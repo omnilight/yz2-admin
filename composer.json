@@ -1,0 +1,29 @@
+{
+    "name": "omnilight/yz2-admin",
+    "description": "Module for managing administration panel",
+    "keywords": ["yii", "framework", "yz", "administation panel"],
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Pavel Agalecky",
+            "email": "pavel.agalecky@gmail.com"
+        }
+    ],
+    "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/omnilight/yz2"
+        },
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "dev-master",
+        "yiisoft/yii2-bootstrap": "dev-master",
+        "omnilight/yz2": "dev-master",
+    },
+    "autoload": {
+        "psr-0": { "yz\\admin\\": "" }
+    },
+    "target-dir": "yz/admin"
+}
