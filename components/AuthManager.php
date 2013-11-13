@@ -26,12 +26,14 @@ class AuthManager extends DbManager
 
     /**
      * Returns name of the operation based on controller's class and it's action name
-     * @param BackendController $controller
+     * @param BackendController|string $controller
      * @param string $action
      * @return string
      */
     public static function getOperationName($controller, $action)
     {
+        if(is_object($controller))
+            $controller = $controller->className();
         return $controller->className() . '.' . $action;
     }
 

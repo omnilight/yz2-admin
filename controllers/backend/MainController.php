@@ -29,6 +29,7 @@ class MainController extends BackendController
 
     public function actionIndex()
     {
+        $this->layout = '@yz/admin/views/layouts/base';
         return $this->render('index');
     }
 

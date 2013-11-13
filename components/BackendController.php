@@ -14,6 +14,8 @@ use yz\controllers\Controller as BaseController;
  */
 class BackendController extends BaseController
 {
+    public $layout = '@yz/admin/views/layouts/main';
+
     public function behaviors()
     {
         return [
