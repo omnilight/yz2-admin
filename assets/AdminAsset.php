@@ -1,12 +1,12 @@
 <?php
 
-namespace yz\admin;
+namespace yz\admin\assets;
 use yii\web\AssetBundle;
 
 
 /**
  * Class AdminAsset
- * @package yz\admin
+ * @package yz\admin\assets
  */
 class AdminAsset extends AssetBundle
 {

@@ -34,7 +34,7 @@ class AuthManager extends DbManager
     {
         if(is_object($controller))
             $controller = $controller->className();
-        return $controller->className() . '.' . $action;
+        return $controller->className() . ':' . $action;
     }
 
 } 

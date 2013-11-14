@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use yz\admin\AdminAsset;
+use yz\admin\assets\AdminAsset;
 
 /**
  * @var \yii\base\View $this
