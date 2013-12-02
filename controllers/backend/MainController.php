@@ -14,11 +14,15 @@ class MainController extends BackendController
 {
     public function actionLogin()
     {
+        $this->layout = '@yz/admin/views/layouts/base';
+
         $model = new LoginForm();
         if($model->load($_POST) && $model->login()) {
             return $this->goBack(['index']);
         } else {
-            return $this->render('login');
+            return $this->render('login',[
+                'loginForm' => $model,
+            ]);
         }
     }
 
@@ -29,7 +33,6 @@ class MainController extends BackendController
 
     public function actionIndex()
     {
-        $this->layout = '@yz/admin/views/layouts/base';
         return $this->render('index');
     }
 

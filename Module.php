@@ -19,6 +19,9 @@ class Module extends BaseModule
 
     public $defaultRoute = 'backend/main';
 
+    /**
+     * @inheritdoc
+     */
     public function getRoutes()
     {
         return [
