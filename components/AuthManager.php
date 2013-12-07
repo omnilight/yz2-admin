@@ -4,7 +4,7 @@ namespace yz\admin\components;
 
 use yii\rbac\DbManager;
 use yz\admin\components\BackendController;
-use yz\admin\models\BaseUsers as BackendUser;
+use yz\admin\models\BaseUser as BackendUser;
 
 /**
  * Class AuthManager

@@ -5,23 +5,39 @@ namespace yz\admin\models;
 use yii\db\ActiveQuery;
 use yii\helpers\Security;
 use yii\web\IdentityInterface;
-use yz\db\ActiveRecord;
 
 /**
- * Class BaseUsers implements admin panel user
+ * Class BaseUser implements admin panel user
  * @property string $login
  * @property string $passhash
  * @property string $auth_key
  * @property bool $is_super_admin
  * @package yz\admin\models
  */
-class BaseUsers extends ActiveRecord implements IdentityInterface
+class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface
 {
     const AUTH_KEY_LENGTH = 32;
 
     public static function tableName()
     {
-        return '{{admin_users}}';
+        return '{{%admin_users}}';
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsSuperAdmin()
+    {
+        return $this->is_super_admin;
+    }
+
+    /**
+     * @param bool $isSuperAdmin
+     * @property bool
+     */
+    public function setIsSuperAdmin($isSuperAdmin)
+    {
+        $this->is_super_admin = $isSuperAdmin;
     }
 
     /**
@@ -100,6 +116,4 @@ class BaseUsers extends ActiveRecord implements IdentityInterface
         } else
             return false;
     }
-
-
 }

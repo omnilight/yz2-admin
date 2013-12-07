@@ -13,7 +13,7 @@ class AdminAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@yz/admin/assets';
+    public $sourcePath = '@yz/admin/assets/adminAsset';
     /**
      * @inheritdoc
      */
@@ -33,5 +33,6 @@ class AdminAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
+        'yz\admin\assets\YzAsset'
     ];
-} 
+}
