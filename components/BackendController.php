@@ -4,7 +4,7 @@ namespace yz\admin\components;
 
 use yii\web\AccessControl;
 use yii\web\AccessRule;
-use yz\controllers\Controller as BaseController;
+use yz\controllers\Controller;
 
 
 /**
@@ -12,7 +12,7 @@ use yz\controllers\Controller as BaseController;
  * @property array $accessRules
  * @package yz\admin\base
  */
-class BackendController extends BaseController
+class BackendController extends Controller
 {
     public $layout = '@yz/admin/views/layouts/main';
 

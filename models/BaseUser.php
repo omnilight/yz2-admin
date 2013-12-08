@@ -14,13 +14,31 @@ use yii\web\IdentityInterface;
  * @property bool $is_super_admin
  * @package yz\admin\models
  */
-class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface
+class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface, AdminableInterface
 {
     const AUTH_KEY_LENGTH = 32;
 
     public static function tableName()
     {
         return '{{%admin_users}}';
+    }
+
+    /**
+     * Returns model title, ex.: 'Person', 'Book'
+     * @return string
+     */
+    public static function getModelTitle()
+    {
+        return \Yii::t('admin', 'Administrator');
+    }
+
+    /**
+     * Returns plural form of the model title, ex.: 'Persons', 'Books'
+     * @return string
+     */
+    public static function getModelTitlePlural()
+    {
+        return \Yii::t('admin', 'Administrators');
     }
 
     /**
