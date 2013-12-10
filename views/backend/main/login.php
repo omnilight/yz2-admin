@@ -1,5 +1,5 @@
 <?php
-use yii\widgets\ActiveForm;
+use \yz\admin\widgets\ActiveForm;
 /**
  * @var \yii\base\View $this
  * @var \yz\admin\models\LoginForm $loginForm
@@ -13,12 +13,17 @@ use yii\widgets\ActiveForm;
         <div class="col-md4">
             <?php $form = ActiveForm::begin([
                 'id' => 'login-form',
-                'options' => ['class' => 'form-horizontal'],
+                'type' => ActiveForm::TYPE_HORIZONTAL,
                 'fieldConfig' => [
                     'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
                     'labelOptions' => ['class' => 'col-lg-1 control-label'],
                 ],
             ]) ?>
+
+            <?= $form->errorSummary([$loginForm]); ?>
+
+            <?= $form->field($loginForm, 'login')->textInput(); ?>
+            <?= $form->field($loginForm, 'password')->passwordInput(); ?>
 
             <?php ActiveForm::end() ?>
         </div>

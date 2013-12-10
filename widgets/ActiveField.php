@@ -6,7 +6,7 @@ namespace yz\admin\widgets;
 /**
  * Class ActiveField
  */
-class ActiveField extends \yii\widgets\ActiveField
+class ActiveField extends \kartik\widgets\ActiveField
 {
 
 } 
