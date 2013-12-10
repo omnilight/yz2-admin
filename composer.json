@@ -20,7 +20,8 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": "dev-master",
         "yiisoft/yii2-bootstrap": "dev-master",
-        "omnilight/yz2": "dev-master"
+        "omnilight/yz2": "dev-master",
+        "kartik-v/yii2-widgets": "dev-master"
     },
     "autoload": {
         "psr-0": { "yz\\admin\\": "" }

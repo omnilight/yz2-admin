@@ -45,11 +45,9 @@ class HasManyRelationInput extends InputWidget
             if($query instanceof ActiveQuery) {
                 $items = $query->asMap()->all();
             } else {
-                throw new Exception('You can use HasManyRelationWidget only with models that has yz\db\ActiveQuery children');
+                throw new Exception('You can use HasOneRelationWidget only with models that has yz\db\ActiveQuery children');
             }
         }
         echo Html::activeDropDownList($this->model, $this->attribute, $items, $this->options);
-
-
     }
 }
