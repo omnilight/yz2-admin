@@ -11,11 +11,6 @@ use yz\base\Module as BaseModule;
 class Module extends BaseModule
 {
     public $adminMenuOrder = 9999;
-    /**
-     * Base url path for backend
-     * @var string
-     */
-    public $backendUrl = 'backend';
 
     public $defaultRoute = 'backend/main';
 
@@ -24,16 +19,17 @@ class Module extends BaseModule
      */
     public function getRoutes()
     {
-        return [
-            'prepend' => [
-                $this->backendUrl => 'admin/backend/main/index',
-                $this->backendUrl.'/login' => 'admin/backend/main/login',
-                $this->backendUrl.'/logout' => 'admin/backend/main/logout',
-                $this->backendUrl.'/<module:\w+>' => '<admin>/backend/settings',
-                $this->backendUrl.'/<module:\w+>/<conroller:\w+>' => '<module>/backend/<controller>',
-                $this->backendUrl.'/<module:\w+>/<conroller:\w+>/<action:w\+>' => '<module>/backend/<controller>/<action>',
-            ]
-        ];
+        if(YZ_APP_TYPE_BACKEND) {
+            return [
+                'prepend' => [
+                    // This is worked in backend
+                    '' => 'admin/main/index',
+                    'login' => 'admin/main/login',
+                    'logout' => 'admin/main/logout',
+                ]
+            ];
+        } else
+            return [];
     }
 
 
