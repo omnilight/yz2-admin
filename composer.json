@@ -26,5 +26,8 @@
     "autoload": {
         "psr-0": { "yz\\admin\\": "" }
     },
-    "target-dir": "yz/admin"
+    "target-dir": "yz/admin",
+    "extra": {
+        "bootstrap": "yz\\admin\\Extension",
+    }
 }
