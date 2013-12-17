@@ -28,6 +28,6 @@
     },
     "target-dir": "yz/admin",
     "extra": {
-        "bootstrap": "yz\\admin\\Extension",
+        "bootstrap": "yz\\admin\\Extension"
     }
 }
