@@ -17,7 +17,7 @@ class m131214_130539_add_default_admin extends \yii\db\Migration
             'passhash' => \yii\helpers\Security::generatePasswordHash($password),
             'is_super_admin' => 1,
             'email' => 'admin@example.com',
-            'name' => Yii::t('admin','Administrator'),
+            'name' => Yii::t('yz/admin','Administrator'),
         ]);
 
         return true;

@@ -21,5 +21,5 @@ return array (
   'Administrator' => 'Администратор',
   'Administrators' => 'Администраторы',
   'The requested model does not exist.' => 'Запрошенная модель не существует',
-  'You do not have access to the requested operation' => 'У вас нет допуска к запрошенной операции',
+  'You do not have access to the requested operation' => 'У вас нет доступа к запрошенной операции',
 );

@@ -29,8 +29,8 @@ interface AdminableInterface
      * ~~~
      *   [
      *      'genre' => [
-     *          'male' => \Yii::t('app','Male'),
-     *          'female' => \Yii::t('app', 'Female'),
+     *          'male' => 'Male',
+     *          'female' => 'Female',
      *   ]
      * ~~~
      * @return array

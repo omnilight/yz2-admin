@@ -29,7 +29,7 @@ class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface, Adminab
      */
     public static function getModelTitle()
     {
-        return \Yii::t('admin', 'Administrator');
+        return \Yii::t('yz/admin', 'Administrator');
     }
 
     /**
@@ -38,7 +38,7 @@ class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface, Adminab
      */
     public static function getModelTitlePlural()
     {
-        return \Yii::t('admin', 'Administrators');
+        return \Yii::t('yz/admin', 'Administrators');
     }
 
     /**

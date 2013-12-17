@@ -71,7 +71,7 @@ class UsersController extends BackendController
         if (($model = Users::find(['id' => $id])) !== null) {
             return $model;
         } else {
-            throw new HttpException(404, \Yii::t('admin','The requested model does not exist.'));
+            throw new HttpException(404, \Yii::t('yz/admin','The requested model does not exist.'));
         }
     }
 } 

@@ -12,7 +12,7 @@ use yz\admin\AdminAsset;
 <?php $this->beginContent('@yz/admin/views/layouts/base'); ?>
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::t('admin','Administration panel'),
+        'brandLabel' => Yii::t('yz/admin','Administration panel'),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',

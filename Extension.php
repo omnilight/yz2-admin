@@ -12,13 +12,10 @@ class Extension extends \yii\base\Extension
 	{
 		parent::init();
 
-		\Yii::$app->i18n->translations['admin'] = [
+		\Yii::$app->i18n->translations['yz/admin'] = [
 			'class' => 'yii\i18n\PhpMessageSource',
-			'basePath' => '@admin/messages',
+			'basePath' => '@yz/admin/messages',
 			'sourceLanguage' => 'en-US',
-			'fileMap' => [
-				'admin' => 'admin.php',
-			]
 		];
 	}
 
