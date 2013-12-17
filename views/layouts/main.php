@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\NavBar;
 use yii\bootstrap\Nav;
-use yz\admin\AdminAsset;
+use yz\admin\assets\AdminAsset;
 
 /**
  * @var \yii\base\View $this

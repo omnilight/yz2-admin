@@ -1,10 +1,10 @@
 <?php
 
-namespace yz\admin\models;
+namespace yz\admin\forms;
 
 
-use app\models\backend\Users;
 use yii\base\Model;
+use yz\admin\models\User;
 
 /**
  * Class LoginForm
@@ -23,10 +23,19 @@ class LoginForm extends Model
         ];
     }
 
-    public function validatePassword()
+	public function attributeLabels()
+	{
+		return [
+			'login' => \Yii::t('yz/admin','Login'),
+			'password' => \Yii::t('yz/admin','Password'),
+		];
+	}
+
+
+	public function validatePassword()
     {
-        /** @var Users $user */
-        $user = Users::findByLogin($this->login)->one();
+        /** @var User $user */
+        $user = User::findByLogin($this->login)->one();
         return $user->validatePassword($this->password);
     }
 

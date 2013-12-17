@@ -2,6 +2,7 @@
 
 namespace yz\admin\components;
 
+use yii\base\Action;
 use yii\web\AccessControl;
 use yii\web\AccessRule;
 use yz\controllers\Controller;
@@ -48,11 +49,11 @@ class BackendController extends Controller
     /**
      * Checks access to the action of the controller for currently logged user
      * @param AccessRule $rule
-     * @param string $action
+     * @param Action $action
      * @return bool
      */
     protected function checkAccess($rule, $action)
     {
-        return \Yii::$app->user->checkAccess(AuthManager::getOperationName($this, $action));
+        return \Yii::$app->user->checkAccess(AuthManager::getOperationName($this, $action->id));
     }
 } 

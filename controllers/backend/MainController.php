@@ -4,7 +4,7 @@ namespace yz\admin\controllers\backend;
 
 use yii\helpers\ArrayHelper;
 use yz\admin\components\BackendController;
-use yz\admin\models\LoginForm;
+use yz\admin\forms\LoginForm;
 
 /**
  * Class MainController
@@ -51,7 +51,7 @@ class MainController extends BackendController
             [
                 'allow' => true,
                 'actions' => ['index','logout','accessDenied'],
-                'roles' => '@',
+                'roles' => ['@'],
             ]
         ],parent::getAccessRules());
     }

@@ -1,6 +1,7 @@
 <?php
 
 namespace yz\admin\assets;
+
 use yii\web\AssetBundle;
 
 
@@ -33,6 +34,6 @@ class AdminAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
-        'yz\admin\assets\YzAsset'
+        'yz\assets\YzAsset'
     ];
 }

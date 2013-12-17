@@ -2,6 +2,7 @@
 
 namespace yz\admin\components;
 
+use yii\base\Action;
 use yii\rbac\DbManager;
 use yz\admin\components\BackendController;
 use yz\admin\models\BaseUser as BackendUser;
@@ -12,13 +13,18 @@ use yz\admin\models\BaseUser as BackendUser;
  */
 class AuthManager extends DbManager
 {
+	public $itemTable = '{{%admin_auth_item}}';
+	public $itemChildTable = '{{%admin_auth_item_child}}';
+	public $assignmentTable = '{{%admin_auth_assignment}}';
+
     /**
      * @inheritdoc
      */
     public function checkAccess($userId, $itemName, $params = [])
     {
         /** @var BackendUser $user */
-        if(($user = \Yii::$app->user->getIdentity()) instanceof BackendUser && $user->is_super_admin) {
+		$user = \Yii::$app->user->getIdentity();
+        if(($user instanceof BackendUser) && $user->is_super_admin) {
             return true;
         } else
             return parent::checkAccess($userId, $itemName, $params);
@@ -34,7 +40,7 @@ class AuthManager extends DbManager
     {
         if(is_object($controller))
             $controller = $controller->className();
-        return $controller->className() . ':' . $action;
+        return $controller . ':' . $action;
     }
 
 } 

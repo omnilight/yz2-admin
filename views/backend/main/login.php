@@ -2,7 +2,7 @@
 use \yz\admin\widgets\ActiveForm;
 /**
  * @var \yii\base\View $this
- * @var \yz\admin\models\LoginForm $loginForm
+ * @var \yz\admin\forms\LoginForm $loginForm
  */
 ?>
 <div class="container">
