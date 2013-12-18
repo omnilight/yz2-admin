@@ -14,13 +14,17 @@
         {
             "type": "vcs",
             "url": "https://github.com/omnilight/yz2-admin"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/omnilight/icons"
         }
     ],
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": "dev-master",
         "yiisoft/yii2-bootstrap": "dev-master",
-        "fortawesome/font-awesome": "v4.0.3",
+        "omnilight/icons": "dev-master",
         "omnilight/yz2": "dev-master"
     },
     "autoload": {
