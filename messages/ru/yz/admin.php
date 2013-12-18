@@ -17,11 +17,17 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Login' => 'Логин',
-  'Password' => 'Пароль',
+  'Logout' => 'Выйти',
+  'Your profile' => 'Ваш профиль',
   'Administration panel' => 'Панель администратора',
   'Administrator' => 'Администратор',
   'Administrators' => 'Администраторы',
-  'The requested model does not exist.' => 'Запрошенная модель не существует',
-  'You do not have access to the requested operation' => 'У вас нет доступа к запрошенной операции',
+  'Groups' => 'Группы',
+  'Incorrect login or password' => 'Неправильный логин или пароль',
+  'List' => 'Список',
+  'Login' => 'Логин',
+  'Password' => 'Пароль',
+  'Sign in' => 'Войти',
+  'The requested model does not exist.' => 'Запрошенная модель не существует.',
+  'You do not have access to the requested operation' => 'У вас нет доступа к запрошенной операции.',
 );

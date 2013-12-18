@@ -1,0 +1,23 @@
+body {
+    background-color: #c7c7c7;
+    padding-top: 150px;
+}
+
+.b-login {
+    background-color: #ffffff;
+    text-align: center;
+    padding: 25px;
+
+    max-width: 70%;
+    margin: 0 auto;
+
+    -webkit-box-shadow: 0px 0px 14px rgba(50, 50, 50, 0.4);
+    -moz-box-shadow:    0px 0px 14px rgba(50, 50, 50, 0.4);
+    box-shadow:         0px 0px 14px rgba(50, 50, 50, 0.4);
+}
+
+.b-login h1 {
+    border-bottom: 1px solid #c7c7c7;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}

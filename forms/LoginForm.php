@@ -2,7 +2,6 @@
 
 namespace yz\admin\forms;
 
-
 use yii\base\Model;
 use yz\admin\models\User;
 
@@ -18,7 +17,7 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            ['login, password', 'required'],
+            [['login', 'password'], 'required'],
             ['password', 'validatePassword'],
         ];
     }
@@ -36,13 +35,15 @@ class LoginForm extends Model
     {
         /** @var User $user */
         $user = User::findByLogin($this->login)->one();
-        return $user->validatePassword($this->password);
+		if(!$user || !$user->validatePassword($this->password)) {
+			$this->addError('password', \Yii::t('yz/admin','Incorrect login or password'));
+		}
     }
 
     public function login()
     {
         if($this->validate()) {
-            $user = Users::findByLogin($this->login)->one();
+            $user = User::findByLogin($this->login)->one();
             \Yii::$app->user->login($user);
             return true;
         } else

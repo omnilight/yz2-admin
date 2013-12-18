@@ -1,0 +1,16 @@
+body {
+    padding-top: 70px;
+}
+
+.form-inline .form-group {
+    margin-right: 4px;
+}
+
+.error-summary {
+    background-color: #a94442;
+    color: #ffffff;
+}
+
+.error-summary li {
+    list-style: none;
+}

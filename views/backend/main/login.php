@@ -1,31 +1,30 @@
 <?php
-use \yz\admin\widgets\ActiveForm;
+use yz\admin\widgets\ActiveForm;
+use yii\helpers\Html;
+
 /**
  * @var \yii\base\View $this
  * @var \yz\admin\forms\LoginForm $loginForm
  */
+\yz\admin\assets\LoginAsset::register($this);
 ?>
 <div class="container">
-    <div class="row">
-        <div class="col-md4"></div>
-    </div>
-    <div class="row">
-        <div class="col-md4">
-            <?php $form = ActiveForm::begin([
-                'id' => 'login-form',
-                'type' => ActiveForm::TYPE_HORIZONTAL,
-                'fieldConfig' => [
-                    'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-                    'labelOptions' => ['class' => 'col-lg-1 control-label'],
-                ],
-            ]) ?>
+	<div class="b-login">
+		<h1><?= Yii::t('yz/admin', 'Administration panel'); ?></h1>
 
-            <?= $form->errorSummary([$loginForm]); ?>
+		<?php $form = ActiveForm::begin([
+			'id' => 'login-form',
+			'type' => ActiveForm::TYPE_INLINE,
+		]) ?>
 
-            <?= $form->field($loginForm, 'login')->textInput(); ?>
-            <?= $form->field($loginForm, 'password')->passwordInput(); ?>
+		<?= $form->errorSummary([$loginForm]); ?>
 
-            <?php ActiveForm::end() ?>
-        </div>
-    </div>
+		<?= $form->field($loginForm, 'login')->textInput(); ?>
+
+		<?= $form->field($loginForm, 'password')->passwordInput(); ?>
+
+		<?= Html::submitButton(Yii::t('yz/admin', 'Sign in'), ['class' => 'btn btn-success']); ?>
+
+		<?php ActiveForm::end() ?>
+	</div>
 </div>
