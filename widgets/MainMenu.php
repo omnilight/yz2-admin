@@ -18,7 +18,9 @@ class MainMenu extends Widget
 
     public function run()
     {
-        $this->render('mainMenu',[
+		MainMenuAsset::register($this->getView());
+
+        echo $this->render('mainMenu',[
             'menuItems' => $this->getMenuItems(),
         ]);
     }
@@ -26,6 +28,7 @@ class MainMenu extends Widget
     protected function getMenuItems()
     {
         if(($menuItems = \Yii::$app->cache->get(static::ADMIN_MENU_ITEMS_KEY)) === false) {
+			$menuItems = [];
             foreach(\Yii::$app->getModules() as $id => $module) {
                 if(is_array($module)) {
                     $module = \Yii::$app->getModule($id);

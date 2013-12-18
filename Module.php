@@ -45,4 +45,24 @@ class Module extends BaseModule
         }
     }
 
+	public function getAdminMenu()
+	{
+		return [
+			[
+				'label' => \Yii::t('yz/admin','Administrators'),
+				'items' => [
+					[
+						'label' => \Yii::t('yz/admin','List'),
+						'route' => ['/admin/users/index'],
+					],
+					[
+						'label' => \Yii::t('yz/admin','Groups'),
+						'route' => ['/admin/groups/index'],
+					]
+				]
+			]
+		];
+	}
+
+
 }

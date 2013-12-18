@@ -14,7 +14,7 @@ use yii\web\IdentityInterface;
  * @property bool $is_super_admin
  * @package yz\admin\models
  */
-class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface, AdminableInterface
+class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface
 {
     const AUTH_KEY_LENGTH = 32;
 
@@ -23,23 +23,6 @@ class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface, Adminab
         return '{{%admin_users}}';
     }
 
-    /**
-     * Returns model title, ex.: 'Person', 'Book'
-     * @return string
-     */
-    public static function getModelTitle()
-    {
-        return \Yii::t('yz/admin', 'Administrator');
-    }
-
-    /**
-     * Returns plural form of the model title, ex.: 'Persons', 'Books'
-     * @return string
-     */
-    public static function getModelTitlePlural()
-    {
-        return \Yii::t('yz/admin', 'Administrators');
-    }
 
     /**
      * @return bool
@@ -73,7 +56,7 @@ class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface, Adminab
      */
     public static function findIdentity($id)
     {
-
+		return static::find($id);
     }
 
     /**
@@ -81,7 +64,7 @@ class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface, Adminab
      */
     public function getId()
     {
-
+		return $this->id;
     }
 
     /**
@@ -89,7 +72,7 @@ class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface, Adminab
      */
     public function getAuthKey()
     {
-
+		return $this->auth_key;
     }
 
     /**
@@ -97,7 +80,7 @@ class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface, Adminab
      */
     public function validateAuthKey($authKey)
     {
-
+		return $this->getAuthKey() === $authKey;
     }
 
     /**

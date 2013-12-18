@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /** @var \yz\admin\widgets\MainMenu $context  */
 $context = $this->context;
 ?>
-<ul class="list-group">
+<ul class="b-mainMenu nav nav-pills nav-stacked">
     <?php foreach ($menuItems as $group): ?>
         <li><?= Html::encode($group['label']); ?></li>
         <?php foreach ($group['items'] as $item): ?>
