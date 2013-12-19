@@ -1,7 +1,7 @@
 <?php
 use yz\admin\widgets\ActiveForm;
 use yii\helpers\Html;
-use omnilight\icons\Icons;
+use yz\icons\Icons;
 
 /**
  * @var \yii\base\View $this
@@ -24,7 +24,7 @@ use omnilight\icons\Icons;
 
 		<?= $form->field($loginForm, 'password')->passwordInput(); ?>
 
-		<?= Html::submitButton(Icons::i('lock') . Yii::t('yz/admin', 'Sign in'), ['class' => 'btn btn-success']); ?>
+		<?= Html::submitButton(Icons::p('unlock-alt') . Yii::t('yz/admin', 'Sign in'), ['class' => 'btn btn-success']); ?>
 
 		<?php ActiveForm::end() ?>
 	</div>

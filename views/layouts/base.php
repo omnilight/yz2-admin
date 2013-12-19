@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yz\admin\assets\AdminAsset;
-use omnilight\icons\Icons;
+use yz\icons\Icons;
 
 /**
  * @var \yii\web\View $this
