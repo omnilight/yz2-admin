@@ -14,6 +14,11 @@ class Module extends BaseModule
 {
     public $adminMenuOrder = 9999;
 
+	/**
+	 * @var string Name of the GET variable used to create links to backpage
+	 */
+	public $returnUrlVar = '__returnUrl';
+
     public function init()
     {
         if(YZ_APP_TYPE_BACKEND) {

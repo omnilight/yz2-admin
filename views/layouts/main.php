@@ -41,6 +41,11 @@ NavBar::end();
 				<?= \yz\admin\widgets\MainMenu::widget(); ?>
 			</div>
 			<div class="col-md-8">
+
+				<?= \yii\widgets\Breadcrumbs::widget([
+					'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+				]); ?>
+
 				<?= $content; ?>
 			</div>
 		</div>

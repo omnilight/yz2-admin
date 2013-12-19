@@ -25,7 +25,7 @@ class AdminAsset extends AssetBundle
      * @inheritdoc
      */
     public $js = [
-        'admin.js',
+        'js/admin.js',
     ];
     /**
      * @inheritdoc
