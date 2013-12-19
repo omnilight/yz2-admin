@@ -4,6 +4,7 @@ namespace yz\admin;
 
 use yii\base\InvalidConfigException;
 use yz\base\Module as BaseModule;
+use yz\icons\Icons;
 
 /**
  * Class Module
@@ -50,9 +51,11 @@ class Module extends BaseModule
 		return [
 			[
 				'label' => \Yii::t('yz/admin','Administrators'),
+				'icon' => Icons::o('users'),
 				'items' => [
 					[
 						'label' => \Yii::t('yz/admin','List'),
+						'icon' => Icons::o('users'),
 						'route' => ['/admin/users/index'],
 					],
 					[

@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\NavBar;
 use yii\bootstrap\Nav;
-use yz\admin\assets\AdminAsset;
+use yz\icons\Icons;
 
 /**
  * @var \yii\base\View $this
@@ -21,11 +21,12 @@ NavBar::begin([
 
 echo Nav::widget([
 	'options' => ['class' => 'navbar-nav navbar-right'],
+	'encodeLabels' => false,
 	'items' => [
 		[
-			'label' => Yii::$app->user->identity->name,
+			'label' => Icons::p('user') . Html::encode(Yii::$app->user->identity->name),
 			'items' => [
-				['label' => Yii::t('yz/admin', 'Your profile'), 'url' => ['/admin/users/profile']],
+				['label' => Icons::p('user') . Yii::t('yz/admin', 'Your profile'), 'url' => ['/admin/users/profile']],
 				['label' => Yii::t('yz/admin', 'Logout'), 'url' => ['/admin/main/logout']],
 			]
 		]

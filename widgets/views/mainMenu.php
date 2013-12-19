@@ -9,9 +9,9 @@ $context = $this->context;
 ?>
 <ul class="b-mainMenu nav nav-pills nav-stacked">
     <?php foreach ($menuItems as $group): ?>
-        <li><?= Html::encode($group['label']); ?></li>
+        <li><?= (isset($group['icon'])?$group['icon']->ac('fa-fw fa-lg').' ':'') . Html::encode($group['label']); ?></li>
         <?php foreach ($group['items'] as $item): ?>
-            <li><?= Html::a($item['label'], $item['route']) ?></li>
+            <li><?= Html::a((isset($item['icon'])?$item['icon']->ac('fa-fw').' ':'') . $item['label'], $item['route']) ?></li>
         <?php endforeach ?>
     <?php endforeach; ?>
 </ul>
