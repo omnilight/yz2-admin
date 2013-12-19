@@ -1,13 +1,15 @@
 <?php
 use yii\helpers\Html;
 use yz\admin\assets\AdminAsset;
+use omnilight\icons\Icons;
 
 /**
- * @var \yii\base\View $this
+ * @var \yii\web\View $this
  * @var string $content
  */
 
 AdminAsset::register($this);
+Icons::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
