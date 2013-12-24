@@ -12,7 +12,9 @@ use yz\admin\widgets\ActiveForm;
 
 <div class="user-form">
 
-	<?php $form = ActiveForm::begin(); ?>
+	<?php $form = ActiveForm::begin([
+		'enableAjaxValidation' => true,
+	]); ?>
 
 		<?= $form->field($model, 'id')->textInput() ?>
 
@@ -38,8 +40,11 @@ use yz\admin\widgets\ActiveForm;
 
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-				<?= Html::submitButton($model->isNewRecord ? \Yii::t('yz/admin','Create & Exit') : \Yii::t('yz/admin','Update & Exit'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 				<?= Html::submitButton($model->isNewRecord ? \Yii::t('yz/admin','Create') : \Yii::t('yz/admin','Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'name' => 'save_and_stay']) ?>
+				<?= Html::submitButton($model->isNewRecord ? \Yii::t('yz/admin','Create & Exit') : \Yii::t('yz/admin','Update & Exit'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+				<?php if ($model->isNewRecord): ?>
+					<?= Html::submitButton(\Yii::t('yz/admin','Create & Then Create Another One'), ['class' => 'btn btn-success', 'name' => 'save_and_create']) ?>
+				<?php endif ?>
 			</div>
 		</div>
 

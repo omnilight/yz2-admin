@@ -2,15 +2,13 @@
 
 namespace yz\admin;
 
-use yii\base\InvalidConfigException;
-use yz\base\Module as BaseModule;
 use yz\icons\Icons;
 
 /**
  * Class Module
  * @package yz\admin
  */
-class Module extends BaseModule
+class Module extends \yz\base\Module
 {
     public $adminMenuOrder = 9999;
 

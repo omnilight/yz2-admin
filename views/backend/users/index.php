@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yz\admin\widgets\GridView;
 use yz\admin\widgets\ActionButtons;
 
 /**
@@ -10,7 +10,7 @@ use yz\admin\widgets\ActionButtons;
  * @var yz\admin\models\search\UserSearch $searchModel
  */
 
-$this->title = yz\admin\models\User::modelTitlePlural();
+$this->title = \yz\admin\models\User::modelTitlePlural();
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -18,6 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="btn-toolbar pull-right">
 		<?=  ActionButtons::widget([
 			'order' => [['search'], ['export', 'create', 'delete', 'return']],
+			'gridId' => 'user-grid',
+			'searchModel' => $searchModel,
+			'modelClass' => '\yz\admin\models\User',
 		]) ?>
 	</div>
 
@@ -26,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
 	<?php echo GridView::widget([
+		'id' => 'user-grid',
 		'dataProvider' => $dataProvider,
 		//'filterModel' => $searchModel,
 		'columns' => [
@@ -44,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			// 'update_time',
 
 			[
-				'class' => 'yii\grid\ActionColumn',
+				'class' => 'yz\admin\widgets\ActionColumn',
 				'template' => '{update} {delete}',
 			],
 		],

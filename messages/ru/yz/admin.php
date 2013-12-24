@@ -17,13 +17,16 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Search' => 'Поиск',
+  'Create & Then Create Another One' => 'Создать, а затем создать еще одну запись',
   'Administration panel' => 'Панель администратора',
   'Administrator' => 'Администратор',
   'Administrators' => 'Администраторы',
+  'Are you sure to delete this item?' => 'Вы уверены, что хотите удалить этот элемент?',
+  'Are you sure to delete this items?' => 'Вы уверены, что хотите удалить эти элементы?',
   'Create' => 'Создать',
   'Create & Exit' => 'Создать и выйти',
   'Create {item}' => 'Создать {item}',
+  'Delete' => 'Удалить',
   'Delete Checked' => 'Удалить отмеченные',
   'Edit' => 'Изменить',
   'Go Back' => 'Вернуться назад',
@@ -33,10 +36,12 @@ return array (
   'Login' => 'Логин',
   'Logout' => 'Выйти',
   'Password' => 'Пароль',
+  'Search' => 'Поиск',
   'Sign in' => 'Войти',
   'Update' => 'Сохранить',
   'Update & Exit' => 'Сохранить и выйти',
   'Update {item}: {title}' => 'Обновить {item}: {title}',
+  'View' => 'Просмотр',
   'You do not have access to the requested operation' => 'У вас нет доступа к запрошенной операции.',
   'Your profile' => 'Ваш профиль',
 );

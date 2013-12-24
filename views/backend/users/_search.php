@@ -14,6 +14,9 @@ use yz\admin\widgets\ActiveForm;
 
 	<?php $form = ActiveForm::begin([
 		'action' => ['index'],
+		'fieldConfig' => [
+			'horizontal' => ['label' => 'col-sm-3', 'input' => 'col-sm-5', 'offset' => 'col-sm-offset-3 col-sm-5'],
+		],
 		'method' => 'get',
 	]); ?>
 
@@ -40,8 +43,9 @@ use yz\admin\widgets\ActiveForm;
 		<?php // echo $form->field($model, 'update_time') ?>
 
 		<div class="form-group">
-			<?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-			<?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+			<div class="col-sm-offset-3 col-sm-5">
+				<?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+			</div>
 		</div>
 
 	<?php ActiveForm::end(); ?>

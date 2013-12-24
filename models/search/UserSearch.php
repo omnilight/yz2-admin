@@ -37,19 +37,7 @@ class UserSearch extends Model
 	 */
 	public function attributeLabels()
 	{
-		return [
-			'id' => 'ID',
-			'login' => 'Login',
-			'passhash' => 'Passhash',
-			'auth_key' => 'Auth Key',
-			'is_super_admin' => 'Is Super Admin',
-			'is_active' => 'Is Active',
-			'name' => 'Name',
-			'email' => 'Email',
-			'login_time' => 'Login Time',
-			'create_time' => 'Create Time',
-			'update_time' => 'Update Time',
-		];
+		return (new \yz\admin\models\User)->attributeLabels();
 	}
 
 	public function search($params)

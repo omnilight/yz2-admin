@@ -53,6 +53,8 @@ class UsersController extends BackendController
 		if ($model->load($_POST) && $model->save()) {
 			if (isset($_POST['save_and_stay'])) {
 				return $this->redirect(['update', 'id' => $model->id]);
+			} elseif (isset($_POST['save_and_create'])) {
+				return $this->redirect(['create']);
 			} else {
 				return $this->redirect(['index']);
 			}

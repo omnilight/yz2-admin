@@ -24,6 +24,7 @@ class m131214_130539_yz_admin_add_default_admin extends \yii\db\Migration
 			'auth_key' => \yii\helpers\Security::generateRandomKey(\yz\admin\models\BaseUser::AUTH_KEY_LENGTH),
             'email' => $email,
             'name' => Yii::t('yz/admin','Administrator'),
+			'create_time' => new \yii\db\Expression('NOW()'),
         ]);
 
 		\yii\helpers\Console::output("Initial administration panel user was created!");
@@ -34,8 +35,8 @@ class m131214_130539_yz_admin_add_default_admin extends \yii\db\Migration
 
 	public function down()
 	{
-		$this->delete('{{%admin_users}}', 'id = 1',[
-            ':email' => 'admin@example.com',
+		$this->delete('{{%admin_users}}', 'login = :login',[
+            ':login' => 'admin',
         ]);
 		return true;
 	}

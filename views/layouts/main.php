@@ -24,10 +24,10 @@ echo Nav::widget([
 	'encodeLabels' => false,
 	'items' => [
 		[
-			'label' => Icons::p('user') . Html::encode(Yii::$app->user->identity->name),
+			'label' => Icons::p('user fa-fw') . Html::encode(Yii::$app->user->identity->name),
 			'items' => [
-				['label' => Icons::p('user') . Yii::t('yz/admin', 'Your profile'), 'url' => ['/admin/users/profile']],
-				['label' => Yii::t('yz/admin', 'Logout'), 'url' => ['/admin/main/logout']],
+				['label' => Icons::p('user fa-fw') . Yii::t('yz/admin', 'Your profile'), 'url' => ['/admin/users/profile']],
+				['label' => Icons::p('power-off fa-fw') . Yii::t('yz/admin', 'Logout'), 'url' => ['/admin/main/logout']],
 			]
 		]
 	]

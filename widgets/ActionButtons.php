@@ -4,8 +4,10 @@ namespace yz\admin\widgets;
 
 
 use yii\base\InvalidConfigException;
+use yii\base\Model;
 use yii\base\Widget;
 use yii\bootstrap\Button;
+use yii\bootstrap\ButtonDropdown;
 use yii\bootstrap\ButtonGroup;
 use yii\helpers\Html;
 use yz\admin\helpers\AdminHelper;
@@ -59,6 +61,22 @@ class ActionButtons extends Widget
 	 * @var bool Whether to add return URL to the links
 	 */
 	public $addReturnUrl = true;
+	/**
+	 * ID of the grid that buttons should interact with
+	 * @var string
+	 */
+	public $gridId = null;
+	/**
+	 * Instance of search model for current table. Used to create special parameters for
+	 * 'create' action
+	 * @var Model
+	 */
+	public $searchModel = null;
+	/**
+	 * Model class itself to find what class to change name to
+	 * @var string
+	 */
+	public $modelClass = null;
 
 	/**
 	 * @throws \yii\base\InvalidConfigException
@@ -146,15 +164,37 @@ class ActionButtons extends Widget
 	{
 		if ($this->_createButton === null) {
 			$url = $this->createUrl + ($this->addReturnUrl ? AdminHelper::returnUrlRoute() : []);
-			$this->_createButton = Button::widget([
-				'tagName' => 'a',
-				'label' => Icons::p('plus') . \Yii::t('yz/admin','Create'),
-				'encodeLabel' => false,
-				'options' => [
-					'href' => Html::url($url),
-					'class' => 'btn btn-success',
-				],
-			]);
+			$attributes = $this->getModelAttributes();
+
+			if ($attributes == []) {
+				$this->_createButton = Button::widget([
+					'tagName' => 'a',
+					'label' => Icons::p('plus') . \Yii::t('yz/admin','Create'),
+					'encodeLabel' => false,
+					'options' => [
+						'href' => Html::url($url),
+						'class' => 'btn btn-success',
+					],
+				]);;
+			} else {
+				$this->_createButton = Html::tag('div', ButtonDropdown::widget([
+					'label' => Icons::p('plus') . \Yii::t('yz/admin','Create'),
+					'split' => true,
+					'dropdown' => [
+						'encodeLabels' => false,
+						'items' => [
+							[
+								'label' => Icons::p('plus') . \Yii::t('yz/admin','Create with default parameters'),
+								'url' => Html::url($url),
+							]
+						]
+					],
+					'options' => [
+						'class' => 'btn btn-success',
+						'href' => Html::url($url + $attributes),
+					]
+				]), ['class' => 'btn-group']);
+			}
 		}
 		return $this->_createButton;
 	}
@@ -181,6 +221,9 @@ class ActionButtons extends Widget
 				'options' => [
 					'href' => Html::url($url),
 					'class' => 'btn btn-danger',
+					'id' => 'action-button-delete-checked',
+					'data-grid' => $this->gridId,
+					'data-confirm' => \Yii::t('yz/admin','Are you sure to delete this items?')
 				],
 			]);
 		}
@@ -293,4 +336,21 @@ class ActionButtons extends Widget
 	 * @var Button
 	 */
 	protected $_searchButton = null;
+
+	/**
+	 * @return array
+	 */
+	protected function getModelAttributes() {
+		if ($this->searchModel === null || $this->modelClass === null)
+			return [];
+
+		$attributes = [];
+		$model = new $this->modelClass;
+		foreach ($this->searchModel->getAttributes() as $name => $value) {
+			if ($value !== null)
+				$attributes[Html::getInputName($model, $name)] = $value;
+		}
+
+		return $attributes;
+	}
 }
