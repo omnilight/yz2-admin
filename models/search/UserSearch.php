@@ -37,7 +37,9 @@ class UserSearch extends Model
 	 */
 	public function attributeLabels()
 	{
-		return (new \yz\admin\models\User)->attributeLabels();
+		return array_merge((new \yz\admin\models\User)->attributeLabels(), [
+			// Custom parameter names
+		]);
 	}
 
 	public function search($params)

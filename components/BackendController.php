@@ -37,7 +37,7 @@ class BackendController extends Controller
             [
                 'allow' => true,
                 'matchCallback' => function($rule, $action) {
-                        $this->checkAccess($rule, $action);
+                        return $this->checkAccess($rule, $action);
                     },
             ],
             [

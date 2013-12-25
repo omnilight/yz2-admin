@@ -178,7 +178,9 @@ class ActionButtons extends Widget
 				]);;
 			} else {
 				$this->_createButton = Html::tag('div', ButtonDropdown::widget([
+					'tagName' => 'a',
 					'label' => Icons::p('plus') . \Yii::t('yz/admin','Create'),
+					'encodeLabel' => false,
 					'split' => true,
 					'dropdown' => [
 						'encodeLabels' => false,

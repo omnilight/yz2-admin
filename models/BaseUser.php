@@ -8,10 +8,17 @@ use yii\web\IdentityInterface;
 
 /**
  * Class BaseUser implements admin panel user
+ * @property integer $id
  * @property string $login
  * @property string $passhash
  * @property string $auth_key
- * @property bool $is_super_admin
+ * @property boolean $is_super_admin
+ * @property boolean $is_active
+ * @property string $name
+ * @property string $email
+ * @property string $login_time
+ * @property string $create_time
+ * @property string $update_time
  * @package yz\admin\models
  */
 class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface
@@ -22,6 +29,60 @@ class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface
     {
         return '{{%admin_users}}';
     }
+
+	/**
+	 * Returns model title, ex.: 'Person', 'Book'
+	 * @return string
+	 */
+	public static function modelTitle()
+	{
+		return \Yii::t('yz/admin', 'Administrator');
+	}
+
+	/**
+	 * Returns plural form of the model title, ex.: 'Persons', 'Books'
+	 * @return string
+	 */
+	public static function modelTitlePlural()
+	{
+		return \Yii::t('yz/admin', 'Administrators');
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+			[['is_super_admin', 'is_active'], 'boolean'],
+			[['login_time', 'create_time', 'update_time'], 'safe'],
+			[['login'], 'string', 'max' => 32],
+			[['passhash', 'auth_key', 'email'], 'string', 'max' => 255],
+			[['name'], 'string', 'max' => 64]
+		];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'id' => \Yii::t('yz/admin','ID'),
+			'login' => \Yii::t('yz/admin','Login'),
+			'passhash' => \Yii::t('yz/admin','Passhash'),
+			'auth_key' => \Yii::t('yz/admin','Auth Key'),
+			'is_super_admin' => \Yii::t('yz/admin','Is Super Admin'),
+			'is_active' => \Yii::t('yz/admin','Is Active'),
+			'name' => \Yii::t('yz/admin','Name'),
+			'email' => \Yii::t('yz/admin','Email'),
+			'login_time' => \Yii::t('yz/admin','Login Time'),
+			'create_time' => \Yii::t('yz/admin','Create Time'),
+			'update_time' => \Yii::t('yz/admin','Update Time'),
+			'adminAuthAssignment' => \Yii::t('yz/admin','Admin Auth Assignment'),
+			'itemNames' => \Yii::t('yz/admin','Item Names'),
+		];
+	}
 
 
     /**

@@ -7,6 +7,7 @@ use yz\admin\models\search\UserSearch;
 use yz\admin\components\BackendController;
 use yii\web\NotFoundHttpException;
 use yii\web\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * UsersController implements the CRUD actions for User model.
@@ -15,14 +16,14 @@ class UsersController extends BackendController
 {
 	public function behaviors()
 	{
-		return [
+		return ArrayHelper::merge(parent::behaviors(), [
 			'verbs' => [
 				'class' => VerbFilter::className(),
 				'actions' => [
 					'delete' => ['post'],
 				],
 			],
-		];
+		]);
 	}
 
 	/**
