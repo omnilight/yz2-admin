@@ -20,7 +20,7 @@ class Module extends \yz\Module
     public function init()
     {
         if(YZ_APP_TYPE_BACKEND) {
-            $this->defaultRoute = 'backend/main';
+            $this->defaultRoute = 'admin/main/index';
         }
         parent::init();
     }

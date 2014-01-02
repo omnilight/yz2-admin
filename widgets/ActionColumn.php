@@ -3,6 +3,7 @@
 namespace yz\admin\widgets;
 
 
+use Closure;
 use yii\bootstrap\Button;
 use yii\helpers\Html;
 use Yii;
@@ -24,11 +25,7 @@ class ActionColumn extends \yii\grid\ActionColumn
 	protected function initDefaultButtons()
 	{
 		if (!isset($this->buttons['view'])) {
-			$this->buttons['view'] = function ($model, $key, $index, $column) {
-				/** @var ActionColumn $column */
-				if ($this->addReturnUrl)
-					$key = (is_array($key) ? $key : ['id' => $key]) + AdminHelper::returnUrlRoute();
-				$url = $column->createUrl($model, $key, $index, 'view');
+			$this->buttons['view'] = function ($url, $model) {
 				return Html::a(Icons::i('eye fa-lg'), $url, [
 					'title' => Yii::t('yz/admin', 'View'),
 					'class' => 'btn btn-info btn-sm',
@@ -36,11 +33,7 @@ class ActionColumn extends \yii\grid\ActionColumn
 			};
 		}
 		if (!isset($this->buttons['update'])) {
-			$this->buttons['update'] = function ($model, $key, $index, $column) {
-				/** @var ActionColumn $column */
-				if ($this->addReturnUrl)
-					$key = (is_array($key) ? $key : ['id' => $key]) + AdminHelper::returnUrlRoute();
-				$url = $column->createUrl($model, $key, $index, 'update');
+			$this->buttons['update'] = function ($url, $model) {
 				return Html::a(Icons::i('pencil-square-o fa-lg'), $url, [
 					'title' => Yii::t('yz/admin', 'Update'),
 					'class' => 'btn btn-success btn-sm',
@@ -48,11 +41,7 @@ class ActionColumn extends \yii\grid\ActionColumn
 			};
 		}
 		if (!isset($this->buttons['delete'])) {
-			$this->buttons['delete'] = function ($model, $key, $index, $column) {
-				/** @var ActionColumn $column */
-				if ($this->addReturnUrl)
-					$key = (is_array($key) ? $key : ['id' => $key]) + AdminHelper::returnUrlRoute();
-				$url = $column->createUrl($model, $key, $index, 'delete');
+			$this->buttons['delete'] = function ($url, $model) {
 				return Html::a(Icons::i('trash-o fa-lg'), $url, [
 					'title' => Yii::t('yz/admin', 'Delete'),
 					'data-confirm' => Yii::t('yz/admin', 'Are you sure to delete this item?'),
@@ -62,4 +51,13 @@ class ActionColumn extends \yii\grid\ActionColumn
 			};
 		}
 	}
+
+	public function createUrl($action, $model, $key, $index)
+	{
+		if ($this->addReturnUrl)
+			$key = (is_array($key) ? $key : ['id' => $key]) + AdminHelper::returnUrlRoute();
+		return parent::createUrl($action, $model, $key, $index);
+	}
+
+
 } 

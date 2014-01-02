@@ -6,7 +6,6 @@ namespace yz\admin\widgets;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yz\admin\components\AuthManager;
-use yz\base\Module as YzModule;
 
 /**
  * Class MainMenu renders main administration menu in the admin panel
@@ -33,7 +32,7 @@ class MainMenu extends Widget
                 if(is_array($module)) {
                     $module = \Yii::$app->getModule($id);
                 }
-                if($module instanceof YzModule) {
+                if($module instanceof \yz\Module) {
                     $moduleMenu = $module->getAdminMenu();
 
                     foreach($moduleMenu as $group) {
