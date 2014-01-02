@@ -8,7 +8,7 @@ use yz\icons\Icons;
  * Class Module
  * @package yz\admin
  */
-class Module extends \yz\base\Module
+class Module extends \yz\Module
 {
     public $adminMenuOrder = 9999;
 
@@ -25,8 +25,39 @@ class Module extends \yz\base\Module
         parent::init();
     }
 
+	/**
+	 * @inheritdoc
+	 */
+	public function getVersion()
+	{
+		return '0.1';
+	}
 
-    /**
+	/**
+	 * @inheritdoc
+	 */
+	public function getName()
+	{
+		return \Yii::t('yz/admin','Administration module');
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getDescription()
+	{
+		return \Yii::t('yz/admin','Provides administration panel functionality with backend user management');
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getIcon()
+	{
+		return null;
+	}
+
+	/**
      * @inheritdoc
      */
     public function getRoutes()
