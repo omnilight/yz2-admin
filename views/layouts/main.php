@@ -46,6 +46,8 @@ NavBar::end();
 					'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 				]); ?>
 
+				<?= \yz\admin\widgets\Flashes::widget(); ?>
+
 				<?= $content; ?>
 			</div>
 		</div>

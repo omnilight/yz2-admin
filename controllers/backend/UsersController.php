@@ -52,7 +52,7 @@ class UsersController extends BackendController
 		$model = new User;
 
 		if ($model->load($_POST) && $model->save()) {
-			\Yii::$app->messages->success(\Yii::t('yz/admin', 'Record was successfully created'));
+			\Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('yz/admin', 'Record was successfully created'));
 			if (isset($_POST['save_and_stay'])) {
 				return $this->redirect(['update', 'id' => $model->id]);
 			} elseif (isset($_POST['save_and_create'])) {
@@ -78,7 +78,7 @@ class UsersController extends BackendController
 		$model = $this->findModel($id);
 
 		if ($model->load($_POST) && $model->save()) {
-			\Yii::$app->messages->success(\Yii::t('yz/admin', 'Record was successfully updated'));
+			\Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('yz/admin', 'Record was successfully updated'));
 			if (isset($_POST['save_and_stay'])) {
 				return $this->redirect(['update', 'id' => $model->id]);
 			} else {
@@ -100,7 +100,7 @@ class UsersController extends BackendController
 	public function actionDelete($id)
 	{
 		$this->findModel($id)->delete();
-		\Yii::$app->messages->success(\Yii::t('yz/admin', 'Record was successfully deleted'));
+		\Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('yz/admin', 'Record was successfully deleted'));
 		return $this->redirect(['index']);
 	}
 
