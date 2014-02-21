@@ -59,5 +59,11 @@ class ActionColumn extends \yii\grid\ActionColumn
 		return parent::createUrl($action, $model, $key, $index);
 	}
 
+	protected function renderDataCellContent($model, $key, $index)
+	{
+		$data = parent::renderDataCellContent($model,$key,$index);
+		return "<nobr>{$data}</nobr>";
+	}
+
 
 } 
