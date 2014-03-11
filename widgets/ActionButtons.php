@@ -10,6 +10,7 @@ use yii\bootstrap\Button;
 use yii\bootstrap\ButtonDropdown;
 use yii\bootstrap\ButtonGroup;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yz\admin\helpers\AdminHelper;
 use yz\icons\Icons;
 
@@ -172,7 +173,7 @@ class ActionButtons extends Widget
 					'label' => Icons::p('plus') . \Yii::t('yz/admin','Create'),
 					'encodeLabel' => false,
 					'options' => [
-						'href' => Html::url($url),
+						'href' => Url::to($url),
 						'class' => 'btn btn-success',
 					],
 				]);;
@@ -187,13 +188,13 @@ class ActionButtons extends Widget
 						'items' => [
 							[
 								'label' => Icons::p('plus') . \Yii::t('yz/admin','Create with default parameters'),
-								'url' => Html::url($url),
+								'url' => Url::to($url),
 							]
 						]
 					],
 					'options' => [
 						'class' => 'btn btn-success',
-						'href' => Html::url($url + $attributes),
+						'href' => Url::to($url + $attributes),
 					]
 				]), ['class' => 'btn-group']);
 			}
@@ -221,7 +222,7 @@ class ActionButtons extends Widget
 				'label' => Icons::p('trash-o') . \Yii::t('yz/admin','Delete Checked'),
 				'encodeLabel' => false,
 				'options' => [
-					'href' => Html::url($url),
+					'href' => Url::to($url),
 					'class' => 'btn btn-danger',
 					'id' => 'action-button-delete-checked',
 					'data-grid' => $this->gridId,
@@ -252,7 +253,7 @@ class ActionButtons extends Widget
 				'label' => Icons::p('list') . \Yii::t('yz/admin','List'),
 				'encodeLabel' => false,
 				'options' => [
-					'href' => Html::url($url),
+					'href' => Url::to($url),
 					'class' => 'btn btn-info',
 				],
 			]);
@@ -280,7 +281,7 @@ class ActionButtons extends Widget
 				'label' => Icons::p('pencil') . \Yii::t('yz/admin','Edit'),
 				'encodeLabel' => false,
 				'options' => [
-					'href' => Html::url($url),
+					'href' => Url::to($url),
 					'class' => 'btn btn-success',
 				],
 			]);
