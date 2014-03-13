@@ -5,6 +5,7 @@ namespace yz\admin\controllers\backend;
 use yii\helpers\ArrayHelper;
 use yz\admin\components\BackendController;
 use yz\admin\forms\LoginForm;
+use yii\helpers\Url;
 
 /**
  * Class MainController
@@ -18,7 +19,7 @@ class MainController extends BackendController
 
         $model = new LoginForm();
         if($model->load($_POST) && $model->login()) {
-            return $this->goBack($this->createUrl('index'));
+            return $this->goBack(Url::toRoute('index'));
         } else {
             return $this->render('login',[
                 'loginForm' => $model,

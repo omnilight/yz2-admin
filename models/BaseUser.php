@@ -120,7 +120,20 @@ class BaseUser extends \yz\db\ActiveRecord implements IdentityInterface
 		return static::find($id);
     }
 
-    /**
+	/**
+	 * Finds an identity by the given secrete token.
+	 * @param string $token the secrete token
+	 * @return IdentityInterface the identity object that matches the given token.
+	 * Null should be returned if such an identity cannot be found
+	 * or the identity is not in an active state (disabled, deleted, etc.)
+	 */
+	public static function findIdentityByAccessToken($token)
+	{
+		return null;
+	}
+
+
+	/**
      * @inheritdoc
      */
     public function getId()
