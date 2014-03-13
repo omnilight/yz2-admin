@@ -6,6 +6,9 @@ use yii\web\AssetBundle;
 
 class MainMenuAsset extends AssetBundle
 {
+	public $publishOptions = [
+		'forceCopy' => true,
+	];
 	/**
 	 * @inheritdoc
 	 */

@@ -15,7 +15,7 @@ class MainController extends BackendController
 {
     public function actionLogin()
     {
-        $this->layout = '@yz/admin/views/layouts/base';
+        $this->layout = '@yz/admin/views/backend/layouts/base';
 
         $model = new LoginForm();
         if($model->load($_POST) && $model->login()) {

@@ -15,7 +15,13 @@ use yz\icons\Icons;
 
 		<?php $form = ActiveForm::begin([
 			'id' => 'login-form',
-			'type' => ActiveForm::TYPE_INLINE,
+			'type' => ActiveForm::TYPE_HORIZONTAL,
+			'fieldConfig' => [
+				'horizontal' => [
+					'label' => 'col-sm-3',
+					'input' => 'col-sm-7'
+				]
+			]
 		]) ?>
 
 		<?= $form->errorSummary([$loginForm]); ?>

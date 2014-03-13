@@ -15,7 +15,7 @@ use yz\controllers\Controller;
  */
 class BackendController extends Controller
 {
-    public $layout = '@yz/admin/views/layouts/main';
+    public $layout = '@yz/admin/views/backend/layouts/main';
 
     public function behaviors()
     {

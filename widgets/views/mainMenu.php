@@ -7,11 +7,11 @@ use yii\helpers\Html;
 /** @var \yz\admin\widgets\MainMenu $context  */
 $context = $this->context;
 ?>
-<ul class="b-mainMenu nav nav-pills nav-stacked">
+<ul class="b-mainMenu nav nav-bar">
     <?php foreach ($menuItems as $group): ?>
-        <li><?= (isset($group['icon'])?$group['icon']->ac('fa-fw fa-lg').' ':'') . Html::encode($group['label']); ?></li>
+        <li class="group"><?= (isset($group['icon'])?$group['icon']->ac('fa-fw fa-lg').' ':'') . Html::encode($group['label']); ?></li>
         <?php foreach ($group['items'] as $item): ?>
-            <li><?= Html::a((isset($item['icon'])?$item['icon']->ac('fa-fw').' ':'') . $item['label'], $item['route']) ?></li>
+            <li class="item"><?= Html::a((isset($item['icon'])?$item['icon']->ac('fa-fw').' ':'') . $item['label'], $item['route']) ?></li>
         <?php endforeach ?>
     <?php endforeach; ?>
 </ul>
