@@ -1,6 +1,6 @@
 <?php
 
-namespace yz\admin\controllers\backend;
+namespace yz\admin\controllers;
 
 use yz\admin\models\User;
 use yz\admin\models\search\UserSearch;

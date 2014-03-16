@@ -1,6 +1,6 @@
 <?php
 
-namespace yz\admin\controllers\backend;
+namespace yz\admin\controllers;
 
 use yii\helpers\ArrayHelper;
 use yz\admin\components\BackendController;

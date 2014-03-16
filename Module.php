@@ -10,20 +10,14 @@ use yz\icons\Icons;
  */
 class Module extends \yz\Module
 {
-    public $adminMenuOrder = 9999;
+	public $adminMenuOrder = 9999;
+
+	public $defaultRoute = 'admin/main/index';
 
 	/**
 	 * @var string Name of the GET variable used to create links to backpage
 	 */
 	public $returnUrlVar = '__returnUrl';
-
-    public function init()
-    {
-        if(YZ_APP_TYPE_BACKEND) {
-            $this->defaultRoute = 'admin/main/index';
-        }
-        parent::init();
-    }
 
 	/**
 	 * @inheritdoc
@@ -38,7 +32,7 @@ class Module extends \yz\Module
 	 */
 	public function getName()
 	{
-		return \Yii::t('yz/admin','Administration module');
+		return \Yii::t('yz/admin', 'Administration module');
 	}
 
 	/**
@@ -46,7 +40,7 @@ class Module extends \yz\Module
 	 */
 	public function getDescription()
 	{
-		return \Yii::t('yz/admin','Provides administration panel functionality with backend user management');
+		return \Yii::t('yz/admin', 'Provides administration panel functionality with backend user management');
 	}
 
 	/**
@@ -58,42 +52,34 @@ class Module extends \yz\Module
 	}
 
 	/**
-     * @inheritdoc
-     */
-    public function getRoutes()
-    {
-        switch(true) {
-            default:
-            case YZ_APP_TYPE_FRONTEND:
-                return [];
-            case YZ_APP_TYPE_BACKEND:
-                return [
-                    'prepend' => [
-                        // This is worked in backend
-                        '' => 'admin/main/index',
-                        'login' => 'admin/main/login',
-                        'logout' => 'admin/main/logout',
-                    ]
-                ];
-            case YZ_APP_TYPE_CONSOLE:
-                return [];
-        }
-    }
+	 * @inheritdoc
+	 */
+	public function getRoutes()
+	{
+		return [
+			'prepend' => [
+				// This is worked in backend
+				'' => 'admin/main/index',
+				'login' => 'admin/main/login',
+				'logout' => 'admin/main/logout',
+			]
+		];
+	}
 
 	public function getAdminMenu()
 	{
 		return [
 			[
-				'label' => \Yii::t('yz/admin','Administrators'),
+				'label' => \Yii::t('yz/admin', 'Administrators'),
 				'icon' => Icons::o('users'),
 				'items' => [
 					[
-						'label' => \Yii::t('yz/admin','List'),
+						'label' => \Yii::t('yz/admin', 'List'),
 						'icon' => Icons::o('users'),
 						'route' => ['/admin/users/index'],
 					],
 					[
-						'label' => \Yii::t('yz/admin','Groups'),
+						'label' => \Yii::t('yz/admin', 'Groups'),
 						'route' => ['/admin/groups/index'],
 					]
 				]
