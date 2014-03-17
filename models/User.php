@@ -2,6 +2,7 @@
 
 namespace yz\admin\models;
 
+use yii\base\NotSupportedException;
 use yii\db\ActiveQuery;
 use yii\helpers\Security;
 use yii\web\IdentityInterface;
@@ -129,7 +130,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token)
     {
-        return null;
+        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
 
