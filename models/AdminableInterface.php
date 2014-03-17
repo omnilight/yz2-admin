@@ -19,11 +19,13 @@ interface AdminableInterface
      * @return string
      */
     public static function modelTitle();
+
     /**
      * Returns plural form of the model title, ex.: 'Persons', 'Books'
      * @return string
      */
     public static function modelTitlePlural();
+
     /**
      * Returns attributes values, ex.:
      * ~~~

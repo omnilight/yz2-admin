@@ -3,9 +3,9 @@
 namespace yz\admin\controllers;
 
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yz\admin\components\BackendController;
 use yz\admin\forms\LoginForm;
-use yii\helpers\Url;
 
 /**
  * Class MainController
@@ -18,10 +18,10 @@ class MainController extends BackendController
         $this->layout = '@yz/admin/views/backend/layouts/base';
 
         $model = new LoginForm();
-        if($model->load($_POST) && $model->login()) {
+        if ($model->load($_POST) && $model->login()) {
             return $this->goBack(Url::toRoute('index'));
         } else {
-            return $this->render('login',[
+            return $this->render('login', [
                 'loginForm' => $model,
             ]);
         }
@@ -51,10 +51,10 @@ class MainController extends BackendController
             ],
             [
                 'allow' => true,
-                'actions' => ['index','logout','accessDenied'],
+                'actions' => ['index', 'logout', 'accessDenied'],
                 'roles' => ['@'],
             ]
-        ],parent::getAccessRules());
+        ], parent::getAccessRules());
     }
 
 

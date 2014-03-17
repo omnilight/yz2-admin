@@ -22,27 +22,27 @@ class LoginForm extends Model
         ];
     }
 
-	public function attributeLabels()
-	{
-		return [
-			'login' => \Yii::t('yz/admin','Login'),
-			'password' => \Yii::t('yz/admin','Password'),
-		];
-	}
+    public function attributeLabels()
+    {
+        return [
+            'login' => \Yii::t('yz/admin', 'Login'),
+            'password' => \Yii::t('yz/admin', 'Password'),
+        ];
+    }
 
 
-	public function validatePassword()
+    public function validatePassword()
     {
         /** @var User $user */
         $user = User::findByLogin($this->login)->one();
-		if(!$user || !$user->validatePassword($this->password)) {
-			$this->addError('password', \Yii::t('yz/admin','Incorrect login or password'));
-		}
+        if (!$user || !$user->validatePassword($this->password)) {
+            $this->addError('password', \Yii::t('yz/admin', 'Incorrect login or password'));
+        }
     }
 
     public function login()
     {
-        if($this->validate()) {
+        if ($this->validate()) {
             $user = User::findByLogin($this->login)->one();
             \Yii::$app->user->login($user);
             return true;

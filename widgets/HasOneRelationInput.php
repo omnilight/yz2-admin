@@ -1,6 +1,7 @@
 <?php
 
 namespace yz\admin\widgets;
+
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
@@ -21,11 +22,11 @@ class HasOneRelationInput extends InputWidget
     {
         parent::init();
 
-        if($this->hasModel() == false) {
+        if ($this->hasModel() == false) {
             throw new InvalidConfigException('This widget can be used only with $model parameter passed');
         }
 
-        if(!($this->model instanceof AdminableInterface)) {
+        if (!($this->model instanceof AdminableInterface)) {
             throw new Exception('Model must implement AdminableInterface');
         }
     }
@@ -36,12 +37,12 @@ class HasOneRelationInput extends InputWidget
         $model = $this->model;
         $relation = $model->getRelation($this->attribute);
 
-        if($this->items) {
+        if ($this->items) {
             $items = $this->items;
         } else {
             /** @var ActiveQuery $query */
             $query = call_user_func($relation->modelClass, 'find');
-            if($query instanceof ActiveQuery) {
+            if ($query instanceof ActiveQuery) {
                 $items = $query->asMap()->all();
             } else {
                 throw new Exception('You can use HasOneRelationWidget only with models that has yz\db\ActiveQuery children');
