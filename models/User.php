@@ -3,9 +3,12 @@
 namespace yz\admin\models;
 
 use yii\base\NotSupportedException;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
+use yii\db\Expression;
 use yii\helpers\Security;
 use yii\web\IdentityInterface;
+use yz\db\ActiveRecord;
 
 /**
  * Class BaseUser implements admin panel user
@@ -48,6 +51,21 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface
     {
         return \Yii::t('yz/admin', 'Administrators');
     }
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at','updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => function($event) { return new Expression('NOW()'); }
+            ]
+        ];
+    }
+
 
     /**
      * @inheritdoc
@@ -124,6 +142,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface
     /**
      * Finds an identity by the given secrete token.
      * @param string $token the secrete token
+     * @throws \yii\base\NotSupportedException
      * @return IdentityInterface the identity object that matches the given token.
      * Null should be returned if such an identity cannot be found
      * or the identity is not in an active state (disabled, deleted, etc.)
