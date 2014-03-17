@@ -74,7 +74,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['is_super_admin', 'is_active'], 'boolean'],
-            [['login_time', 'create_time', 'update_time'], 'safe'],
+            [['logged_at', 'created_at', 'updated_at'], 'safe'],
             [['login'], 'string', 'max' => 32],
             [['passhash', 'auth_key', 'email'], 'string', 'max' => 255],
             [['name'], 'string', 'max' => 64]
