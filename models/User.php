@@ -77,6 +77,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface
             [['logged_at', 'created_at', 'updated_at'], 'safe'],
             [['login'], 'string', 'max' => 32],
             [['passhash', 'auth_key', 'email'], 'string', 'max' => 255],
+            [['email'], 'email'],
             [['name'], 'string', 'max' => 64]
         ];
     }
