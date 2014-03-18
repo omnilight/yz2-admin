@@ -52,14 +52,14 @@ class ChangeUserPasswordForm extends Model
     public function myOldPasswordValidator()
     {
         if ($this->_user->validatePassword($this->oldPassword) == false)
-            $this->addError('oldPassword',Yii::t('yz/admin','Old password is incorrect'));
+            $this->addError('oldPassword',Yii::t('admin/t','Old password is incorrect'));
     }
 
     public function attributeLabels()
     {
         return [
-            'password' => \Yii::t('yz/admin','Password'),
-            'passwordRepeat' => \Yii::t('yz/admin','Repeat Password'),
+            'password' => \Yii::t('admin/t','Password'),
+            'passwordRepeat' => \Yii::t('admin/t','Repeat Password'),
         ];
     }
 

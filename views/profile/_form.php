@@ -11,7 +11,7 @@ use yz\admin\widgets\ActiveForm;
  */
 ?>
 
-<div class="user-form crud-form">
+<div class="profile-form crud-form">
 
     <?php $form = ActiveForm::begin([
         'enableAjaxValidation' => true,
@@ -22,10 +22,6 @@ use yz\admin\widgets\ActiveForm;
     <?= $form->field($model, 'login')->textInput(['maxlength' => 32]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
-
-    <?= $form->field($model, 'is_super_admin')->checkbox() ?>
-
-    <?= $form->field($model, 'is_active')->checkbox() ?>
 
     <?php if ($model->isNewRecord): ?>
         <?= $form->field($model, 'password')->passwordInput() ?>
@@ -55,6 +51,8 @@ use yz\admin\widgets\ActiveForm;
         <?php $form = ActiveForm::begin([
             'enableAjaxValidation' => false,
         ]); ?>
+
+        <?= $form->field($passwordForm, 'oldPassword')->passwordInput() ?>
 
         <?= $form->field($passwordForm, 'password')->passwordInput() ?>
 

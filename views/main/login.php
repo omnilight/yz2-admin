@@ -11,7 +11,7 @@ use yz\icons\Icons;
 ?>
 <div class="container">
 	<div class="b-login">
-		<h1><?= Yii::t('yz/admin', 'Administration panel'); ?></h1>
+		<h1><?= Yii::t('admin/t', 'Administration panel'); ?></h1>
 
 		<?php $form = ActiveForm::begin([
 			'id' => 'login-form',
@@ -30,7 +30,7 @@ use yz\icons\Icons;
 
 		<?= $form->field($loginForm, 'password')->passwordInput(); ?>
 
-		<?= Html::submitButton(Icons::p('unlock-alt') . Yii::t('yz/admin', 'Sign in'), ['class' => 'btn btn-success']); ?>
+		<?= Html::submitButton(Icons::p('unlock-alt') . Yii::t('admin/t', 'Sign in'), ['class' => 'btn btn-success']); ?>
 
 		<?php ActiveForm::end() ?>
 	</div>

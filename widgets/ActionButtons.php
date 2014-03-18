@@ -136,7 +136,7 @@ class ActionButtons extends Widget
             if (AdminHelper::getReturnUrl() !== null) {
                 $this->_returnButton = Button::widget([
                     'tagName' => 'a',
-                    'label' => Icons::p('angle-left') . \Yii::t('yz/admin', 'Go Back'),
+                    'label' => Icons::p('angle-left') . \Yii::t('admin/t', 'Go Back'),
                     'encodeLabel' => false,
                     'options' => [
                         'href' => AdminHelper::getReturnUrl(),
@@ -170,7 +170,7 @@ class ActionButtons extends Widget
             if ($attributes == []) {
                 $this->_createButton = Button::widget([
                     'tagName' => 'a',
-                    'label' => Icons::p('plus') . \Yii::t('yz/admin', 'Create'),
+                    'label' => Icons::p('plus') . \Yii::t('admin/t', 'Create'),
                     'encodeLabel' => false,
                     'options' => [
                         'href' => Url::to($url),
@@ -180,14 +180,14 @@ class ActionButtons extends Widget
             } else {
                 $this->_createButton = Html::tag('div', ButtonDropdown::widget([
                     'tagName' => 'a',
-                    'label' => Icons::p('plus') . \Yii::t('yz/admin', 'Create'),
+                    'label' => Icons::p('plus') . \Yii::t('admin/t', 'Create'),
                     'encodeLabel' => false,
                     'split' => true,
                     'dropdown' => [
                         'encodeLabels' => false,
                         'items' => [
                             [
-                                'label' => Icons::p('plus') . \Yii::t('yz/admin', 'Create with default parameters'),
+                                'label' => Icons::p('plus') . \Yii::t('admin/t', 'Create with default parameters'),
                                 'url' => Url::to($url),
                             ]
                         ]
@@ -219,14 +219,14 @@ class ActionButtons extends Widget
             $url = $this->deleteUrl + ($this->addReturnUrl ? AdminHelper::returnUrlRoute() : []);
             $this->_deleteButton = Button::widget([
                 'tagName' => 'a',
-                'label' => Icons::p('trash-o') . \Yii::t('yz/admin', 'Delete Checked'),
+                'label' => Icons::p('trash-o') . \Yii::t('admin/t', 'Delete Checked'),
                 'encodeLabel' => false,
                 'options' => [
                     'href' => Url::to($url),
                     'class' => 'btn btn-danger',
                     'id' => 'action-button-delete-checked',
                     'data-grid' => $this->gridId,
-                    'data-confirm' => \Yii::t('yz/admin', 'Are you sure to delete this items?')
+                    'data-confirm' => \Yii::t('admin/t', 'Are you sure to delete this items?')
                 ],
             ]);
         }
@@ -250,7 +250,7 @@ class ActionButtons extends Widget
             $url = $this->indexUrl + ($this->addReturnUrl ? AdminHelper::returnUrlRoute() : []);
             $this->_indexButton = Button::widget([
                 'tagName' => 'a',
-                'label' => Icons::p('list') . \Yii::t('yz/admin', 'List'),
+                'label' => Icons::p('list') . \Yii::t('admin/t', 'List'),
                 'encodeLabel' => false,
                 'options' => [
                     'href' => Url::to($url),
@@ -278,7 +278,7 @@ class ActionButtons extends Widget
             $url = $this->updateUrl + ($this->addReturnUrl ? AdminHelper::returnUrlRoute() : []);
             $this->_updateButton = Button::widget([
                 'tagName' => 'a',
-                'label' => Icons::p('pencil') . \Yii::t('yz/admin', 'Edit'),
+                'label' => Icons::p('pencil') . \Yii::t('admin/t', 'Edit'),
                 'encodeLabel' => false,
                 'options' => [
                     'href' => Url::to($url),
@@ -304,7 +304,7 @@ class ActionButtons extends Widget
     {
         if ($this->_searchButton === null) {
             $this->_searchButton = Button::widget([
-                'label' => Icons::p('search-plus') . \Yii::t('yz/admin', 'Search'),
+                'label' => Icons::p('search-plus') . \Yii::t('admin/t', 'Search'),
                 'encodeLabel' => false,
                 'options' => [
                     'class' => 'btn btn-default',

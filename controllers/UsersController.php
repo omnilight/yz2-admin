@@ -11,6 +11,7 @@ use Yii;
 use yz\admin\forms\ChangeUserPasswordForm;
 use yz\admin\models\search\UserSearch;
 use yz\admin\models\User;
+use yz\admin\models\UserCreate;
 use yz\widgets\ActiveForm;
 
 /**
@@ -53,7 +54,7 @@ class UsersController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User;
+        $model = new UserCreate;
 
         if (\Yii::$app->request->isAjax) {
             \Yii::$app->response->format = Response::FORMAT_JSON;
@@ -62,7 +63,7 @@ class UsersController extends Controller
         }
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('yz/admin', 'Record was successfully created'));
+            \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully created'));
             return $this->getCreateUpdateResponse($model);
         } else {
             return $this->render('create', [
@@ -81,6 +82,7 @@ class UsersController extends Controller
     {
         $model = $this->findModel($id);
         $passwordForm = new ChangeUserPasswordForm($model);
+        $passwordForm->askOldPassword = false;
 
         if (\Yii::$app->request->isAjax) {
             \Yii::$app->response->format = Response::FORMAT_JSON;
@@ -89,9 +91,11 @@ class UsersController extends Controller
         }
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('yz/admin', 'Record was successfully updated'));
+            \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully updated'));
             return $this->getCreateUpdateResponse($model);
-        } elseif ($passwordForm->load(\Yii::$app->request->post())) {
+        } elseif ($passwordForm->load(\Yii::$app->request->post()) && $passwordForm->process()) {
+            \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Password was successfully changed'));
+            return $this->getCreateUpdateResponse($model);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -109,7 +113,7 @@ class UsersController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-        \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('yz/admin', 'Record was successfully deleted'));
+        \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully deleted'));
         return $this->redirect(['index']);
     }
 

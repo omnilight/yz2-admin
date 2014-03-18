@@ -25,8 +25,8 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'login' => \Yii::t('yz/admin', 'Login'),
-            'password' => \Yii::t('yz/admin', 'Password'),
+            'login' => \Yii::t('admin/t', 'Login'),
+            'password' => \Yii::t('admin/t', 'Password'),
         ];
     }
 
@@ -36,7 +36,7 @@ class LoginForm extends Model
         /** @var User $user */
         $user = User::findByLogin($this->login)->one();
         if (!$user || !$user->validatePassword($this->password)) {
-            $this->addError('password', \Yii::t('yz/admin', 'Incorrect login or password'));
+            $this->addError('password', \Yii::t('admin/t', 'Incorrect login or password'));
         }
     }
 

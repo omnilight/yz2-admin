@@ -15,7 +15,7 @@ use yz\icons\Icons;
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand"
-				   href="<?= Yii::$app->homeUrl ?>"><?= Yii::t('yz/admin', 'Administration panel') ?></a>
+				   href="<?= Yii::$app->homeUrl ?>"><?= Yii::t('admin/t', 'Administration panel') ?></a>
 			</div>
 
 			<?php echo Nav::widget([
@@ -25,8 +25,8 @@ use yz\icons\Icons;
 					[
 						'label' => Icons::p('user fa-fw') . Html::encode(Yii::$app->user->identity->name),
 						'items' => [
-							['label' => Icons::p('user fa-fw') . Yii::t('yz/admin', 'Your profile'), 'url' => ['/admin/users/profile']],
-							['label' => Icons::p('power-off fa-fw') . Yii::t('yz/admin', 'Logout'), 'url' => ['/admin/main/logout']],
+							['label' => Icons::p('user fa-fw') . Yii::t('admin/t', 'Your profile'), 'url' => ['/admin/profile/index']],
+							['label' => Icons::p('power-off fa-fw') . Yii::t('admin/t', 'Logout'), 'url' => ['/admin/main/logout']],
 						]
 					]
 				]

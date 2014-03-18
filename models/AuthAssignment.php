@@ -31,7 +31,7 @@ class AuthAssignment extends \yz\db\ActiveRecord implements ModelInfoInterface
      */
     public static function modelTitle()
     {
-        return \Yii::t('yz/admin', 'Auth Assignment');
+        return \Yii::t('admin/t', 'Auth Assignment');
     }
 
     /**
@@ -40,7 +40,7 @@ class AuthAssignment extends \yz\db\ActiveRecord implements ModelInfoInterface
      */
     public static function modelTitlePlural()
     {
-        return \Yii::t('yz/admin', 'Auth Assignments');
+        return \Yii::t('admin/t', 'Auth Assignments');
     }
 
 	/**
@@ -61,12 +61,12 @@ class AuthAssignment extends \yz\db\ActiveRecord implements ModelInfoInterface
 	public function attributeLabels()
 	{
 		return [
-			'item_name' => \Yii::t('yz/admin','Item Name'),
-			'user_id' => \Yii::t('yz/admin','User ID'),
-			'biz_rule' => \Yii::t('yz/admin','Biz Rule'),
-			'data' => \Yii::t('yz/admin','Data'),
-			'user' => \Yii::t('yz/admin','User'),
-			'itemName' => \Yii::t('yz/admin','Item Name'),
+			'item_name' => \Yii::t('admin/t','Item Name'),
+			'user_id' => \Yii::t('admin/t','User ID'),
+			'biz_rule' => \Yii::t('admin/t','Biz Rule'),
+			'data' => \Yii::t('admin/t','Data'),
+			'user' => \Yii::t('admin/t','User'),
+			'itemName' => \Yii::t('admin/t','Item Name'),
 		];
 	}
 

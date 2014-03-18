@@ -41,7 +41,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
      */
     public static function modelTitle()
     {
-        return \Yii::t('yz/admin', 'Administrator');
+        return \Yii::t('admin/t', 'Administrator');
     }
 
     /**
@@ -50,7 +50,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
      */
     public static function modelTitlePlural()
     {
-        return \Yii::t('yz/admin', 'Administrators');
+        return \Yii::t('admin/t', 'Administrators');
     }
 
     public function behaviors()
@@ -74,6 +74,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     public function rules()
     {
         return [
+            [['login','email','name'], 'required'],
             [['is_super_admin', 'is_active'], 'boolean'],
             [['logged_at', 'created_at', 'updated_at'], 'safe'],
             [['login'], 'string', 'max' => 32],
@@ -89,19 +90,19 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     public function attributeLabels()
     {
         return [
-            'id' => \Yii::t('yz/admin', 'ID'),
-            'login' => \Yii::t('yz/admin', 'Login'),
-            'passhash' => \Yii::t('yz/admin', 'Passhash'),
-            'auth_key' => \Yii::t('yz/admin', 'Auth Key'),
-            'is_super_admin' => \Yii::t('yz/admin', 'Is Super Admin'),
-            'is_active' => \Yii::t('yz/admin', 'Is Active'),
-            'name' => \Yii::t('yz/admin', 'Name'),
-            'email' => \Yii::t('yz/admin', 'Email'),
-            'login_time' => \Yii::t('yz/admin', 'Login Time'),
-            'created_at' => \Yii::t('yz/admin', 'Create Time'),
-            'updated_at' => \Yii::t('yz/admin', 'Update Time'),
-            'adminAuthAssignment' => \Yii::t('yz/admin', 'Admin Auth Assignment'),
-            'itemNames' => \Yii::t('yz/admin', 'Item Names'),
+            'id' => \Yii::t('admin/t', 'ID'),
+            'login' => \Yii::t('admin/t', 'Login'),
+            'passhash' => \Yii::t('admin/t', 'Passhash'),
+            'auth_key' => \Yii::t('admin/t', 'Auth Key'),
+            'is_super_admin' => \Yii::t('admin/t', 'Is Super Admin'),
+            'is_active' => \Yii::t('admin/t', 'Is Active'),
+            'name' => \Yii::t('admin/t', 'Name'),
+            'email' => \Yii::t('admin/t', 'Email'),
+            'login_time' => \Yii::t('admin/t', 'Login Time'),
+            'created_at' => \Yii::t('admin/t', 'Create Time'),
+            'updated_at' => \Yii::t('admin/t', 'Update Time'),
+            'adminAuthAssignment' => \Yii::t('admin/t', 'Admin Auth Assignment'),
+            'itemNames' => \Yii::t('admin/t', 'Item Names'),
         ];
     }
 

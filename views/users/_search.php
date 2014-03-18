@@ -28,9 +28,9 @@ use yz\admin\widgets\ActiveForm;
 
 		<?= $form->field($model, 'auth_key') ?>
 
-		<?= $form->field($model, 'is_super_admin')->radioList(['' => \Yii::t('yz/admin','All records'), '1' => \Yii::t('yz/admin','Yes'), '0' => \Yii::t('yz/admin','No')]) ?>
+		<?= $form->field($model, 'is_super_admin')->radioList(['' => \Yii::t('admin/t','All records'), '1' => \Yii::t('admin/t','Yes'), '0' => \Yii::t('admin/t','No')]) ?>
 
-		<?php // echo $form->field($model, 'is_active')->radioList(['' => \Yii::t('yz/admin','All records'), '1' => \Yii::t('yz/admin','Yes'), '0' => \Yii::t('yz/admin','No')]) ?>
+		<?php // echo $form->field($model, 'is_active')->radioList(['' => \Yii::t('admin/t','All records'), '1' => \Yii::t('admin/t','Yes'), '0' => \Yii::t('admin/t','No')]) ?>
 
 		<?php // echo $form->field($model, 'name') ?>
 
@@ -44,7 +44,7 @@ use yz\admin\widgets\ActiveForm;
 
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-sm-5">
-				<?= Html::submitButton(\Yii::t('yz/admin','Search'), ['class' => 'btn btn-primary']) ?>
+				<?= Html::submitButton(\Yii::t('admin/t','Search'), ['class' => 'btn btn-primary']) ?>
 			</div>
 		</div>
 

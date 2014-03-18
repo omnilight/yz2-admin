@@ -32,7 +32,7 @@ class Module extends \yz\Module
      */
     public function getName()
     {
-        return \Yii::t('yz/admin', 'Administration module');
+        return \Yii::t('admin/t', 'Administration module');
     }
 
     /**
@@ -40,7 +40,7 @@ class Module extends \yz\Module
      */
     public function getDescription()
     {
-        return \Yii::t('yz/admin', 'Provides administration panel functionality with backend user management');
+        return \Yii::t('admin/t', 'Provides administration panel functionality with backend user management');
     }
 
     /**
@@ -58,10 +58,10 @@ class Module extends \yz\Module
     {
         return [
             'prepend' => [
-                // This is worked in backend
                 '' => 'admin/main/index',
                 'login' => 'admin/main/login',
                 'logout' => 'admin/main/logout',
+                'profile' => 'admin/profile/index',
             ]
         ];
     }
@@ -70,20 +70,31 @@ class Module extends \yz\Module
     {
         return [
             [
-                'label' => \Yii::t('yz/admin', 'Administrators'),
+                'label' => \Yii::t('admin/menu', 'Administrators'),
                 'icon' => Icons::o('user'),
                 'items' => [
                     [
-                        'label' => \Yii::t('yz/admin', 'List'),
+                        'label' => \Yii::t('admin/menu', 'List'),
                         'icon' => Icons::o('list'),
                         'route' => ['/admin/users/index'],
                     ],
                     [
-                        'label' => \Yii::t('yz/admin', 'Groups'),
+                        'label' => \Yii::t('admin/menu', 'Groups'),
                         'icon' => Icons::o('list'),
                         'route' => ['/admin/groups/index'],
                     ]
-                ]
+                ],
+            ],
+            [
+                'label' => \Yii::t('admin/menu', 'System'),
+                'icon' => Icons::o('gear'),
+                'items' => [
+                    [
+                        'label' => \Yii::t('admin/menu', 'Information'),
+                        'icon' => Icons::o('info'),
+                        'route' => ['/admin/general/info'],
+                    ],
+                ],
             ]
         ];
     }

@@ -29,7 +29,7 @@ class AuthItemChild extends \yz\db\ActiveRecord implements ModelInfoInterface
      */
     public static function modelTitle()
     {
-        return \Yii::t('yz/admin', 'Auth Item Child');
+        return \Yii::t('admin/t', 'Auth Item Child');
     }
 
     /**
@@ -38,7 +38,7 @@ class AuthItemChild extends \yz\db\ActiveRecord implements ModelInfoInterface
      */
     public static function modelTitlePlural()
     {
-        return \Yii::t('yz/admin', 'Auth Item Children');
+        return \Yii::t('admin/t', 'Auth Item Children');
     }
 
 	/**
@@ -57,10 +57,10 @@ class AuthItemChild extends \yz\db\ActiveRecord implements ModelInfoInterface
 	public function attributeLabels()
 	{
 		return [
-			'parent' => \Yii::t('yz/admin','Parent'),
-			'child' => \Yii::t('yz/admin','Child'),
-			'childRecord' => \Yii::t('yz/admin','Child'),
-			'parentRecord' => \Yii::t('yz/admin','Parent'),
+			'parent' => \Yii::t('admin/t','Parent'),
+			'child' => \Yii::t('admin/t','Child'),
+			'childRecord' => \Yii::t('admin/t','Child'),
+			'parentRecord' => \Yii::t('admin/t','Parent'),
 		];
 	}
 

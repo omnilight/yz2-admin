@@ -9,7 +9,7 @@ use yz\admin\widgets\ActionButtons;
  * @var \yz\admin\forms\ChangeUserPasswordForm $passwordForm
  */
 
-$this->title = \Yii::t('yz/admin','Update {item}: {title}', [
+$this->title = \Yii::t('admin/t','Update object "{item}": {title}', [
 	'item' => \yz\admin\models\User::modelTitle(),
 	'title' => $model->name,
 ]);

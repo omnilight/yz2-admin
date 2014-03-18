@@ -25,7 +25,7 @@ class ActionColumn extends \yii\grid\ActionColumn
         if (!isset($this->buttons['view'])) {
             $this->buttons['view'] = function ($url, $model) {
                 return Html::a(Icons::i('eye fa-lg'), $url, [
-                    'title' => Yii::t('yz/admin', 'View'),
+                    'title' => Yii::t('admin/t', 'View'),
                     'class' => 'btn btn-info btn-sm',
                 ]);
             };
@@ -33,7 +33,7 @@ class ActionColumn extends \yii\grid\ActionColumn
         if (!isset($this->buttons['update'])) {
             $this->buttons['update'] = function ($url, $model) {
                 return Html::a(Icons::i('pencil-square-o fa-lg'), $url, [
-                    'title' => Yii::t('yz/admin', 'Update'),
+                    'title' => Yii::t('admin/t', 'Update'),
                     'class' => 'btn btn-success btn-sm',
                 ]);
             };
@@ -41,8 +41,8 @@ class ActionColumn extends \yii\grid\ActionColumn
         if (!isset($this->buttons['delete'])) {
             $this->buttons['delete'] = function ($url, $model) {
                 return Html::a(Icons::i('trash-o fa-lg'), $url, [
-                    'title' => Yii::t('yz/admin', 'Delete'),
-                    'data-confirm' => Yii::t('yz/admin', 'Are you sure to delete this item?'),
+                    'title' => Yii::t('admin/t', 'Delete'),
+                    'data-confirm' => Yii::t('admin/t', 'Are you sure to delete this item?'),
                     'data-method' => 'post',
                     'class' => 'btn btn-danger btn-sm',
                 ]);
