@@ -5,7 +5,7 @@ namespace yz\admin\components;
 use yii\base\Action;
 use yii\web\AccessControl;
 use yii\web\AccessRule;
-use yz\controllers\Controller;
+use yii\web\Controller;
 
 
 /**
