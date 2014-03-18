@@ -15,7 +15,7 @@ Icons::register($this);
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?= Yii::t('yz/admin','Administration panel'); ?></title>
+    <title><?= Yii::t('backend','Administration panel'); ?></title>
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php $this->head(); ?>

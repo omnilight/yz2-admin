@@ -2,17 +2,17 @@
 
 namespace yz\admin\controllers;
 
+use backend\base\Controller;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\VerbFilter;
-use yz\admin\components\BackendController;
 use yz\admin\models\search\UserSearch;
 use yz\admin\models\User;
 
 /**
  * UsersController implements the CRUD actions for User model.
  */
-class UsersController extends BackendController
+class UsersController extends Controller
 {
     public function behaviors()
     {

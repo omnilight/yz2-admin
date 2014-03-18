@@ -15,7 +15,7 @@ use yz\icons\Icons;
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand"
-				   href="<?= Yii::$app->homeUrl ?>"><?= Yii::t('yz/admin', 'Administration panel') ?></a>
+				   href="<?= Yii::$app->homeUrl ?>"><?= Yii::t('backend', 'Administration panel') ?></a>
 			</div>
 
 			<?php echo Nav::widget([

@@ -2,20 +2,20 @@
 
 namespace yz\admin\controllers;
 
+use backend\base\Controller;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-use yz\admin\components\BackendController;
 use yz\admin\forms\LoginForm;
 
 /**
  * Class MainController
  * @package yz\admin\controllers\backend
  */
-class MainController extends BackendController
+class MainController extends Controller
 {
     public function actionLogin()
     {
-        $this->layout = '@yz/admin/views/backend/layouts/base';
+        $this->layout = '@yz/admin/views/layouts/base';
 
         $model = new LoginForm();
         if ($model->load($_POST) && $model->login()) {
