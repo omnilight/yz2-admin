@@ -6,6 +6,7 @@ use yz\admin\widgets\ActiveForm;
 /**
  * @var yii\web\View $this
  * @var \yz\admin\models\User $model
+ * @var \yz\admin\forms\ChangeUserPasswordForm $passwordForm
  * @var yz\admin\widgets\ActiveForm $form
  */
 ?>
@@ -41,3 +42,28 @@ use yz\admin\widgets\ActiveForm;
 	<?php ActiveForm::end(); ?>
 
 </div>
+
+<?php if ($model->isNewRecord == false): ?>
+<div class="user-form crud-form">
+
+    <h2><?= Yii::t('yz/admin','Change password') ?></h2>
+
+    <?php $form = ActiveForm::begin([
+        'enableAjaxValidation' => false,
+    ]); ?>
+
+    <?= $form->field($passwordForm, 'password')->passwordInput() ?>
+
+    <?= $form->field($passwordForm, 'passwordRepeat')->passwordInput() ?>
+
+    <div class="form-group form-actions">
+        <div class="col-sm-offset-2 col-sm-10">
+            <?= Html::submitButton($model->isNewRecord ? \Yii::t('yz/admin','Create') : \Yii::t('yz/admin','Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'name' => 'action', 'value' => 'save_and_stay']) ?>
+            <?= Html::submitButton($model->isNewRecord ? \Yii::t('yz/admin','Create & Exit') : \Yii::t('yz/admin','Update & Exit'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+</div>
+<?php endif ?>

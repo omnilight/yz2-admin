@@ -49,14 +49,23 @@ body {
   margin-left: 240px;
   background-color: #ffffff;
 }
-.b-content h1 {
+.b-content h1,
+.b-content .h1 {
   font-size: 28px;
+}
+.b-content h2,
+.b-content .h2 {
+  font-size: 20px;
 }
 .b-content .crud-form {
   border-top: 1px solid #d4d4d4;
   padding-top: 15px;
   padding-bottom: 10px;
   background-color: #f9f9f9;
+}
+.b-content .crud-form h2,
+.b-content .crud-form .h2 {
+  margin-left: 25px;
 }
 .b-content .crud-form .required label:after {
   content: " *";

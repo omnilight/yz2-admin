@@ -3,7 +3,7 @@
 namespace yz\admin\forms;
 
 use yii\base\Model;
-use yz\interfaces\User;
+use yz\admin\models\User;
 
 /**
  * Class LoginForm

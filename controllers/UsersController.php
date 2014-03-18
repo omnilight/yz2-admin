@@ -80,7 +80,7 @@ class UsersController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $changePassword = new ChangeUserPasswordForm($model);
+        $passwordForm = new ChangeUserPasswordForm($model);
 
         if (\Yii::$app->request->isAjax) {
             \Yii::$app->response->format = Response::FORMAT_JSON;
@@ -91,11 +91,11 @@ class UsersController extends Controller
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('yz/admin', 'Record was successfully updated'));
             return $this->getCreateUpdateResponse($model);
-        } elseif ($changePassword->load(\Yii::$app->request->post())) {
+        } elseif ($passwordForm->load(\Yii::$app->request->post())) {
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'changePassword' => $changePassword,
+                'passwordForm' => $passwordForm,
             ]);
         }
     }
