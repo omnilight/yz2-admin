@@ -9,6 +9,7 @@ use yii\db\Expression;
 use yii\helpers\Security;
 use yii\web\IdentityInterface;
 use yz\db\ActiveRecord;
+use yz\interfaces\ModelInfoInterface;
 
 /**
  * Class BaseUser implements admin panel user
@@ -25,7 +26,7 @@ use yz\db\ActiveRecord;
  * @property string $updated_at
  * @package yz\admin\models
  */
-class User extends \yz\db\ActiveRecord implements IdentityInterface
+class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoInterface
 {
     const AUTH_KEY_LENGTH = 32;
 

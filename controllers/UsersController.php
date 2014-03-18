@@ -6,8 +6,8 @@ use backend\base\Controller;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\VerbFilter;
-use yz\admin\models\search\UserSearch;
-use yz\admin\models\User;
+use yz\interfaces\search\UserSearch;
+use yz\interfaces\User;
 
 /**
  * UsersController implements the CRUD actions for User model.

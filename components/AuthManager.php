@@ -3,7 +3,7 @@
 namespace yz\admin\components;
 
 use yii\rbac\DbManager;
-use yz\admin\models\User;
+use yz\interfaces\User;
 
 /**
  * Class AuthManager

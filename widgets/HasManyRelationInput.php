@@ -6,8 +6,8 @@ use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\widgets\InputWidget;
-use yz\admin\models\AdminableInterface;
 use yz\db\ActiveQuery;
+use yz\interfaces\ModelInfoInterface;
 
 /**
  * Class HasManyRelationInput
@@ -26,8 +26,8 @@ class HasManyRelationInput extends InputWidget
             throw new InvalidConfigException('This widget can be used only with $model parameter passed');
         }
 
-        if (!($this->model instanceof AdminableInterface)) {
-            throw new Exception('Model must implement AdminableInterface');
+        if (!($this->model instanceof ModelInfoInterface)) {
+            throw new Exception('Model must implement ModelInfoInterface');
         }
     }
 

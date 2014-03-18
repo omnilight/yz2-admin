@@ -1,16 +1,16 @@
 <?php
 
 use yii\helpers\Html;
-use yz\admin\widgets\GridView;
 use yz\admin\widgets\ActionButtons;
+use yz\admin\widgets\GridView;
 
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var yz\admin\models\search\UserSearch $searchModel
+ * @var yz\interfaces\search\UserSearch $searchModel
  */
 
-$this->title = \yz\admin\models\User::modelTitlePlural();
+$this->title = \yz\interfaces\User::modelTitlePlural();
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">

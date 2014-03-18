@@ -4,11 +4,11 @@ namespace yz\admin\widgets;
 
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
-use Yii;
 use yii\db\ActiveRelation;
 use yii\widgets\InputWidget;
-use yz\admin\models\AdminableInterface;
+use Yii;
 use yz\db\ActiveRecord;
+use yz\interfaces\ModelInfoInterface;
 
 /**
  * Class RelationInput
@@ -26,14 +26,14 @@ class RelationInput extends InputWidget
             throw new InvalidConfigException('This widget can be used only with $model parameter passed');
         }
 
-        if (!($this->model instanceof AdminableInterface)) {
-            throw new Exception('Model must implement AdminableInterface');
+        if (!($this->model instanceof ModelInfoInterface)) {
+            throw new Exception('Model must implement ModelInfoInterface');
         }
     }
 
     public function run()
     {
-        /** @var ActiveRecord|AdminableInterface $model */
+        /** @var ActiveRecord|ModelInfoInterface $model */
         $model = $this->model;
         /** @var ActiveRelation $relation */
         $relation = $model->getRelation($this->attribute);

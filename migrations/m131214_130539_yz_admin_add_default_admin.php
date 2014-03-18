@@ -19,7 +19,7 @@ class m131214_130539_yz_admin_add_default_admin extends \yii\db\Migration
             'login' => 'admin',
             'passhash' => \yii\helpers\Security::generatePasswordHash($password),
             'is_super_admin' => 1,
-            'auth_key' => \yii\helpers\Security::generateRandomKey(\yz\admin\models\User::AUTH_KEY_LENGTH),
+            'auth_key' => \yii\helpers\Security::generateRandomKey(\yz\interfaces\User::AUTH_KEY_LENGTH),
             'email' => $email,
             'name' => Yii::t('yz/admin', 'Administrator'),
             'create_time' => new \yii\db\Expression('NOW()'),

@@ -5,11 +5,11 @@ use yz\admin\widgets\ActionButtons;
 
 /**
  * @var yii\web\View $this
- * @var yz\admin\models\User $model
+ * @var yz\interfaces\User $model
  */
 
-$this->title = \Yii::t('yz/admin','Create {item}', ['{item}' => \yz\admin\models\User::modelTitle()]);
-$this->params['breadcrumbs'][] = ['label' => \yz\admin\models\User::modelTitlePlural(), 'url' => ['index']];
+$this->title = \Yii::t('yz/admin','Create {item}', ['{item}' => \yz\interfaces\User::modelTitle()]);
+$this->params['breadcrumbs'][] = ['label' => \yz\interfaces\User::modelTitlePlural(), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-create">
