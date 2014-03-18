@@ -5,7 +5,7 @@ use yz\admin\widgets\ActionButtons;
 
 /**
  * @var yii\web\View $this
- * @var yz\interfaces\User $model
+ * @var \yz\admin\models\User $model
  */
 
 $this->title = \Yii::t('yz/admin','Create {item}', ['{item}' => \yz\interfaces\User::modelTitle()]);

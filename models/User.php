@@ -98,8 +98,8 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
             'name' => \Yii::t('yz/admin', 'Name'),
             'email' => \Yii::t('yz/admin', 'Email'),
             'login_time' => \Yii::t('yz/admin', 'Login Time'),
-            'create_time' => \Yii::t('yz/admin', 'Create Time'),
-            'update_time' => \Yii::t('yz/admin', 'Update Time'),
+            'created_at' => \Yii::t('yz/admin', 'Create Time'),
+            'updated_at' => \Yii::t('yz/admin', 'Update Time'),
             'adminAuthAssignment' => \Yii::t('yz/admin', 'Admin Auth Assignment'),
             'itemNames' => \Yii::t('yz/admin', 'Item Names'),
         ];

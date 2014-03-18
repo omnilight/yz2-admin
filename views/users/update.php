@@ -5,14 +5,14 @@ use yz\admin\widgets\ActionButtons;
 
 /**
  * @var yii\web\View $this
- * @var yz\interfaces\User $model
+ * @var \yz\admin\models\User $model
  */
 
 $this->title = \Yii::t('yz/admin','Update {item}: {title}', [
-	'item' => \yz\interfaces\User::modelTitle(),
+	'item' => \yz\admin\models\User::modelTitle(),
 	'title' => $model->name,
 ]);
-$this->params['breadcrumbs'][] = ['label' => \yz\interfaces\User::modelTitlePlural(), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => \yz\admin\models\User::modelTitlePlural(), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-update">

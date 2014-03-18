@@ -1,10 +1,10 @@
 <?php
 
-namespace yz\interfaces\search;
+namespace yz\admin\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yz\interfaces\User;
+use yz\admin\models\User;
 
 /**
  * UserSearch represents the model behind the search form about User.
@@ -37,7 +37,7 @@ class UserSearch extends Model
      */
     public function attributeLabels()
     {
-        return array_merge((new \yz\interfaces\User)->attributeLabels(), [
+        return array_merge((new User)->attributeLabels(), [
             // Custom parameter names
         ]);
     }

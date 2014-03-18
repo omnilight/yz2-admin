@@ -2,8 +2,9 @@
 
 namespace yz\admin\components;
 
+use backend\base\Controller;
 use yii\rbac\DbManager;
-use yz\interfaces\User;
+use yz\admin\models\User;
 
 /**
  * Class AuthManager
@@ -30,7 +31,7 @@ class AuthManager extends DbManager
 
     /**
      * Returns name of the operation based on controller's class and it's action name
-     * @param BackendController|string $controller
+     * @param Controller|string $controller
      * @param string $action
      * @return string
      */

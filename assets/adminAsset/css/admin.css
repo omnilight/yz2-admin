@@ -55,6 +55,8 @@ body {
 .b-content .crud-form {
   border-top: 1px solid #d4d4d4;
   padding-top: 15px;
+  padding-bottom: 10px;
+  background-color: #f9f9f9;
 }
 .b-content .crud-form .required label:after {
   content: " *";

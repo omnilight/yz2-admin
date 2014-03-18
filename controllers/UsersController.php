@@ -5,9 +5,13 @@ namespace yz\admin\controllers;
 use backend\base\Controller;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\web\VerbFilter;
-use yz\interfaces\search\UserSearch;
-use yz\interfaces\User;
+use Yii;
+use yz\admin\forms\ChangeUserPasswordForm;
+use yz\admin\models\search\UserSearch;
+use yz\admin\models\User;
+use yz\widgets\ActiveForm;
 
 /**
  * UsersController implements the CRUD actions for User model.
@@ -51,15 +55,15 @@ class UsersController extends Controller
     {
         $model = new User;
 
-        if ($model->load($_POST) && $model->save()) {
+        if (\Yii::$app->request->isAjax) {
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            $model->load(\Yii::$app->request->post());
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('yz/admin', 'Record was successfully created'));
-            if (isset($_POST['save_and_stay'])) {
-                return $this->redirect(['update', 'id' => $model->id]);
-            } elseif (isset($_POST['save_and_create'])) {
-                return $this->redirect(['create']);
-            } else {
-                return $this->redirect(['index']);
-            }
+            return $this->getCreateUpdateResponse($model);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -76,17 +80,22 @@ class UsersController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $changePassword = new ChangeUserPasswordForm($model);
 
-        if ($model->load($_POST) && $model->save()) {
+        if (\Yii::$app->request->isAjax) {
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            $model->load(\Yii::$app->request->post());
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('yz/admin', 'Record was successfully updated'));
-            if (isset($_POST['save_and_stay'])) {
-                return $this->redirect(['update', 'id' => $model->id]);
-            } else {
-                return $this->redirect(['index']);
-            }
+            return $this->getCreateUpdateResponse($model);
+        } elseif ($changePassword->load(\Yii::$app->request->post())) {
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'changePassword' => $changePassword,
             ]);
         }
     }

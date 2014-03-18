@@ -71,15 +71,16 @@ class Module extends \yz\Module
         return [
             [
                 'label' => \Yii::t('yz/admin', 'Administrators'),
-                'icon' => Icons::o('users'),
+                'icon' => Icons::o('user'),
                 'items' => [
                     [
                         'label' => \Yii::t('yz/admin', 'List'),
-                        'icon' => Icons::o('users'),
+                        'icon' => Icons::o('list'),
                         'route' => ['/admin/users/index'],
                     ],
                     [
                         'label' => \Yii::t('yz/admin', 'Groups'),
+                        'icon' => Icons::o('list'),
                         'route' => ['/admin/groups/index'],
                     ]
                 ]
