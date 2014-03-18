@@ -1,6 +1,6 @@
 <?php
 
-class m140103_201752_change_date_fields extends \yii\db\Migration
+class m140316_222452_change_date_fields extends \yii\db\Migration
 {
     public function up()
     {

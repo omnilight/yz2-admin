@@ -9,13 +9,13 @@ use yz\icons\Icons;
  * @var string $content
  */
 ?>
-<?php $this->beginContent('@yz/admin/views/backend/layouts/base.php'); ?>
+<?php $this->beginContent('@yz/admin/views/layouts/base.php'); ?>
 	<!-- Top bar-->
 	<nav class="navbar navbar-fixed-top b-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand"
-				   href="<?= Yii::$app->homeUrl ?>"><?= Yii::t('backend', 'Administration panel') ?></a>
+				   href="<?= Yii::$app->homeUrl ?>"><?= Yii::t('yz/admin', 'Administration panel') ?></a>
 			</div>
 
 			<?php echo Nav::widget([
