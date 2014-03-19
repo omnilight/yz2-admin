@@ -107,13 +107,23 @@ class UsersController extends Controller
     /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param mixed $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-        \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully deleted'));
+        if (is_array($id)) {
+            $message = \Yii::t('admin/t', 'Records were successfully deleted');
+        } else {
+            $id = (array)$id;
+            $message = \Yii::t('admin/t', 'Record was successfully deleted');
+        }
+
+        foreach ($id as $id_)
+            $this->findModel($id_)->delete();
+
+        \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, $message);
+
         return $this->redirect(['index']);
     }
 

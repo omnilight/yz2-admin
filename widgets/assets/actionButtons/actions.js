@@ -13,10 +13,15 @@ yii.yz.admin.actionButtons = (function($) {
                         .addClass('hidden');
                 }
             });
-            $('#action-button-delete-checked').on('click', function() {
+            $('#action-button-delete-checked').on('click', function(event) {
                 var grid = $('#'+$(this).data('grid'));
-                var selectedIds = grid.yiiGridView('getSelectedRows');
-                console.log(selectedIds);
+                var url = $(this).attr('href');
+                var data = {id: grid.yiiGridView('getSelectedRows')};
+
+                $(this).data('method', 'post');
+                $(this).attr('href', url + $.param(data));
+                //return yii.handleAction(this);
+                return false;
             })
         }
     };
