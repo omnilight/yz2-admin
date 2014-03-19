@@ -79,9 +79,9 @@ class Module extends \yz\Module
                         'route' => ['/admin/users/index'],
                     ],
                     [
-                        'label' => \Yii::t('admin/menu', 'Groups'),
+                        'label' => \Yii::t('admin/menu', 'Roles'),
                         'icon' => Icons::o('list'),
-                        'route' => ['/admin/groups/index'],
+                        'route' => ['/admin/roles/index'],
                     ]
                 ],
             ],

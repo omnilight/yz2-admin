@@ -17,8 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return array (
+  'Roles' => 'Роли',
   'Administrators' => 'Администраторы',
-  'Groups' => 'Группы',
   'Information' => 'Информация',
   'List' => 'Список',
   'System' => 'Система',
