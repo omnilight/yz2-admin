@@ -2,6 +2,9 @@
 
 namespace yz\admin;
 
+use yii\rbac\Item;
+use yz\admin\components\AuthManager;
+use yz\admin\controllers\MainController;
 use yz\icons\Icons;
 
 /**
@@ -98,6 +101,4 @@ class Module extends \yz\Module
             ]
         ];
     }
-
-
 }

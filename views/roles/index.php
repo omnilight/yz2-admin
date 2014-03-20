@@ -19,16 +19,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="btn-toolbar pull-right">
         <?=
         ActionButtons::widget([
-            'order' => [['create', 'delete', 'discover', 'return']],
+            'order' => [['create', 'delete', 'return'],['discover']],
             'buttons' => [
-                'discover' => \yii\bootstrap\Button::widget([
+                'discover' => \yii\bootstrap\ButtonDropdown::widget([
                         'tagName' => 'a',
-                        'label' => Yii::t('admin/t','Discover tasks and operations'),
+                        'label' => Yii::t('admin/t', 'Tasks and operations'),
                         'encodeLabel' => false,
                         'options' => [
-                            'href' => Url::to(['discover-auth-items']),
                             'class' => 'btn btn-default',
                         ],
+                        'dropdown' => [
+                            'items' => [
+                                ['label' => Yii::t('admin/t', 'Discover...'), 'url' => Url::to(['discover-auth-items'])],
+                                ['label' => Yii::t('admin/t', 'Delete all...'), 'url' => Url::to(['delete-tasks-and-operations']),
+                                'linkOptions' => [
+                                    'data-confirm' => Yii::t('admin/t','Do you really want to delete all tasks and operations?'),
+                                ]]
+                            ]
+                        ]
                     ]),
             ],
             'gridId' => 'role-grid',
@@ -46,11 +54,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\CheckboxColumn'],
 
-            'name',
-            'type',
             'description:ntext',
-            'biz_rule:ntext',
-            'data:ntext',
+            'name',
+//            'type',
+//            'biz_rule:ntext',
+//            'data:ntext',
 
             [
                 'class' => 'yz\admin\widgets\ActionColumn',

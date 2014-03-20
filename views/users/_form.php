@@ -27,6 +27,8 @@ use yz\admin\widgets\ActiveForm;
 
     <?= $form->field($model, 'is_active')->checkbox() ?>
 
+    <?= $form->field($model, 'rolesItems')->dropDownList($model->getRolesItemsValues(),['multiple' => 'multiple']) ?>
+
     <?php if ($model->isNewRecord): ?>
         <?= $form->field($model, 'password')->passwordInput() ?>
         <?= $form->field($model, 'passwordRepeat')->passwordInput() ?>

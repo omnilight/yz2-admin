@@ -3,6 +3,8 @@
 namespace yz\admin\controllers;
 
 use Yii;
+use yii\rbac\Item;
+use yz\admin\models\AuthItem;
 use yz\admin\models\Role;
 use yz\admin\models\search\RoleSearch;
 use backend\base\Controller;
@@ -12,6 +14,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yz\admin\widgets\ActiveForm;
 use yz\Module;
+use yz\Yz;
 
 /**
  * RolesController implements the CRUD actions for Role model.
@@ -130,8 +133,38 @@ class RolesController extends Controller
             $module = Yii::$app->getModule($id);
             if (!($module instanceof Module))
                 continue;
-            $authItems = $module->getAuthItems();
+            $authItems = array_merge($authItems, $module->getAuthItems());
         }
+
+        $authManager = Yii::$app->authManager;
+        foreach ($authItems as $name => $authItem) {
+            /** @var array $authItem [Name, type, [child1, child2, ...]] */
+            if ($authManager->getItem($name))
+                continue;
+            $authManager->createItem($name, $authItem[1], $authItem[0]);
+        }
+        foreach ($authItems as $name => $authItem) {
+            /** @var array $authItem [Name, type, [child1, child2, ...]] */
+            foreach ($authItem[2] as $childName) {
+                if ($authManager->hasItemChild($name, $childName))
+                    continue;
+                $authManager->addItemChild($name, $childName);
+            }
+        }
+
+        Yii::$app->session->setFlash(Yz::FLASH_SUCCESS,Yii::t('admin/t','Tasks and operations were successfully discovered'));
+
+        $this->redirect(['index']);
+    }
+
+    public function actionDeleteTasksAndOperations()
+    {
+        AuthItem::deleteAll('type in (:tasks, :operations)',[
+            ':tasks' => Item::TYPE_TASK,
+            ':operations' => Item::TYPE_OPERATION,
+        ]);
+
+        Yii::$app->session->setFlash(Yz::FLASH_SUCCESS,Yii::t('admin/t','Tasks and operations were successfully deleted'));
 
         $this->redirect(['index']);
     }

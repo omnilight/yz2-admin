@@ -5,8 +5,12 @@ namespace yz\admin\models;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
+use yii\db\BaseActiveRecord;
 use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Security;
+use yii\rbac\Item;
+use yii\rbac\Manager;
 use yii\web\IdentityInterface;
 use yz\db\ActiveRecord;
 use yz\interfaces\ModelInfoInterface;
@@ -24,11 +28,25 @@ use yz\interfaces\ModelInfoInterface;
  * @property string $logged_at
  * @property string $created_at
  * @property string $updated_at
+ * 
+ * @property Manager $authManager
+ * @property array $rolesItems 
+ * @property array $rolesItemsValues 
+ * 
  * @package yz\admin\models
  */
 class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoInterface
 {
     const AUTH_KEY_LENGTH = 32;
+
+    /**
+     * @var Manager
+     */
+    protected $_authManager;
+    /**
+     * @var array
+     */
+    protected $_rolesItems;
 
     public static function tableName()
     {
@@ -80,7 +98,8 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
             [['login'], 'string', 'max' => 32],
             [['passhash', 'auth_key', 'email'], 'string', 'max' => 255],
             [['email'], 'email'],
-            [['name'], 'string', 'max' => 64]
+            [['name'], 'string', 'max' => 64],
+            [['rolesItems'], 'safe'],
         ];
     }
 
@@ -98,12 +117,54 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
             'is_active' => \Yii::t('admin/t', 'Is Active'),
             'name' => \Yii::t('admin/t', 'Name'),
             'email' => \Yii::t('admin/t', 'Email'),
-            'login_time' => \Yii::t('admin/t', 'Login Time'),
+            'logged_at' => \Yii::t('admin/t', 'Login Time'),
             'created_at' => \Yii::t('admin/t', 'Create Time'),
             'updated_at' => \Yii::t('admin/t', 'Update Time'),
             'adminAuthAssignment' => \Yii::t('admin/t', 'Admin Auth Assignment'),
             'itemNames' => \Yii::t('admin/t', 'Item Names'),
+            'rolesItems' => \Yii::t('admin/t','Assigned Roles'),
         ];
+    }
+
+    /**
+     * @return Manager
+     */
+    public function getAuthManager()
+    {
+        if ($this->_authManager == null) {
+            $this->_authManager = \Yii::$app->authManager;
+        }
+        return $this->_authManager;
+    }
+
+    /**
+     * @param array $rolesItems
+     */
+    public function setRolesItems($rolesItems)
+    {
+        $this->_rolesItems = $rolesItems;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRolesItems()
+    {
+        if ($this->_rolesItems == null && !$this->isNewRecord) {
+            $this->_rolesItems = ArrayHelper::getColumn($this->getAuthManager()->getAssignments($this->id),'name');
+        }
+        return $this->_rolesItems;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRolesItemsValues()
+    {
+        /** @var ActiveQuery $query */
+        $query = AuthItem::find()->asArray()
+            ->where(['type' => [Item::TYPE_ROLE]]);
+        return ArrayHelper::map($query->all(), 'name','description');
     }
 
 
@@ -214,4 +275,17 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
         } else
             return false;
     }
+
+    public function afterSave($insert)
+    {
+        if ($this->_rolesItems !== null) {
+            foreach ($this->_rolesItems as $itemName) {
+                $this->getAuthManager()->assign($this->id, $itemName);
+            }
+        }
+
+        parent::afterSave($insert);
+    }
+
+
 }

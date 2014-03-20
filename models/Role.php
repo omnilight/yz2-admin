@@ -2,6 +2,7 @@
 
 namespace yz\admin\models;
 
+use yii\db\ActiveQuery;
 use yii\db\BaseActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\rbac\Item;
@@ -41,6 +42,12 @@ class Role extends AuthItem
         return \Yii::t('admin/t', 'User Roles');
     }
 
+    public static function createQuery($config = [])
+    {
+        return parent::createQuery($config)->andWhere(['type' => Item::TYPE_ROLE]);
+    }
+
+
     public function rules()
     {
         return array_merge(parent::rules(), [
@@ -50,6 +57,7 @@ class Role extends AuthItem
                 'message' => \Yii::t('admin/t', 'Name of the role must contain only characters from the list: {chars}', [
                         'chars' => 'a-z, A-Z, 0-9, -'
                     ])],
+            [['childRoles','childOperationsAndTasks'], 'safe'],
         ]);
     }
 
@@ -60,7 +68,6 @@ class Role extends AuthItem
             'childOperationsAndTasks' => \Yii::t('admin/t','Child operations and tasks'),
         ]);
     }
-
 
     /**
      * @return Manager
@@ -128,11 +135,12 @@ class Role extends AuthItem
      */
     public function getChildRolesValues()
     {
-        return ArrayHelper::map(AuthItem::find()
-            ->where(['type' => Item::TYPE_ROLE])
-            ->andWhere('name != :name', [':name' => $this->name])
-            ->asArray()
-            ->all(), 'name', 'description');
+        /** @var ActiveQuery $query */
+        $query = AuthItem::find()->asArray()
+            ->where(['type' => [Item::TYPE_ROLE]]);
+        if (!$this->isNewRecord)
+            $query->andWhere('name != :name', [':name' => $this->name]);
+        return ArrayHelper::map($query->all(), 'name','description');
     }
 
     /**
@@ -160,11 +168,12 @@ class Role extends AuthItem
      */
     public function getChildOperationsAndTasksValues()
     {
-        return ArrayHelper::map(AuthItem::find()
-            ->where(['type' => [Item::TYPE_OPERATION, Item::TYPE_TASK]])
-            ->andWhere('name != :name', [':name' => $this->name])
-            ->asArray()
-            ->all(), 'name', 'description');
+        /** @var ActiveQuery $query */
+        $query = AuthItem::find()->asArray()
+            ->where(['type' => [Item::TYPE_OPERATION, Item::TYPE_TASK]]);
+        if (!$this->isNewRecord)
+            $query->andWhere('name != :name', [':name' => $this->name]);
+        return ArrayHelper::map($query->all(), 'name','description');
     }
 
     public function beforeValidate()
