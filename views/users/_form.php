@@ -27,7 +27,7 @@ use yz\admin\widgets\ActiveForm;
 
     <?= $form->field($model, 'is_active')->checkbox() ?>
 
-    <?= $form->field($model, 'rolesItems')->dropDownList($model->getRolesItemsValues(),['multiple' => 'multiple']) ?>
+    <?= $form->field($model, 'rolesItems')->dropDownList($model->getRolesItemsValues(), ['multiple' => 'multiple']) ?>
 
     <?php if ($model->isNewRecord): ?>
         <?= $form->field($model, 'password')->passwordInput() ?>
@@ -37,10 +37,10 @@ use yz\admin\widgets\ActiveForm;
 
     <div class="form-group form-actions">
         <div class="col-sm-offset-2 col-sm-10">
-            <?= Html::submitButton($model->isNewRecord ? \Yii::t('admin/t', 'Create') : \Yii::t('admin/t', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'name' => 'action', 'value' => 'save_and_stay']) ?>
+            <?= Html::submitButton($model->isNewRecord ? \Yii::t('admin/t', 'Create') : \Yii::t('admin/t', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'name' => '__action', 'value' => 'save_and_stay']) ?>
             <?= Html::submitButton($model->isNewRecord ? \Yii::t('admin/t', 'Create & Exit') : \Yii::t('admin/t', 'Update & Exit'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             <?php if ($model->isNewRecord): ?>
-                <?= Html::submitButton(\Yii::t('admin/t', 'Create & Then Create Another One'), ['class' => 'btn btn-success', 'name' => 'action', 'value' => 'save_and_create']) ?>
+                <?= Html::submitButton(\Yii::t('admin/t', 'Create & Then Create Another One'), ['class' => 'btn btn-success', 'name' => '__action', 'value' => 'save_and_create']) ?>
             <?php endif ?>
         </div>
     </div>
@@ -64,7 +64,7 @@ use yz\admin\widgets\ActiveForm;
 
         <div class="form-group form-actions">
             <div class="col-sm-offset-2 col-sm-10">
-                <?= Html::submitButton($model->isNewRecord ? \Yii::t('admin/t', 'Create') : \Yii::t('admin/t', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'name' => 'action', 'value' => 'save_and_stay']) ?>
+                <?= Html::submitButton($model->isNewRecord ? \Yii::t('admin/t', 'Create') : \Yii::t('admin/t', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'name' => '__action', 'value' => 'save_and_stay']) ?>
                 <?= Html::submitButton($model->isNewRecord ? \Yii::t('admin/t', 'Create & Exit') : \Yii::t('admin/t', 'Update & Exit'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
         </div>

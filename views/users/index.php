@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="btn-toolbar pull-right">
         <?=
         ActionButtons::widget([
-            'order' => [['search'], ['export', 'create', 'delete', 'return']],
+            'order' => [['export', 'create', 'delete', 'return']],
             'gridId' => 'user-grid',
             'searchModel' => $searchModel,
             'modelClass' => '\yz\admin\models\User',
@@ -27,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?php echo GridView::widget([
         'id' => 'user-grid',
@@ -45,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'is_super_admin:boolean',
             // 'is_active:boolean',
             // 'email:email',
-            // 'login_time',
+            'logged_at',
             'created_at',
             'updated_at',
 

@@ -13,8 +13,6 @@ class UserSearch extends Model
 {
     public $id;
     public $login;
-    public $passhash;
-    public $auth_key;
     public $is_super_admin;
     public $is_active;
     public $name;

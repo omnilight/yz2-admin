@@ -15,9 +15,9 @@ class m131213_153949_yz_admin_init extends \yii\db\Migration
             'is_active' => Schema::TYPE_BOOLEAN,
             'name' => Schema::TYPE_STRING . '(64)',
             'email' => Schema::TYPE_STRING,
-            'login_time' => Schema::TYPE_DATETIME,
-            'create_time' => Schema::TYPE_DATETIME,
-            'update_time' => Schema::TYPE_DATETIME,
+            'logged_at' => Schema::TYPE_DATETIME,
+            'created_at' => Schema::TYPE_DATETIME,
+            'updated_at' => Schema::TYPE_DATETIME,
         ], 'ENGINE=InnoDB CHARSET=utf8');
 
         $this->createTable('{{%admin_auth_item}}', [
@@ -56,7 +56,7 @@ class m131213_153949_yz_admin_init extends \yii\db\Migration
         $this->addForeignKey('item_name', '{{%admin_auth_assignment}}', 'item_name',
             '{{%admin_auth_item}}', 'name', 'CASCADE', 'CASCADE');
         $this->addForeignKey('user_id', '{{%admin_auth_assignment}}', 'user_id',
-            '{{%admin_users}}', 'id');
+            '{{%admin_users}}', 'id', 'CASCADE', 'CASCADE');
 
         return true;
     }

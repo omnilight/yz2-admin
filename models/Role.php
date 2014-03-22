@@ -126,6 +126,8 @@ class Role extends AuthItem
         if ($this->_childRoles === null && !$this->isNewRecord) {
             $this->_childRoles =
                 ArrayHelper::getColumn(self::filterItems($this->getAuthManager()->getItemChildren($this->name), Item::TYPE_ROLE), 'name');
+        } elseif ($this->_childRoles == null) {
+            $this->_childRoles = [];
         }
         return $this->_childRoles;
     }
@@ -159,6 +161,8 @@ class Role extends AuthItem
         if ($this->_childOperationsAndTasks == null && !$this->isNewRecord) {
             $this->_childOperationsAndTasks =
                 ArrayHelper::getColumn(self::filterItems($this->getAuthManager()->getItemChildren($this->name), [Item::TYPE_OPERATION, Item::TYPE_TASK]), 'name');
+        } elseif ($this->_childOperationsAndTasks == null) {
+            $this->_childOperationsAndTasks = [];
         }
         return $this->_childOperationsAndTasks;
     }

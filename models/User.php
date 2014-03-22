@@ -96,8 +96,10 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
             [['is_super_admin', 'is_active'], 'boolean'],
             [['logged_at', 'created_at', 'updated_at'], 'safe'],
             [['login'], 'string', 'max' => 32],
+            [['login'], 'unique'],
             [['passhash', 'auth_key', 'email'], 'string', 'max' => 255],
             [['email'], 'email'],
+            [['email'], 'unique'],
             [['name'], 'string', 'max' => 64],
             [['rolesItems'], 'safe'],
         ];
@@ -151,7 +153,9 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     public function getRolesItems()
     {
         if ($this->_rolesItems == null && !$this->isNewRecord) {
-            $this->_rolesItems = ArrayHelper::getColumn($this->getAuthManager()->getAssignments($this->id),'name');
+            $this->_rolesItems = array_keys($this->getAuthManager()->getAssignments($this->id));
+        } elseif ($this->_rolesItems == null) {
+            $this->_rolesItems = [];
         }
         return $this->_rolesItems;
     }

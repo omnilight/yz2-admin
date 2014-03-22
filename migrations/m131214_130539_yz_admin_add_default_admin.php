@@ -22,7 +22,8 @@ class m131214_130539_yz_admin_add_default_admin extends \yii\db\Migration
             'auth_key' => \yii\helpers\Security::generateRandomKey(\yz\admin\models\User::AUTH_KEY_LENGTH),
             'email' => $email,
             'name' => Yii::t('admin/t', 'Administrator'),
-            'create_time' => new \yii\db\Expression('NOW()'),
+            'created_at' => new \yii\db\Expression('NOW()'),
+            'updated_at' => new \yii\db\Expression('NOW()'),
         ]);
 
         \yii\helpers\Console::output("Initial administration panel user was created!");

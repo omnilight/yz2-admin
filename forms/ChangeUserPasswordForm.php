@@ -38,7 +38,8 @@ class ChangeUserPasswordForm extends Model
     {
         $rules = [
             [['password','passwordRepeat'], 'required'],
-            [['passwordRepeat'], 'compare', 'compareAttribute' => 'password']
+            [['passwordRepeat'], 'compare', 'compareAttribute' => 'password'],
+            [['password'], 'string', 'min' => 6],
         ];
 
         if ($this->askOldPassword) {

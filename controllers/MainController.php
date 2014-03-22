@@ -30,6 +30,7 @@ class MainController extends Controller
     public function actionLogout()
     {
         \Yii::$app->user->logout();
+        $this->redirect(['login']);
     }
 
     public function actionIndex()

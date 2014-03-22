@@ -19,6 +19,7 @@
 return array (
   'Admin Auth Assignment' => '',
   'Admin Auth Item Child' => '',
+    'Assigned Roles' => 'Присвоенные роли',
   'Auth Assignment' => '',
   'Auth Assignments' => '',
   'Auth Item' => '',
