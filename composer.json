@@ -21,6 +21,6 @@
         "psr-4": { "yz\\admin\\": "" }
     },
     "extra": {
-        "bootstrap": "yz\\admin\\Extension"
+        "bootstrap": "yz\\admin\\Bootstrap"
     }
 }
