@@ -204,7 +204,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
      */
     public static function findIdentity($id)
     {
-        return static::find($id);
+        return static::findOne($id);
     }
 
     /**
