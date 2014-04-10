@@ -14,7 +14,7 @@ class Bootstrap implements BootstrapInterface
      * Bootstrap method to be called during application bootstrap stage.
      * @param Application $app the application currently running
      */
-    public function bootstrap(Application $app)
+    public function bootstrap($app)
     {
         $app->i18n->translations['admin/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
