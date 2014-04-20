@@ -54,21 +54,6 @@ class Module extends \yz\Module
         return null;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getRoutes()
-    {
-        return [
-            'prepend' => [
-                '' => 'admin/main/index',
-                'login' => 'admin/main/login',
-                'logout' => 'admin/main/logout',
-                'profile' => 'admin/profile/index',
-            ]
-        ];
-    }
-
     public function getAdminMenu()
     {
         return [
