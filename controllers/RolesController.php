@@ -165,14 +165,13 @@ class RolesController extends Controller
         $this->redirect(['index']);
     }
 
-    public function actionDeleteTasksAndOperations()
+    public function actionDeletePermissions()
     {
-        AuthItem::deleteAll('type in (:tasks, :operations)',[
-            ':tasks' => Item::TYPE_TASK,
-            ':operations' => Item::TYPE_OPERATION,
+        AuthItem::deleteAll('type in (:permissions)',[
+            ':permissions' => Item::TYPE_PERMISSION,
         ]);
 
-        Yii::$app->session->setFlash(Yz::FLASH_SUCCESS,Yii::t('admin/t','Tasks and operations were successfully deleted'));
+        Yii::$app->session->setFlash(Yz::FLASH_SUCCESS,Yii::t('admin/t','Permissions were successfully deleted'));
 
         $this->redirect(['index']);
     }

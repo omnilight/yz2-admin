@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'buttons' => [
                 'discover' => \yii\bootstrap\ButtonDropdown::widget([
                         'tagName' => 'a',
-                        'label' => Yii::t('admin/t', 'Tasks and operations'),
+                        'label' => Yii::t('admin/t', 'Permissions'),
                         'encodeLabel' => false,
                         'options' => [
                             'class' => 'btn btn-default',
@@ -31,9 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'dropdown' => [
                             'items' => [
                                 ['label' => Yii::t('admin/t', 'Discover...'), 'url' => Url::to(['discover-auth-items'])],
-                                ['label' => Yii::t('admin/t', 'Delete all...'), 'url' => Url::to(['delete-tasks-and-operations']),
+                                ['label' => Yii::t('admin/t', 'Delete all...'), 'url' => Url::to(['delete-permissions']),
                                 'linkOptions' => [
-                                    'data-confirm' => Yii::t('admin/t','Do you really want to delete all tasks and operations?'),
+                                    'data-confirm' => Yii::t('admin/t','Do you really want to delete all permissions?'),
                                 ]]
                             ]
                         ]

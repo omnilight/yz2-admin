@@ -10,7 +10,7 @@ use yz\admin\widgets\ActionButtons;
 
 $this->title = \Yii::t('admin/t','Update object "{item}": {title}', [
     'item' => yz\admin\models\Role::modelTitle(),
-    'title' => $model->name,
+    'title' => $model->description,
 ]);
 $this->params['breadcrumbs'][] = ['label' => yz\admin\models\Role::modelTitlePlural(), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
