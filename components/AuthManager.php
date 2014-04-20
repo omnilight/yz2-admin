@@ -3,6 +3,7 @@
 namespace yz\admin\components;
 
 use backend\base\Controller;
+use yii\helpers\VarDumper;
 use yii\rbac\DbManager;
 use yz\admin\models\User;
 
@@ -19,14 +20,13 @@ class AuthManager extends DbManager
     /**
      * @inheritdoc
      */
-    public function checkAccess($userId, $itemName, $params = [])
+    public function checkAccess($userId, $permissionName, $params = [])
     {
-        /** @var User $user */
-        $user = \Yii::$app->user->getIdentity();
+        $user = User::findOne($userId);
         if (($user instanceof User) && $user->is_super_admin) {
             return true;
         } else
-            return parent::checkAccess($userId, $itemName, $params);
+            return parent::checkAccess($userId, $permissionName, $params);
     }
 
     /**

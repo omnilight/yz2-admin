@@ -18,7 +18,7 @@ class MainController extends Controller
         $this->layout = '@yz/admin/views/layouts/base';
 
         $model = new LoginForm();
-        if ($model->load($_POST) && $model->login()) {
+        if ($model->load(\Yii::$app->request->post()) && $model->login()) {
             return $this->goBack(Url::toRoute('index'));
         } else {
             return $this->render('login', [

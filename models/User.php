@@ -191,12 +191,12 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
 
     /**
      * @param $login
-     * @return ActiveQuery
+     * @return User
      */
     public static function findByLogin($login)
     {
         return static::find()
-            ->where(['login' => $login]);
+            ->where(['login' => $login])->one();
     }
 
     /**
