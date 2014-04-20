@@ -3,13 +3,13 @@
 namespace yz\admin\controllers;
 
 use Yii;
+use yii\filters\VerbFilter;
 use yii\rbac\Item;
 use yz\admin\models\AuthItem;
 use yz\admin\models\Role;
 use yz\admin\models\search\RoleSearch;
 use backend\base\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yz\admin\widgets\ActiveForm;

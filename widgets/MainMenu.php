@@ -38,7 +38,7 @@ class MainMenu extends Widget
                         $groupItems = [];
                         foreach ($group['items'] as $item) {
                             if (isset($item['authItem']))
-                                $hasAccess = \Yii::$app->user->checkAccess($item['authItem']);
+                                $hasAccess = \Yii::$app->user->can($item['authItem']);
                             elseif (isset($item['route']) && is_array($item['route']))
                                 $hasAccess = $this->checkAccessByRoute($item['route'][0]);
                             else
@@ -82,6 +82,6 @@ class MainMenu extends Widget
 
         $operation = AuthManager::getOperationName($controller, $action);
 
-        return ($_routes[$route] = \Yii::$app->user->checkAccess($operation));
+        return ($_routes[$route] = \Yii::$app->user->can($operation));
     }
 } 

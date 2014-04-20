@@ -3,10 +3,10 @@
 namespace yz\admin\controllers;
 
 use backend\base\Controller;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use yii\web\VerbFilter;
 use Yii;
 use yz\admin\forms\ChangeUserPasswordForm;
 use yz\admin\models\search\UserSearch;
