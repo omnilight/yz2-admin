@@ -24,7 +24,7 @@ class m140417_192304_change_auth_tables extends \yii\db\Migration
         $this->addColumn('{{%admin_auth_item}}', 'updated_at', 'integer');
         $this->addColumn('{{%admin_auth_item}}', 'rule_name', 'string(64)');
         $this->createIndex('rule_name', '{{%admin_auth_item}}', 'rule_name');
-        $this->addForeignKey('rule_name', '{{%admin_auth_item}}', 'rule_name',
+        $this->addForeignKey('{{%fk_admin_auth_item_rule_name}}', '{{%admin_auth_item}}', 'rule_name',
             '{{%admin_auth_rule}}', 'name', 'SET NULL', 'CASCADE');
 
         $this->dropColumn('{{%admin_auth_assignment}}', 'biz_rule');
@@ -37,7 +37,7 @@ class m140417_192304_change_auth_tables extends \yii\db\Migration
         $this->dropColumn('{{%admin_auth_assignment}}', 'created_at');
         $this->addColumn('{{%admin_auth_assignment}}', 'data', 'text');
         $this->addColumn('{{%admin_auth_assignment}}', 'biz_rule', 'text');
-        $this->dropForeignKey('rule_name', '{{%admin_auth_item}}');
+        $this->dropForeignKey('{{%fk_admin_auth_item_rule_name}}', '{{%admin_auth_item}}');
         $this->dropColumn('{{%admin_auth_item}}', 'rule_name');
         $this->dropColumn('{{%admin_auth_item}}', 'updated_at');
         $this->dropColumn('{{%admin_auth_item}}', 'created_at');

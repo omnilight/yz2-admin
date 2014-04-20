@@ -39,9 +39,9 @@ class m131213_153949_yz_admin_init extends \yii\db\Migration
 
         $this->createIndex('parent', '{{%admin_auth_item_child}}', 'parent');
         $this->createIndex('child', '{{%admin_auth_item_child}}', 'child');
-        $this->addForeignKey('parent', '{{%admin_auth_item_child}}', 'parent',
+        $this->addForeignKey('{{%fk_admin_auth_item_child_parent}}', '{{%admin_auth_item_child}}', 'parent',
             '{{%admin_auth_item}}', 'name', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('child', '{{%admin_auth_item_child}}', 'child',
+        $this->addForeignKey('{{%fk_admin_auth_item_child_child}}', '{{%admin_auth_item_child}}', 'child',
             '{{%admin_auth_item}}', 'name', 'CASCADE', 'CASCADE');
 
         $this->createTable('{{%admin_auth_assignment}}', [
@@ -53,9 +53,9 @@ class m131213_153949_yz_admin_init extends \yii\db\Migration
         ], 'ENGINE=InnoDB CHARSET=utf8');
         $this->createIndex('item_name', '{{%admin_auth_assignment}}', 'item_name');
         $this->createIndex('user_id', '{{%admin_auth_assignment}}', 'user_id');
-        $this->addForeignKey('item_name', '{{%admin_auth_assignment}}', 'item_name',
+        $this->addForeignKey('{{%fk_admin_auth_assignment_item_name}}', '{{%admin_auth_assignment}}', 'item_name',
             '{{%admin_auth_item}}', 'name', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('user_id', '{{%admin_auth_assignment}}', 'user_id',
+        $this->addForeignKey('{{%fk_admin_auth_assignment_user_id}}', '{{%admin_auth_assignment}}', 'user_id',
             '{{%admin_users}}', 'id', 'CASCADE', 'CASCADE');
 
         return true;
