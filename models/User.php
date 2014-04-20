@@ -9,8 +9,8 @@ use yii\db\BaseActiveRecord;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Security;
+use yii\rbac\DbManager;
 use yii\rbac\Item;
-use yii\rbac\Manager;
 use yii\web\IdentityInterface;
 use yz\db\ActiveRecord;
 use yz\interfaces\ModelInfoInterface;
@@ -29,7 +29,7 @@ use yz\interfaces\ModelInfoInterface;
  * @property string $created_at
  * @property string $updated_at
  * 
- * @property Manager $authManager
+ * @property DbManager $authManager
  * @property array $rolesItems 
  * @property array $rolesItemsValues 
  * 
@@ -40,7 +40,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     const AUTH_KEY_LENGTH = 32;
 
     /**
-     * @var Manager
+     * @var DbManager
      */
     protected $_authManager;
     /**
@@ -129,7 +129,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     }
 
     /**
-     * @return Manager
+     * @return DbManager
      */
     public function getAuthManager()
     {

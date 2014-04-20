@@ -3,8 +3,10 @@
 namespace yz\admin\controllers;
 
 use Yii;
+use yii\base\InvalidParamException;
 use yii\filters\VerbFilter;
 use yii\rbac\Item;
+use yii\rbac\Permission;
 use yz\admin\models\AuthItem;
 use yz\admin\models\Role;
 use yz\admin\models\search\RoleSearch;
@@ -137,18 +139,24 @@ class RolesController extends Controller
         }
 
         $authManager = Yii::$app->authManager;
+        $items = [];
         foreach ($authItems as $name => $authItem) {
             /** @var array $authItem [Name, type, [child1, child2, ...]] */
-            if ($authManager->getItem($name))
+            if ($authManager->getPermission($name))
                 continue;
-            $authManager->createItem($name, $authItem[1], $authItem[0]);
+            $item = new Item();
+            $item->type = $authItem[1];
+            $item->name = $name;
+            $item->description = $authItem[0];
+            $authManager->add($item);
+            $items[$name] = $item;
         }
         foreach ($authItems as $name => $authItem) {
             /** @var array $authItem [Name, type, [child1, child2, ...]] */
+            $children =ArrayHelper::getColumn($authManager->getChildren($name), 'name');
             foreach ($authItem[2] as $childName) {
-                if ($authManager->hasItemChild($name, $childName))
-                    continue;
-                $authManager->addItemChild($name, $childName);
+                if (!in_array($childName, $children))
+                    $authManager->addChild($items[$name], $items[$childName]);
             }
         }
 
@@ -178,7 +186,7 @@ class RolesController extends Controller
      */
     protected function findModel($id)
     {
-        if ($id !== null && ($model = Role::find($id)) !== null) {
+        if ($id !== null && ($model = Role::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

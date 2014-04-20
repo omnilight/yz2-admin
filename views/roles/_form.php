@@ -22,7 +22,7 @@ use yz\admin\widgets\ActiveForm;
 
     <?= $form->field($model, 'childRoles')->dropDownList($model->getChildRolesValues(),['multiple' => 'multiple']) ?>
 
-    <?= $form->field($model, 'childOperationsAndTasks')->dropDownList($model->getChildOperationsAndTasksValues(),['multiple' => 'multiple']) ?>
+    <?= $form->field($model, 'childPermissions')->dropDownList($model->getChildPermissionsValues(),['multiple' => 'multiple']) ?>
 
 
     <div class="form-group form-actions">

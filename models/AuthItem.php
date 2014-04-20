@@ -10,12 +10,15 @@ use yz\interfaces\ModelInfoInterface;
  * @property string $name
  * @property integer $type
  * @property string $description
- * @property string $biz_rule
  * @property string $data
+ * @property integer $created_at
+ * @property integer $updated_at
+ * @property string $rule_name
  *
  * @property AuthAssignment $adminAuthAssignment
  * @property AuthItem[] $users
  * @property AuthItemChild $adminAuthItemChild
+ * @property AuthRule $rules
  */
 class AuthItem extends \yz\db\ActiveRecord implements ModelInfoInterface
 {
@@ -48,15 +51,15 @@ class AuthItem extends \yz\db\ActiveRecord implements ModelInfoInterface
 	/**
 	 * @inheritdoc
 	 */
-	public function rules()
-	{
-		return [
-			[['type'], 'required'],
-			[['type'], 'integer'],
-			[['description', 'biz_rule', 'data'], 'string'],
-			[['name'], 'string', 'max' => 64]
-		];
-	}
+    public function rules()
+    {
+        return [
+            [['type'], 'required'],
+            [['type', 'created_at', 'updated_at'], 'integer'],
+            [['description', 'data'], 'string'],
+            [['name', 'rule_name'], 'string', 'max' => 64]
+        ];
+    }
 
 	/**
 	 * @inheritdoc
@@ -72,11 +75,14 @@ class AuthItem extends \yz\db\ActiveRecord implements ModelInfoInterface
 			'adminAuthAssignment' => \Yii::t('admin/t','Admin Auth Assignment'),
 			'users' => \Yii::t('admin/t','Users'),
 			'adminAuthItemChild' => \Yii::t('admin/t','Admin Auth Item Child'),
+            'created_at' => \Yii::t('admin/t', 'Created At'),
+            'updated_at' => \Yii::t('admin/t', 'Updated At'),
+            'rule_name' => \Yii::t('admin/t', 'Rule Name'),
 		];
 	}
 
 	/**
-	 * @return \yii\db\ActiveQueryInterface
+	 * @return \yii\db\ActiveRecord
 	 */
 	public function getAdminAuthAssignment()
 	{
@@ -84,7 +90,7 @@ class AuthItem extends \yz\db\ActiveRecord implements ModelInfoInterface
 	}
 
 	/**
-	 * @return \yii\db\ActiveQueryInterface
+	 * @return \yii\db\ActiveRecord
 	 */
 	public function getUsers()
 	{
@@ -92,10 +98,18 @@ class AuthItem extends \yz\db\ActiveRecord implements ModelInfoInterface
 	}
 
 	/**
-	 * @return \yii\db\ActiveQueryInterface
+	 * @return \yii\db\ActiveRecord
 	 */
 	public function getAdminAuthItemChild()
 	{
 		return $this->hasOne(AuthItemChild::className(), ['parent' => 'name']);
 	}
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRuleName()
+    {
+        return $this->hasOne(AuthRule::className(), ['name' => 'rule_name']);
+    }
 }
