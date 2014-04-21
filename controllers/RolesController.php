@@ -142,8 +142,14 @@ class RolesController extends Controller
         $items = [];
         foreach ($authItems as $name => $authItem) {
             /** @var array $authItem [Name, type, [child1, child2, ...]] */
-            if ($authManager->getPermission($name))
+            if ($item = $authManager->getPermission($name)) {
+                $items[$name] = $item;
                 continue;
+            }
+            if ($authManager->getRole($name)) {
+                $items[$name] = $item;
+                continue;
+            }
             $item = new Item();
             $item->type = $authItem[1];
             $item->name = $name;
