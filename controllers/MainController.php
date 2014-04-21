@@ -15,7 +15,7 @@ class MainController extends Controller
 {
     public function actionLogin()
     {
-        $this->layout = '@yz/admin/views/layouts/base';
+        $this->layout = '//base';
 
         $model = new LoginForm();
         if ($model->load(\Yii::$app->request->post()) && $model->login()) {
