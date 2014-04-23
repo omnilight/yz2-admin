@@ -43,6 +43,10 @@ class ActionButtons extends Widget
      */
     public $deleteUrl = ['delete'];
     /**
+     * @var array|string
+     */
+    public $exportUrl = ['export'];
+    /**
      * Buttons order. Format:
      * ~~~
      * [ // Button group
@@ -87,9 +91,9 @@ class ActionButtons extends Widget
         ActionButtonsAsset::register($this->getView());
 
         $customButtons = $this->buttons;
-        $standardButtons = ['index', 'create', 'update', 'delete', 'return', 'search'];
+        $standardButtons = ['index', 'create', 'update', 'delete', 'return', 'search', 'export',];
         // List of the buttons that will be done in the future
-        $reservedButtons = ['export'];
+        $reservedButtons = [];
 
         foreach ($this->order as $group) {
             $buttons = [];
@@ -316,6 +320,36 @@ class ActionButtons extends Widget
     }
 
     /**
+     * @param \yii\bootstrap\Button $exportButton
+     */
+    public function setExportButton($exportButton)
+    {
+        $this->_exportButton = $exportButton;
+    }
+
+    /**
+     * @return \yii\bootstrap\Button
+     */
+    public function getExportButton()
+    {
+        if ($this->_exportButton === null) {
+            $url = $this->exportUrl;
+            $this->_exportButton = Button::widget([
+                'tagName' => 'a',
+                'label' => Icons::p('search-plus') . \Yii::t('admin/t', 'Export to MS Excel'),
+                'encodeLabel' => false,
+                'options' => [
+                    'href' => Url::to($url),
+                    'class' => 'btn btn-default',
+                    'id' => 'action-button-export',
+                ],
+            ]);
+        }
+        return $this->_exportButton;
+    }
+
+
+    /**
      * @var Button
      */
     protected $_returnButton = null;
@@ -339,6 +373,10 @@ class ActionButtons extends Widget
      * @var Button
      */
     protected $_searchButton = null;
+    /**
+     * @var Button
+     */
+    protected $_exportButton = null;
 
     /**
      * @return array
