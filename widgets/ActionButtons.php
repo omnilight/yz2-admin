@@ -333,10 +333,11 @@ class ActionButtons extends Widget
     public function getExportButton()
     {
         if ($this->_exportButton === null) {
-            $url = $this->exportUrl;
+            $params = \Yii::$app->request->getQueryParams();
+            $url = $this->exportUrl + $params;
             $this->_exportButton = Button::widget([
                 'tagName' => 'a',
-                'label' => Icons::p('search-plus') . \Yii::t('admin/t', 'Export to MS Excel'),
+                'label' => Icons::p('download') . \Yii::t('admin/t', 'Export to MS Excel'),
                 'encodeLabel' => false,
                 'options' => [
                     'href' => Url::to($url),
