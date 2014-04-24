@@ -20,9 +20,9 @@ use yz\admin\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
 
-    <?= $form->field($model, 'childRoles')->dropDownList($model->getChildRolesValues(),['multiple' => 'multiple']) ?>
+    <?= $form->field($model, 'childRoles')->dropDownList($model->getChildRolesValues(),['multiple' => 'multiple', 'size' => 10]) ?>
 
-    <?= $form->field($model, 'childPermissions')->dropDownList($model->getChildPermissionsValues(),['multiple' => 'multiple']) ?>
+    <?= $form->field($model, 'childPermissions')->dropDownList($model->getChildPermissionsValues(),['multiple' => 'multiple', 'size' => 20]) ?>
 
 
     <div class="form-group form-actions">
