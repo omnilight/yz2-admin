@@ -208,14 +208,9 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     }
 
     /**
-     * Finds an identity by the given secrete token.
-     * @param string $token the secrete token
-     * @throws \yii\base\NotSupportedException
-     * @return IdentityInterface the identity object that matches the given token.
-     * Null should be returned if such an identity cannot be found
-     * or the identity is not in an active state (disabled, deleted, etc.)
+     * @inheritdoc
      */
-    public static function findIdentityByAccessToken($token)
+    public static function findIdentityByAccessToken($token, $type = null)
     {
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
