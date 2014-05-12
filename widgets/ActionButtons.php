@@ -12,6 +12,7 @@ use yii\bootstrap\ButtonGroup;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yz\admin\helpers\AdminHelper;
+use yz\icons\Icon;
 use yz\icons\Icons;
 
 /**
@@ -58,8 +59,18 @@ class ActionButtons extends Widget
      */
     public $order = [];
     /**
-     * Custom buttons
-     * @var Button[]|callable[]
+     * Custom buttons. If it has a form of array, than the following format could be used:
+     * ~~~
+     * [
+     *  'customButton' => [
+     *      'label' => 'My label',
+     *      'icon' => Icons::o('some-icon'),
+     *      'route' => ['my/route'],
+     *      'class' => 'btn btn-default',
+     *  ],
+     * ]
+     * ~~~
+     * @var Button[]|callable[]|array
      */
     public $buttons = [];
     /**
@@ -102,11 +113,7 @@ class ActionButtons extends Widget
                     // All other buttons
                     $buttons = array_merge($buttons, array_values($customButtons));
                 } elseif (isset($customButtons[$name])) {
-                    // One of the custom buttons
-                    if (is_callable($customButtons[$name]))
-                        $buttons[] = call_user_func($customButtons[$name]);
-                    else
-                        $buttons[] = $customButtons[$name];
+                    $buttons[] = $this->createCustomButton($customButtons[$name]);
                 } elseif (in_array($name, $standardButtons)) {
                     if (($button = $this->{$name . 'Button'}) !== false)
                         $buttons[] = $button;
@@ -121,6 +128,30 @@ class ActionButtons extends Widget
                 'buttons' => $buttons,
             ]);
         }
+    }
+
+    /**
+     * Creates custom button
+     * @param Button|array|callable $buttonConfig
+     * @return string
+     */
+    protected function createCustomButton($buttonConfig)
+    {
+        if (is_callable($buttonConfig))
+            return call_user_func($buttonConfig);
+        elseif (is_array($buttonConfig)) {
+            $icon = (isset($buttonConfig['icon']) && ($buttonConfig['icon'] instanceof Icon)) ? $buttonConfig['icon']->app(' ') : '';
+            return Button::widget([
+                'tagName' => 'a',
+                'label' => $icon . $buttonConfig['label'],
+                'encodeLabel' => false,
+                'options' => [
+                    'href' => Url::to($buttonConfig['route']),
+                    'class' => isset($buttonConfig['class']) ? $buttonConfig['class'] : 'btn btn-default',
+                ],
+            ]);
+        } else
+            return $buttonConfig;
     }
 
     /**
