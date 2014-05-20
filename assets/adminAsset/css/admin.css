@@ -72,3 +72,12 @@ body {
   color: #d60000;
   font-weight: bold;
 }
+.b-content .crud-block {
+  border-top: 1px solid #d4d4d4;
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+.b-content .crud-form .detail-view th,
+.b-content .crud-block .detail-view th {
+  width: 300px;
+}
