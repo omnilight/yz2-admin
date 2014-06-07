@@ -36,11 +36,10 @@ class LoginForm extends Model
         ];
     }
 
-
     public function validatePassword()
     {
         $user = $this->getUser();
-        if (!$user || !$user->validatePassword($this->password)) {
+        if (!$user || !$user->validatePassword($this->password) || $user->is_active == 0) {
             $this->addError('password', \Yii::t('admin/t', 'Incorrect login or password'));
         }
     }
