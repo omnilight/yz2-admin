@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="btn-toolbar pull-right">
         <?=
         ActionButtons::widget([
-            'order' => [['export', 'create', 'delete', 'return']],
+            'order' => [['create', 'delete', 'return']],
             'gridId' => 'user-grid',
             'searchModel' => $searchModel,
             'modelClass' => '\yz\admin\models\User',
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //			'passhash',
 //			'auth_key',
             'is_super_admin:boolean',
-            // 'is_active:boolean',
+            'is_active:boolean',
             // 'email:email',
             'logged_at',
             'created_at',

@@ -51,7 +51,8 @@ body {
 .b-content {
   padding-top: 50px;
 }
-.breadcrumb + .b-content {
+.breadcrumb + .b-content,
+.alert + .b-content {
   padding-top: 0;
 }
 .b-content {
