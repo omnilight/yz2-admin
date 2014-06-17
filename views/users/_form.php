@@ -72,4 +72,24 @@ use yz\admin\widgets\ActiveForm;
         <?php ActiveForm::end(); ?>
 
     </div>
+
+    <div class="user-form crud-form">
+        <h2><?= Yii::t('admin/t','User access token') ?></h2>
+
+        <div class="col-sm-offset-1 col-sm-8">
+            <pre><?= $model->access_token ?></pre>
+        </div>
+
+        <?php $form = ActiveForm::begin([
+            'enableAjaxValidation' => false,
+        ]); ?>
+
+        <div class="form-group form-actions">
+            <div class="col-sm-offset-2 col-sm-10">
+                <?= Html::submitButton(\Yii::t('admin/t', 'Reset token'), ['class' => 'btn btn-primary', 'name' => '__action', 'value' => 'reset_access_token']) ?>
+            </div>
+        </div>
+
+        <?php ActiveForm::end(); ?>
+    </div>
 <?php endif ?>

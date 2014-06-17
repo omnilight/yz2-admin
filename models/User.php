@@ -28,6 +28,7 @@ use yz\interfaces\ModelInfoInterface;
  * @property string $logged_at
  * @property string $created_at
  * @property string $updated_at
+ * @property string $access_token
  * 
  * @property DbManager $authManager
  * @property array $rolesItems 
@@ -38,6 +39,7 @@ use yz\interfaces\ModelInfoInterface;
 class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoInterface
 {
     const AUTH_KEY_LENGTH = 32;
+    const ACCESS_TOKEN_LENGTH = 32;
 
     /**
      * @var DbManager
@@ -212,7 +214,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return static::findOne(['access_token' => $token, 'is_active' => 1]);
     }
 
 
@@ -269,6 +271,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
                 $this->auth_key = Security::generateRandomKey(static::AUTH_KEY_LENGTH);
+                $this->access_token = Security::generateRandomKey(static::ACCESS_TOKEN_LENGTH);
             }
             return true;
         } else
