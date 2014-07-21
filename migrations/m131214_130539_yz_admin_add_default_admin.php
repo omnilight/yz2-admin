@@ -17,10 +17,10 @@ class m131214_130539_yz_admin_add_default_admin extends \yii\db\Migration
 
         $this->insert('{{%admin_users}}', [
             'login' => 'admin',
-            'passhash' => \yii\helpers\Security::generatePasswordHash($password),
+            'passhash' => \Yii::$app->security->generatePasswordHash($password),
             'is_super_admin' => 1,
             'is_active' => 1,
-            'auth_key' => \yii\helpers\Security::generateRandomKey(\yz\admin\models\User::AUTH_KEY_LENGTH),
+            'auth_key' => \Yii::$app->security->generateRandomKey(\yz\admin\models\User::AUTH_KEY_LENGTH),
             'email' => $email,
             'name' => Yii::t('admin/t', 'Administrator'),
             'created_at' => new \yii\db\Expression('NOW()'),

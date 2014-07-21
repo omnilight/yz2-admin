@@ -2,13 +2,10 @@
 
 namespace yz\admin\models;
 
-use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
-use yii\db\BaseActiveRecord;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Security;
 use yii\rbac\DbManager;
 use yii\rbac\Item;
 use yii\web\IdentityInterface;
@@ -251,7 +248,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
         if ($this->isNewRecord)
             return false;
 
-        return Security::validatePassword($password, $this->passhash);
+        return \Yii::$app->security->validatePassword($password, $this->passhash);
     }
 
     /**
@@ -260,7 +257,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
      */
     public static function hashPassword($password)
     {
-        return Security::generatePasswordHash($password);
+        return \Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
@@ -270,15 +267,15 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     {
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
-                $this->auth_key = Security::generateRandomKey(static::AUTH_KEY_LENGTH);
-                $this->access_token = Security::generateRandomKey(static::ACCESS_TOKEN_LENGTH);
+                $this->auth_key = \Yii::$app->security->generateRandomKey(static::AUTH_KEY_LENGTH);
+                $this->access_token = \Yii::$app->security->generateRandomKey(static::ACCESS_TOKEN_LENGTH);
             }
             return true;
         } else
             return false;
     }
 
-    public function afterSave($insert)
+    public function afterSave($insert, $changedAttributes)
     {
         if ($this->_rolesItems !== null) {
             foreach ($this->_rolesItems as $itemName) {
@@ -286,7 +283,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
             }
         }
 
-        parent::afterSave($insert);
+        parent::afterSave($insert, $changedAttributes);
     }
 
 

@@ -13,7 +13,7 @@ use yz\interfaces\ModelInfoInterface;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property AdminAuthItem[] $adminAuthItems
+ * @property AuthItem[] $adminAuthItems
  */
 class AuthRule extends \yz\db\ActiveRecord implements ModelInfoInterface
 {
@@ -74,6 +74,6 @@ class AuthRule extends \yz\db\ActiveRecord implements ModelInfoInterface
      */
     public function getAdminAuthItems()
     {
-        return $this->hasMany(AdminAuthItem::className(), ['rule_name' => 'name']);
+        return $this->hasMany(AuthItem::className(), ['rule_name' => 'name']);
     }
 }

@@ -1,8 +1,6 @@
 <?php
 
 namespace yz\admin\models;
-use yii\helpers\Security;
-use yz\db\ActiveRecord;
 
 
 /**
