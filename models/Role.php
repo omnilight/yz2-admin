@@ -187,9 +187,9 @@ class Role extends AuthItem
         return parent::beforeValidate();
     }
 
-    public function afterSave($insert)
+    public function afterSave($insert, $changedAttributes)
     {
-        parent::afterSave($insert);
+        parent::afterSave($insert, $changedAttributes);
 
         if ($this->_childPermissions !== null) {
             foreach ($this->_childPermissions as $name)
