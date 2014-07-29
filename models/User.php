@@ -278,8 +278,10 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->_rolesItems !== null) {
+            $roles = $this->getAuthManager()->getRolesByUser($this->id);
             foreach ($this->_rolesItems as $itemName) {
-                $this->getAuthManager()->assign($this->getAuthManager()->getRole($itemName), $this->id);
+                if (!isset($roles[$itemName]))
+                    $this->getAuthManager()->assign($this->getAuthManager()->getRole($itemName), $this->id);
             }
         }
 
