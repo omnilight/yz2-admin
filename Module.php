@@ -2,6 +2,7 @@
 
 namespace yz\admin;
 
+use yii\helpers\ArrayHelper;
 use yii\rbac\Item;
 use yz\admin\components\AuthManager;
 use yz\admin\controllers\MainController;
@@ -21,6 +22,11 @@ class Module extends \yz\Module
      * @var string Name of the GET variable used to create links to backpage
      */
     public $returnUrlVar = '__returnUrl';
+
+    /**
+     * @var array Extra menu items
+     */
+    public $menuItems = [];
 
     /**
      * @inheritdoc
@@ -56,7 +62,7 @@ class Module extends \yz\Module
 
     public function getAdminMenu()
     {
-        return [
+        return ArrayHelper::merge($this->menuItems, [
             [
                 'label' => \Yii::t('admin/menu', 'Administrators'),
                 'icon' => Icons::o('user'),
@@ -84,6 +90,6 @@ class Module extends \yz\Module
                     ],
                 ],
             ]
-        ];
+        ]);
     }
 }
