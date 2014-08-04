@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
 use yii\rbac\DbManager;
 use yii\rbac\Item;
 use yii\web\IdentityInterface;
+use Yii;
 use yz\db\ActiveRecord;
 use yz\interfaces\ModelInfoInterface;
 
@@ -29,7 +30,9 @@ use yz\interfaces\ModelInfoInterface;
  * 
  * @property DbManager $authManager
  * @property array $rolesItems 
- * @property array $rolesItemsValues 
+ * @property array $rolesItemsValues
+ *
+ * @property Role $roles Roles of the user
  * 
  * @package yz\admin\models
  */
@@ -69,6 +72,16 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     {
         return \Yii::t('admin/t', 'Administrators');
     }
+
+    /**
+     * @inheritdoc
+     * @return UsersQuery
+     */
+    public static function find()
+    {
+        return Yii::createObject(UsersQuery::className(), [get_called_class()]);
+    }
+
 
     public function behaviors()
     {
@@ -288,5 +301,12 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
         parent::afterSave($insert, $changedAttributes);
     }
 
-
+    /**
+     * @return ActiveQuery
+     */
+    public function getRoles()
+    {
+        return $this->hasMany(Role::className(), ['name' => 'item_name'])
+            ->viaTable('{{%admin_auth_assignment}}', ['user_id' => 'id']);
+    }
 }
