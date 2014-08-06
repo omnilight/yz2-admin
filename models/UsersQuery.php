@@ -23,7 +23,7 @@ class UsersQuery extends ActiveQuery
             'roles' => function($query) use ($roles) {
                     /** @var ActiveQuery $query */
                     return $query->where([
-                        'roles.name' => $roles,
+                         Role::tableName().'.name' => $roles,
                     ]);
                 }
         ]);
