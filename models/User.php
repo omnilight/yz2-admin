@@ -10,6 +10,7 @@ use yii\rbac\DbManager;
 use yii\rbac\Item;
 use yii\web\IdentityInterface;
 use Yii;
+use yii\web\UserEvent;
 use yz\db\ActiveRecord;
 use yz\interfaces\ModelInfoInterface;
 
@@ -308,5 +309,17 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     {
         return $this->hasMany(Role::className(), ['name' => 'item_name'])
             ->viaTable('{{%admin_auth_assignment}}', ['user_id' => 'id']);
+    }
+
+    /**
+     * @param UserEvent $event
+     */
+    public static function onAfterLoginHandler($event)
+    {
+        /** @var User $identity */
+        $identity = $event->identity;
+        $identity->updateAttributes([
+            'logged_at' => new Expression('NOW()'),
+        ]);
     }
 }
