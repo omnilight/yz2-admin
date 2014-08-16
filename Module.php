@@ -3,9 +3,6 @@
 namespace yz\admin;
 
 use yii\helpers\ArrayHelper;
-use yii\rbac\Item;
-use yz\admin\components\AuthManager;
-use yz\admin\controllers\MainController;
 use yz\icons\Icons;
 
 /**
