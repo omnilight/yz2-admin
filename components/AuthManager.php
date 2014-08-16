@@ -16,6 +16,7 @@ class AuthManager extends DbManager
     public $itemTable = '{{%admin_auth_item}}';
     public $itemChildTable = '{{%admin_auth_item_child}}';
     public $assignmentTable = '{{%admin_auth_assignment}}';
+    public $ruleTable = '{{%admin_auth_rule}}';
 
     /**
      * @inheritdoc
