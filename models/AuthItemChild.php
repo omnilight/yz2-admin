@@ -15,15 +15,15 @@ use yz\interfaces\ModelInfoInterface;
  */
 class AuthItemChild extends \yz\db\ActiveRecord implements ModelInfoInterface
 {
-	/**
-	 * @inheritdoc
-	 */
-	public static function tableName()
-	{
-		return '{{%admin_auth_item_child}}';
-	}
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return '{{%admin_auth_item_child}}';
+    }
 
-	/**
+    /**
      * Returns model title, ex.: 'Person', 'Book'
      * @return string
      */
@@ -41,42 +41,42 @@ class AuthItemChild extends \yz\db\ActiveRecord implements ModelInfoInterface
         return \Yii::t('admin/t', 'Auth Item Children');
     }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function rules()
-	{
-		return [
-			[['parent', 'child'], 'string', 'max' => 64]
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['parent', 'child'], 'string', 'max' => 64]
+        ];
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels()
-	{
-		return [
-			'parent' => \Yii::t('admin/t','Parent'),
-			'child' => \Yii::t('admin/t','Child'),
-			'childRecord' => \Yii::t('admin/t','Child'),
-			'parentRecord' => \Yii::t('admin/t','Parent'),
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'parent' => \Yii::t('admin/t', 'Parent'),
+            'child' => \Yii::t('admin/t', 'Child'),
+            'childRecord' => \Yii::t('admin/t', 'Child'),
+            'parentRecord' => \Yii::t('admin/t', 'Parent'),
+        ];
+    }
 
-	/**
-	 * @return \yii\db\ActiveQueryInterface
-	 */
-	public function getChildRecord()
-	{
-		return $this->hasOne(AuthItem::className(), ['name' => 'child']);
-	}
+    /**
+     * @return \yii\db\ActiveQueryInterface
+     */
+    public function getChildRecord()
+    {
+        return $this->hasOne(AuthItem::className(), ['name' => 'child']);
+    }
 
-	/**
-	 * @return \yii\db\ActiveQueryInterface
-	 */
-	public function getParentRecord()
-	{
-		return $this->hasOne(AuthItem::className(), ['name' => 'parent']);
-	}
+    /**
+     * @return \yii\db\ActiveQueryInterface
+     */
+    public function getParentRecord()
+    {
+        return $this->hasOne(AuthItem::className(), ['name' => 'parent']);
+    }
 }

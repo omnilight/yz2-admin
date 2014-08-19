@@ -2,8 +2,6 @@
 
 namespace yz\admin\components;
 
-use backend\base\Controller;
-use yii\helpers\VarDumper;
 use yii\rbac\DbManager;
 use yz\admin\models\User;
 

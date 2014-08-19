@@ -1,9 +1,10 @@
 <?php
 
 namespace yz\admin\actions;
+
 use yii\base\Action;
-use yii\data\DataProviderInterface;
 use Yii;
+use yii\data\DataProviderInterface;
 use yz\admin\widgets\GridView;
 
 
@@ -72,14 +73,14 @@ class ExportAction extends Action
         ]);
 
         Yii::$app->response->headers['Content-Type'] = 'application/msexcel';
-        Yii::$app->response->headers['Content-Disposition'] = 'attachment; filename='.$this->reportName.'.xls';
+        Yii::$app->response->headers['Content-Disposition'] = 'attachment; filename=' . $this->reportName . '.xls';
         return strtr(self::EXPORT_TEMPLATE, [
             '{name}' => $this->reportName,
             '{grid}' => $grid,
         ]);
     }
 
-    const EXPORT_TEMPLATE =<<<HTML
+    const EXPORT_TEMPLATE = <<<HTML
 <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"
       xmlns="http://www.w3.org/TR/REC-html40">
 

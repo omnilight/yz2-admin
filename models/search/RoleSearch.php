@@ -30,10 +30,10 @@ class RoleSearch extends Model
      */
     public function attributeLabels()
     {
-		return array_merge((new Role)->attributeLabels(), [
-			// Custom parameter names
-		]);
-	}
+        return array_merge((new Role)->attributeLabels(), [
+            // Custom parameter names
+        ]);
+    }
 
     public function search($params)
     {

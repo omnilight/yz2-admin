@@ -3,7 +3,6 @@
 namespace yz\admin\models;
 
 use yii\db\ActiveQuery;
-use yii\db\BaseActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\rbac\DbManager;
 use yii\rbac\Item;
@@ -57,15 +56,15 @@ class Role extends AuthItem
                 'message' => \Yii::t('admin/t', 'Name of the role must contain only characters from the list: {chars}', [
                         'chars' => 'a-z, A-Z, 0-9, -'
                     ])],
-            [['childRoles','childPermissions'], 'safe'],
+            [['childRoles', 'childPermissions'], 'safe'],
         ]);
     }
 
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
-            'childRoles' => \Yii::t('admin/t','Child roles'),
-            'childPermissions' => \Yii::t('admin/t','Child permissions'),
+            'childRoles' => \Yii::t('admin/t', 'Child roles'),
+            'childPermissions' => \Yii::t('admin/t', 'Child permissions'),
         ]);
     }
 
@@ -142,7 +141,7 @@ class Role extends AuthItem
             ->where(['type' => [Item::TYPE_ROLE]]);
         if (!$this->isNewRecord)
             $query->andWhere('name != :name', [':name' => $this->name]);
-        return ArrayHelper::map($query->all(), 'name','description');
+        return ArrayHelper::map($query->all(), 'name', 'description');
     }
 
     /**
@@ -177,7 +176,7 @@ class Role extends AuthItem
             ->where(['type' => [Item::TYPE_PERMISSION]]);
         if (!$this->isNewRecord)
             $query->andWhere('name != :name', [':name' => $this->name]);
-        return ArrayHelper::map($query->all(), 'name','description');
+        return ArrayHelper::map($query->all(), 'name', 'description');
     }
 
     public function beforeValidate()

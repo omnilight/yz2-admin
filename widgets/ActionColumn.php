@@ -3,8 +3,8 @@
 namespace yz\admin\widgets;
 
 
-use Yii;
 use yii\helpers\Html;
+use Yii;
 use yz\admin\helpers\AdminHelper;
 use yz\icons\Icons;
 

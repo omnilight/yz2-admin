@@ -2,12 +2,11 @@
 
 namespace yz\admin\controllers;
 
-use backend\base\Controller;
+use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use Yii;
 use yz\admin\forms\ChangeUserPasswordForm;
 use yz\admin\models\search\UserSearch;
 use yz\admin\models\User;

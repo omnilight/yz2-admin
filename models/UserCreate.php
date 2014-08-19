@@ -14,17 +14,17 @@ class UserCreate extends User
 
     public function rules()
     {
-        return array_merge(parent::rules(),[
-            [['password','passwordRepeat'], 'required'],
+        return array_merge(parent::rules(), [
+            [['password', 'passwordRepeat'], 'required'],
             [['passwordRepeat'], 'compare', 'compareAttribute' => 'password'],
         ]);
     }
 
     public function attributeLabels()
     {
-        return array_merge(parent::attributeLabels(),[
-            'password' => \Yii::t('admin/t','Password'),
-            'passwordRepeat' => \Yii::t('admin/t','Repeat Password'),
+        return array_merge(parent::attributeLabels(), [
+            'password' => \Yii::t('admin/t', 'Password'),
+            'passwordRepeat' => \Yii::t('admin/t', 'Repeat Password'),
         ]);
     }
 

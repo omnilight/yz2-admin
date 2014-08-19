@@ -2,7 +2,6 @@
 
 namespace yz\admin\widgets;
 
-
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\Widget;
