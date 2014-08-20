@@ -9,6 +9,27 @@ use yz\admin\widgets\ActiveForm;
  * @var \yz\admin\forms\ChangeUserPasswordForm $passwordForm
  * @var yz\admin\widgets\ActiveForm $form
  */
+$passwordId = Html::getInputId($model, 'password');
+$passwordRepeatId = Html::getInputId($model, 'passwordRepeat');
+$message = \yii\helpers\Json::encode(Yii::t('admin/t','New password is: {password}'));
+$generatorJs =<<<JS
+(function($) {
+    var passwordLength = 12;
+    var alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789001234567890';
+
+    $('#generate_password').on('click', function() {
+        var password = '';
+        for (var i = 0; i < passwordLength; i++) {
+            var charPos = Math.floor(Math.random() * alphabet.length);
+            password += alphabet.substring(charPos, charPos+1);
+        }
+        $('#{$passwordId}').val(password);
+        $('#{$passwordRepeatId}').val(password);
+
+        alert($message.replace('{password}', password));
+    });
+})(jQuery);
+JS;
 ?>
 
 <div class="user-form crud-form">
@@ -32,6 +53,8 @@ use yz\admin\widgets\ActiveForm;
     <?php if ($model->isNewRecord): ?>
         <?= $form->field($model, 'password')->passwordInput() ?>
         <?= $form->field($model, 'passwordRepeat')->passwordInput() ?>
+        <a href="#" id="generate_password"><?= Yii::t('admin/t','Generate password') ?></a>
+        <?php $this->registerJs($generatorJs) ?>
     <?php endif ?>
 
 
@@ -59,8 +82,9 @@ use yz\admin\widgets\ActiveForm;
         ]); ?>
 
         <?= $form->field($passwordForm, 'password')->passwordInput() ?>
-
         <?= $form->field($passwordForm, 'passwordRepeat')->passwordInput() ?>
+        <a href="#" id="generate_password"><?= Yii::t('admin/t','Generate password') ?></a>
+        <?php $this->registerJs($generatorJs) ?>
 
         <div class="form-group form-actions">
             <div class="col-sm-offset-2 col-sm-10">
