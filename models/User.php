@@ -281,8 +281,8 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     {
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
-                $this->auth_key = \Yii::$app->security->generateRandomKey(static::AUTH_KEY_LENGTH);
-                $this->access_token = \Yii::$app->security->generateRandomKey(static::ACCESS_TOKEN_LENGTH);
+                $this->auth_key = \Yii::$app->security->generateRandomString(static::AUTH_KEY_LENGTH);
+                $this->access_token = \Yii::$app->security->generateRandomString(static::ACCESS_TOKEN_LENGTH);
             }
             return true;
         } else
