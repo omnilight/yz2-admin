@@ -2,6 +2,7 @@
 
 namespace yz\admin\controllers;
 
+use backend\base\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\rbac\Item;

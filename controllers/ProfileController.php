@@ -2,6 +2,7 @@
 
 namespace yz\admin\controllers;
 
+use backend\base\Controller;
 use yii\web\Response;
 use yz\admin\forms\ChangeUserPasswordForm;
 use yz\admin\models\User;
