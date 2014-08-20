@@ -25,7 +25,7 @@ class AuthRule extends \yz\db\ActiveRecord implements ModelInfoInterface
         return '{{%admin_auth_rule}}';
     }
 
-	/**
+    /**
      * Returns model title, ex.: 'Person', 'Book'
      * @return string
      */

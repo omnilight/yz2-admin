@@ -2,18 +2,15 @@
 
 namespace yz\admin\controllers;
 
-use Yii;
-use yii\base\InvalidParamException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\rbac\Item;
-use yii\rbac\Permission;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
+use Yii;
 use yz\admin\models\AuthItem;
 use yz\admin\models\Role;
 use yz\admin\models\search\RoleSearch;
-use backend\base\Controller;
-use yii\web\NotFoundHttpException;
-use yii\helpers\ArrayHelper;
-use yii\web\Response;
 use yz\admin\widgets\ActiveForm;
 use yz\Module;
 use yz\Yz;
@@ -23,8 +20,8 @@ use yz\Yz;
  */
 class RolesController extends Controller
 {
-	public function behaviors()
-	{
+    public function behaviors()
+    {
         return ArrayHelper::merge(parent::behaviors(), [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -32,15 +29,15 @@ class RolesController extends Controller
                     'delete' => ['post'],
                 ],
             ],
-		]);
+        ]);
     }
 
     /**
      * Lists all Role models.
-	 * @param string $export Set export type
+     * @param string $export Set export type
      * @return mixed
      */
-	public function actionIndex($export = null)
+    public function actionIndex($export = null)
     {
         $searchModel = new RoleSearch;
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
@@ -60,47 +57,47 @@ class RolesController extends Controller
     {
         $model = new Role;
 
-		if (\Yii::$app->request->isAjax) {
-			\Yii::$app->response->format = Response::FORMAT_JSON;
-			$model->load($_POST);
-			return ActiveForm::validate($model);
-		}
+        if (\Yii::$app->request->isAjax) {
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            $model->load($_POST);
+            return ActiveForm::validate($model);
+        }
 
-		if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-			\Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully created'));
-			return $this->getCreateUpdateResponse($model);
-		} else {
-			return $this->render('create', [
-				'model' => $model,
-			]);
-		}
-	}
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully created'));
+            return $this->getCreateUpdateResponse($model);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
 
-	/**
-	 * Updates an existing Role model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param string $id
-	 * @return mixed
-	 */
-	public function actionUpdate($id)
-	{
-		$model = $this->findModel($id);
+    /**
+     * Updates an existing Role model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
 
-		if (\Yii::$app->request->isAjax) {
-			\Yii::$app->response->format = Response::FORMAT_JSON;
-			$model->load(\Yii::$app->request->post());
-			return ActiveForm::validate($model);
-		}
+        if (\Yii::$app->request->isAjax) {
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            $model->load(\Yii::$app->request->post());
+            return ActiveForm::validate($model);
+        }
 
-		if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-			\Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully updated'));
-			return $this->getCreateUpdateResponse($model);
-		} else {
-			return $this->render('update', [
-				'model' => $model,
-			]);
-		}
-	}
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully updated'));
+            return $this->getCreateUpdateResponse($model);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
 
 
     /**
@@ -159,25 +156,25 @@ class RolesController extends Controller
         }
         foreach ($authItems as $name => $authItem) {
             /** @var array $authItem [Name, type, [child1, child2, ...]] */
-            $children =ArrayHelper::getColumn($authManager->getChildren($name), 'name');
+            $children = ArrayHelper::getColumn($authManager->getChildren($name), 'name');
             foreach ($authItem[2] as $childName) {
                 if (!in_array($childName, $children))
                     $authManager->addChild($items[$name], $items[$childName]);
             }
         }
 
-        Yii::$app->session->setFlash(Yz::FLASH_SUCCESS,Yii::t('admin/t','Tasks and operations were successfully discovered'));
+        Yii::$app->session->setFlash(Yz::FLASH_SUCCESS, Yii::t('admin/t', 'Tasks and operations were successfully discovered'));
 
         $this->redirect(['index']);
     }
 
     public function actionDeletePermissions()
     {
-        AuthItem::deleteAll('type in (:permissions)',[
+        AuthItem::deleteAll('type in (:permissions)', [
             ':permissions' => Item::TYPE_PERMISSION,
         ]);
 
-        Yii::$app->session->setFlash(Yz::FLASH_SUCCESS,Yii::t('admin/t','Permissions were successfully deleted'));
+        Yii::$app->session->setFlash(Yz::FLASH_SUCCESS, Yii::t('admin/t', 'Permissions were successfully deleted'));
 
         $this->redirect(['index']);
     }

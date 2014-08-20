@@ -1,10 +1,8 @@
 <?php
 
 namespace yz\admin\models;
+
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
-use yii\db\Connection;
-use yii\db\Query;
 
 
 /**
@@ -20,10 +18,10 @@ class UsersQuery extends ActiveQuery
     public function byRoles($roles)
     {
         $this->innerJoinWith([
-            'roles' => function($query) use ($roles) {
+            'roles' => function ($query) use ($roles) {
                     /** @var ActiveQuery $query */
                     return $query->where([
-                         Role::tableName().'.name' => $roles,
+                        Role::tableName() . '.name' => $roles,
                     ]);
                 }
         ]);

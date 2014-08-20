@@ -1,6 +1,7 @@
 <?php
 
 namespace yz\admin\forms;
+
 use yii\base\Model;
 use Yii;
 use yz\admin\models\User;
@@ -37,7 +38,7 @@ class ChangeUserPasswordForm extends Model
     public function rules()
     {
         $rules = [
-            [['password','passwordRepeat'], 'required'],
+            [['password', 'passwordRepeat'], 'required'],
             [['passwordRepeat'], 'compare', 'compareAttribute' => 'password'],
             [['password'], 'string', 'min' => 6],
         ];
@@ -53,14 +54,14 @@ class ChangeUserPasswordForm extends Model
     public function myOldPasswordValidator()
     {
         if ($this->_user->validatePassword($this->oldPassword) == false)
-            $this->addError('oldPassword',Yii::t('admin/t','Old password is incorrect'));
+            $this->addError('oldPassword', Yii::t('admin/t', 'Old password is incorrect'));
     }
 
     public function attributeLabels()
     {
         return [
-            'password' => \Yii::t('admin/t','Password'),
-            'passwordRepeat' => \Yii::t('admin/t','Repeat Password'),
+            'password' => \Yii::t('admin/t', 'Password'),
+            'passwordRepeat' => \Yii::t('admin/t', 'Repeat Password'),
         ];
     }
 

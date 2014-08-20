@@ -2,7 +2,6 @@
 
 namespace yz\admin\controllers;
 
-use backend\base\Controller;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yz\admin\forms\LoginForm;

@@ -19,6 +19,10 @@ class Module extends \yz\Module
      * @var string Name of the GET variable used to create links to backpage
      */
     public $returnUrlVar = '__returnUrl';
+    /**
+     * @var string Title of the admin panel that is showed in the top of the layout. Default is 'Admin Panel'
+     */
+    public $adminTitle;
 
     /**
      * @var array Extra menu items
@@ -47,14 +51,6 @@ class Module extends \yz\Module
     public function getDescription()
     {
         return \Yii::t('admin/t', 'Provides administration panel functionality with backend user management');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getIcon()
-    {
-        return null;
     }
 
     public function getAdminMenu()

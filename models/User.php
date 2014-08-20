@@ -2,6 +2,7 @@
 
 namespace yz\admin\models;
 
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
@@ -9,7 +10,6 @@ use yii\helpers\ArrayHelper;
 use yii\rbac\DbManager;
 use yii\rbac\Item;
 use yii\web\IdentityInterface;
-use Yii;
 use yii\web\UserEvent;
 use yz\db\ActiveRecord;
 use yz\interfaces\ModelInfoInterface;
@@ -28,13 +28,13 @@ use yz\interfaces\ModelInfoInterface;
  * @property string $created_at
  * @property string $updated_at
  * @property string $access_token
- * 
+ *
  * @property DbManager $authManager
- * @property array $rolesItems 
+ * @property array $rolesItems
  * @property array $rolesItemsValues
  *
  * @property Role $roles Roles of the user
- * 
+ *
  * @package yz\admin\models
  */
 class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoInterface
@@ -90,10 +90,12 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
             'timestamp' => [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at','updated_at'],
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
-                'value' => function($event) { return new Expression('NOW()'); }
+                'value' => function ($event) {
+                        return new Expression('NOW()');
+                    }
             ]
         ];
     }
@@ -105,7 +107,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     public function rules()
     {
         return [
-            [['login','email','name'], 'required'],
+            [['login', 'email', 'name'], 'required'],
             [['is_super_admin', 'is_active'], 'boolean'],
             [['logged_at', 'created_at', 'updated_at'], 'safe'],
             [['login'], 'string', 'max' => 32],
@@ -137,7 +139,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
             'updated_at' => \Yii::t('admin/t', 'Update Time'),
             'adminAuthAssignment' => \Yii::t('admin/t', 'Admin Auth Assignment'),
             'itemNames' => \Yii::t('admin/t', 'Item Names'),
-            'rolesItems' => \Yii::t('admin/t','Assigned Roles'),
+            'rolesItems' => \Yii::t('admin/t', 'Assigned Roles'),
         ];
     }
 
@@ -181,7 +183,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
         /** @var ActiveQuery $query */
         $query = AuthItem::find()->asArray()
             ->where(['type' => [Item::TYPE_ROLE]]);
-        return ArrayHelper::map($query->all(), 'name','description');
+        return ArrayHelper::map($query->all(), 'name', 'description');
     }
 
 

@@ -22,15 +22,15 @@ use yz\interfaces\ModelInfoInterface;
  */
 class AuthItem extends \yz\db\ActiveRecord implements ModelInfoInterface
 {
-	/**
-	 * @inheritdoc
-	 */
-	public static function tableName()
-	{
-		return '{{%admin_auth_item}}';
-	}
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return '{{%admin_auth_item}}';
+    }
 
-	/**
+    /**
      * Returns model title, ex.: 'Person', 'Book'
      * @return string
      */
@@ -48,9 +48,9 @@ class AuthItem extends \yz\db\ActiveRecord implements ModelInfoInterface
         return \Yii::t('admin/t', 'Auth Items');
     }
 
-	/**
-	 * @inheritdoc
-	 */
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -61,49 +61,49 @@ class AuthItem extends \yz\db\ActiveRecord implements ModelInfoInterface
         ];
     }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels()
-	{
-		return [
-			'name' => \Yii::t('admin/t','Name'),
-			'type' => \Yii::t('admin/t','Type'),
-			'description' => \Yii::t('admin/t','Description'),
-			'biz_rule' => \Yii::t('admin/t','Biz Rule'),
-			'data' => \Yii::t('admin/t','Data'),
-			'adminAuthAssignment' => \Yii::t('admin/t','Admin Auth Assignment'),
-			'users' => \Yii::t('admin/t','Users'),
-			'adminAuthItemChild' => \Yii::t('admin/t','Admin Auth Item Child'),
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'name' => \Yii::t('admin/t', 'Name'),
+            'type' => \Yii::t('admin/t', 'Type'),
+            'description' => \Yii::t('admin/t', 'Description'),
+            'biz_rule' => \Yii::t('admin/t', 'Biz Rule'),
+            'data' => \Yii::t('admin/t', 'Data'),
+            'adminAuthAssignment' => \Yii::t('admin/t', 'Admin Auth Assignment'),
+            'users' => \Yii::t('admin/t', 'Users'),
+            'adminAuthItemChild' => \Yii::t('admin/t', 'Admin Auth Item Child'),
             'created_at' => \Yii::t('admin/t', 'Created At'),
             'updated_at' => \Yii::t('admin/t', 'Updated At'),
             'rule_name' => \Yii::t('admin/t', 'Rule Name'),
-		];
-	}
+        ];
+    }
 
-	/**
-	 * @return \yii\db\ActiveRecord
-	 */
-	public function getAdminAuthAssignment()
-	{
-		return $this->hasOne(AuthAssignment::className(), ['item_name' => 'name']);
-	}
+    /**
+     * @return \yii\db\ActiveRecord
+     */
+    public function getAdminAuthAssignment()
+    {
+        return $this->hasOne(AuthAssignment::className(), ['item_name' => 'name']);
+    }
 
-	/**
-	 * @return \yii\db\ActiveRecord
-	 */
-	public function getUsers()
-	{
-		return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('{{%admin_auth_assignment}}', ['item_name' => 'name']);
-	}
+    /**
+     * @return \yii\db\ActiveRecord
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('{{%admin_auth_assignment}}', ['item_name' => 'name']);
+    }
 
-	/**
-	 * @return \yii\db\ActiveRecord
-	 */
-	public function getAdminAuthItemChild()
-	{
-		return $this->hasOne(AuthItemChild::className(), ['parent' => 'name']);
-	}
+    /**
+     * @return \yii\db\ActiveRecord
+     */
+    public function getAdminAuthItemChild()
+    {
+        return $this->hasOne(AuthItemChild::className(), ['parent' => 'name']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery

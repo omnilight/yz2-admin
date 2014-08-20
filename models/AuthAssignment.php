@@ -17,15 +17,15 @@ use yz\interfaces\ModelInfoInterface;
  */
 class AuthAssignment extends \yz\db\ActiveRecord implements ModelInfoInterface
 {
-	/**
-	 * @inheritdoc
-	 */
-	public static function tableName()
-	{
-		return '{{%admin_auth_assignment}}';
-	}
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return '{{%admin_auth_assignment}}';
+    }
 
-	/**
+    /**
      * Returns model title, ex.: 'Person', 'Book'
      * @return string
      */
@@ -43,9 +43,9 @@ class AuthAssignment extends \yz\db\ActiveRecord implements ModelInfoInterface
         return \Yii::t('admin/t', 'Auth Assignments');
     }
 
-	/**
-	 * @inheritdoc
-	 */
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -54,9 +54,9 @@ class AuthAssignment extends \yz\db\ActiveRecord implements ModelInfoInterface
         ];
     }
 
-	/**
-	 * @inheritdoc
-	 */
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
@@ -66,19 +66,19 @@ class AuthAssignment extends \yz\db\ActiveRecord implements ModelInfoInterface
         ];
     }
 
-	/**
-	 * @return \yii\db\ActiveRecord
-	 */
-	public function getUser()
-	{
-		return $this->hasOne(User::className(), ['id' => 'user_id']);
-	}
+    /**
+     * @return \yii\db\ActiveRecord
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
 
-	/**
-	 * @return \yii\db\ActiveRecord
-	 */
-	public function getItemName()
-	{
-		return $this->hasOne(AuthItem::className(), ['name' => 'item_name']);
-	}
+    /**
+     * @return \yii\db\ActiveRecord
+     */
+    public function getItemName()
+    {
+        return $this->hasOne(AuthItem::className(), ['name' => 'item_name']);
+    }
 }
