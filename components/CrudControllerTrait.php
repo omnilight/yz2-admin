@@ -11,6 +11,7 @@ namespace yz\admin\components;
 use yii\db\ActiveRecord;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yz\admin\helpers\AdminHtml;
 
 trait CrudControllerTrait
 {
@@ -25,19 +26,19 @@ trait CrudControllerTrait
         /** @var Controller $this */
         $me = $this;
         $defaultActions = [
-            'save_and_stay' => function () use ($model, $me) {
+            AdminHtml::ACTION_SAVE_AND_STAY => function () use ($model, $me) {
                     return $me->redirect(['update', 'id' => $model->getPrimaryKey()]);
                 },
-            'save_and_create' => function () use ($model, $me) {
+            AdminHtml::ACTION_SAVE_AND_CREATE => function () use ($model, $me) {
                     return $me->redirect(['create']);
                 },
-            'save_and_leave' => function () use ($model, $me) {
+            AdminHtml::ACTION_SAVE_AND_LEAVE => function () use ($model, $me) {
                     return $me->redirect(['index']);
                 },
         ];
 
         $actions = array_merge($defaultActions, $actions);
-        $actionName = \Yii::$app->request->post('__action', 'save_and_leave');
+        $actionName = \Yii::$app->request->post(AdminHtml::ACTION_BUTTON_NAME, AdminHtml::ACTION_SAVE_AND_LEAVE);
 
         if (isset($actions[$actionName]))
             return call_user_func($actions[$actionName]);
