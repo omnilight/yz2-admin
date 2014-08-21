@@ -97,7 +97,7 @@ class UsersController extends Controller
             \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Password was successfully changed'));
             return $this->getCreateUpdateResponse($model);
         } elseif (Yii::$app->request->post('__action') == 'reset_access_token') {
-            $model->access_token = \Yii::$app->security->generateRandomKey(User::ACCESS_TOKEN_LENGTH);
+            $model->access_token = \Yii::$app->security->generateRandomString(User::ACCESS_TOKEN_LENGTH);
             if ($model->save())
                 \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Access token was successfully changed'));
             else
