@@ -13,6 +13,7 @@ use yz\admin\models\search\UserSearch;
 use yz\admin\models\User;
 use yz\admin\models\UserCreate;
 use yz\widgets\ActiveForm;
+use yz\Yz;
 
 /**
  * UsersController implements the CRUD actions for User model.
@@ -63,7 +64,7 @@ class UsersController extends Controller
         }
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully created'));
+            \Yii::$app->session->setFlash(Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully created'));
             return $this->getCreateUpdateResponse($model);
         } else {
             return $this->render('create', [
@@ -91,17 +92,17 @@ class UsersController extends Controller
         }
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully updated'));
+            \Yii::$app->session->setFlash(Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Record was successfully updated'));
             return $this->getCreateUpdateResponse($model);
         } elseif ($passwordForm->load(\Yii::$app->request->post()) && $passwordForm->process()) {
-            \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Password was successfully changed'));
+            \Yii::$app->session->setFlash(Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Password was successfully changed'));
             return $this->getCreateUpdateResponse($model);
         } elseif (Yii::$app->request->post('__action') == 'reset_access_token') {
             $model->access_token = \Yii::$app->security->generateRandomString(User::ACCESS_TOKEN_LENGTH);
             if ($model->save())
-                \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Access token was successfully changed'));
+                \Yii::$app->session->setFlash(Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Access token was successfully changed'));
             else
-                \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Unknown error'));
+                \Yii::$app->session->setFlash(Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Unknown error'));
             return $this->redirect('');
         } else {
             return $this->render('update', [
@@ -129,7 +130,7 @@ class UsersController extends Controller
         foreach ($id as $id_)
             $this->findModel($id_)->delete();
 
-        \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, $message);
+        \Yii::$app->session->setFlash(Yz::FLASH_SUCCESS, $message);
 
         return $this->redirect(['index']);
     }
