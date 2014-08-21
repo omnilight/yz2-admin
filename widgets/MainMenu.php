@@ -2,7 +2,6 @@
 
 namespace yz\admin\widgets;
 
-
 use yii\base\Widget;
 use yz\admin\components\AuthManager;
 
@@ -16,8 +15,6 @@ class MainMenu extends Widget
 
     public function run()
     {
-        MainMenuAsset::register($this->getView());
-
         echo $this->render('mainMenu', [
             'menuItems' => $this->getMenuItems(),
         ]);

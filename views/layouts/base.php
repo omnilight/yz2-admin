@@ -21,7 +21,7 @@ Icons::register($this);
     <?= Html::csrfMetaTags() ?>
     <?php $this->head(); ?>
 </head>
-<body>
+<body class="skin-blue">
 <?php $this->beginBody() ?>
     <?= $content; ?>
 <?php $this->endBody() ?>

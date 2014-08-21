@@ -5,7 +5,7 @@ namespace yz\admin\widgets;
 
 use yii\helpers\Html;
 use Yii;
-use yz\admin\helpers\AdminHelper;
+use yz\admin\helpers\AdminUrl;
 use yz\icons\Icons;
 
 /**
@@ -53,7 +53,7 @@ class ActionColumn extends \yii\grid\ActionColumn
     public function createUrl($action, $model, $key, $index)
     {
         if ($this->addReturnUrl)
-            $key = (is_array($key) ? $key : ['id' => $key]) + AdminHelper::returnUrlRoute();
+            $key = (is_array($key) ? $key : ['id' => $key]) + AdminUrl::returnUrlRoute();
         return parent::createUrl($action, $model, $key, $index);
     }
 

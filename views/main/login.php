@@ -15,11 +15,10 @@ use yz\icons\Icons;
 
 		<?php $form = ActiveForm::begin([
 			'id' => 'login-form',
-			'type' => ActiveForm::TYPE_HORIZONTAL,
 			'fieldConfig' => [
-				'horizontal' => [
+				'horizontalCssClasses' => [
 					'label' => 'col-sm-3',
-					'input' => 'col-sm-7'
+					'wrapper' => 'col-sm-7'
 				]
 			]
 		]) ?>

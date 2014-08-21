@@ -10,7 +10,7 @@ use yii\bootstrap\ButtonDropdown;
 use yii\bootstrap\ButtonGroup;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yz\admin\helpers\AdminHelper;
+use yz\admin\helpers\AdminUrl;
 use yz\icons\Icon;
 use yz\icons\Icons;
 
@@ -167,13 +167,13 @@ class ActionButtons extends Widget
     public function getReturnButton()
     {
         if ($this->_returnButton === null) {
-            if (AdminHelper::getReturnUrl() !== null) {
+            if (AdminUrl::getReturnUrl() !== null) {
                 $this->_returnButton = Button::widget([
                     'tagName' => 'a',
                     'label' => Icons::p('angle-left') . \Yii::t('admin/t', 'Go Back'),
                     'encodeLabel' => false,
                     'options' => [
-                        'href' => AdminHelper::getReturnUrl(),
+                        'href' => AdminUrl::getReturnUrl(),
                         'class' => 'btn btn-default',
                     ],
                 ]);
@@ -198,7 +198,7 @@ class ActionButtons extends Widget
     public function getCreateButton()
     {
         if ($this->_createButton === null) {
-            $url = $this->createUrl + ($this->addReturnUrl ? AdminHelper::returnUrlRoute() : []);
+            $url = $this->createUrl + ($this->addReturnUrl ? AdminUrl::returnUrlRoute() : []);
             $attributes = $this->getModelAttributes();
 
             if ($attributes == []) {
@@ -250,7 +250,7 @@ class ActionButtons extends Widget
     public function getDeleteButton()
     {
         if ($this->_deleteButton === null) {
-            $url = $this->deleteUrl + ($this->addReturnUrl ? AdminHelper::returnUrlRoute() : []);
+            $url = $this->deleteUrl + ($this->addReturnUrl ? AdminUrl::returnUrlRoute() : []);
             $this->_deleteButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('trash-o') . \Yii::t('admin/t', 'Delete Checked'),
@@ -281,7 +281,7 @@ class ActionButtons extends Widget
     public function getIndexButton()
     {
         if ($this->_indexButton === null) {
-            $url = $this->indexUrl + ($this->addReturnUrl ? AdminHelper::returnUrlRoute() : []);
+            $url = $this->indexUrl + ($this->addReturnUrl ? AdminUrl::returnUrlRoute() : []);
             $this->_indexButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('list') . \Yii::t('admin/t', 'List'),
@@ -309,7 +309,7 @@ class ActionButtons extends Widget
     public function getUpdateButton()
     {
         if ($this->_updateButton === null) {
-            $url = $this->updateUrl + ($this->addReturnUrl ? AdminHelper::returnUrlRoute() : []);
+            $url = $this->updateUrl + ($this->addReturnUrl ? AdminUrl::returnUrlRoute() : []);
             $this->_updateButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('pencil') . \Yii::t('admin/t', 'Edit'),

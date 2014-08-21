@@ -1,43 +1,39 @@
 <?php
 
 namespace yz\admin\assets;
-
 use yii\web\AssetBundle;
 
 
 /**
- * Class AdminAsset
- * @package yz\admin\assets
+ * Class AdminLTEAsset
+ * @package \yz\admin\assets
  */
-class AdminAsset extends AssetBundle
+class AdminLTEAsset extends AssetBundle
 {
-	public $publishOptions = [
-		'forceCopy' => YII_DEBUG,
-	];
+    public $publishOptions = [
+        'forceCopy' => YII_DEBUG,
+    ];
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@yz/admin/assets/adminAsset';
+    public $sourcePath = '@yz/admin/assets/adminLteAsset';
     /**
      * @inheritdoc
      */
     public $css = [
-        'css/admin.css',
+        'css/adminLTE.css',
     ];
     /**
      * @inheritdoc
      */
     public $js = [
-        'js/admin.js',
+        'js/adminLTE.js',
     ];
     /**
      * @inheritdoc
      */
     public $depends = [
-        'yz\admin\assets\AdminLTEAsset',
-        'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
-        'yz\assets\YzAsset'
     ];
-}
+} 

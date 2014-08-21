@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use yz\admin\helpers\AdminHtml;
 use yz\admin\widgets\ActiveForm;
+use yz\admin\widgets\FormBox;
 
 /**
  * @var yii\web\View $this
@@ -10,31 +12,24 @@ use yz\admin\widgets\ActiveForm;
  */
 ?>
 
-<div class="role-form crud-form">
+<?php $box = FormBox::begin(['cssClass' => 'roles-form box-primary', 'title' => '']) ?>
 
-    <?php $form = ActiveForm::begin([
-        'enableAjaxValidation' => true,
-    ]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'description')->textInput() ?>
+    <?php $box->beginBody() ?>
+        <?= $form->field($model, 'description')->textInput() ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
+        <?= $form->field($model, 'childRoles')->dropDownList($model->getChildRolesValues(),['multiple' => 'multiple', 'size' => 10]) ?>
+        <?= $form->field($model, 'childPermissions')->dropDownList($model->getChildPermissionsValues(),['multiple' => 'multiple', 'size' => 20]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
+    <?php $box->endBody() ?>
 
-    <?= $form->field($model, 'childRoles')->dropDownList($model->getChildRolesValues(),['multiple' => 'multiple', 'size' => 10]) ?>
-
-    <?= $form->field($model, 'childPermissions')->dropDownList($model->getChildPermissionsValues(),['multiple' => 'multiple', 'size' => 20]) ?>
-
-
-    <div class="form-group form-actions">
-        <div class="col-sm-offset-2 col-sm-10">
-            <?= Html::submitButton($model->isNewRecord ? \Yii::t('admin/t', 'Create') : \Yii::t('admin/t', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'name' => '__action', 'value' => 'save_and_stay']) ?>
-            <?= Html::submitButton($model->isNewRecord ? \Yii::t('admin/t', 'Create & Exit') : \Yii::t('admin/t', 'Update & Exit'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            <?php if ($model->isNewRecord): ?>
-                <?= Html::submitButton(\Yii::t('admin/t', 'Create & Then Create Another One'), ['class' => 'btn btn-success', 'name' => '__action', 'value' => 'save_and_create']) ?>
-            <?php endif ?>
-        </div>
-    </div>
+    <?php $box->actions([
+        AdminHtml::actionButton(AdminHtml::ACTION_SAVE_AND_STAY, $model->isNewRecord),
+        AdminHtml::actionButton(AdminHtml::ACTION_SAVE_AND_LEAVE, $model->isNewRecord),
+        AdminHtml::actionButton(AdminHtml::ACTION_SAVE_AND_CREATE, $model->isNewRecord),
+    ]) ?>
 
     <?php ActiveForm::end(); ?>
 
-</div>
+<?php FormBox::end() ?>

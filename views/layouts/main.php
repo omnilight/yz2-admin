@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\NavBar;
 use yii\bootstrap\Nav;
+use yii\helpers\Url;
 use yz\icons\Icons;
 
 /**
@@ -10,14 +11,18 @@ use yz\icons\Icons;
  */
 ?>
 <?php $this->beginContent('@yz/admin/views/layouts/base.php'); ?>
-    <!-- Top bar-->
-    <nav class="navbar navbar-fixed-top b-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand"
-                   href="<?= Yii::$app->homeUrl ?>"><?= Yii::$app->getModule('admin')->adminTitle ?: Yii::t('admin/t', 'Administration panel') ?></a>
-            </div>
-
+    <header class="header">
+        <a href="<?= Url::home() ?>" class="logo">
+            <?= Yii::$app->getModule('admin')->adminTitle ?: Yii::t('admin/t', 'Administration panel') ?>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
             <?php echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'encodeLabels' => false,
@@ -31,23 +36,24 @@ use yz\icons\Icons;
                     ]
                 ]
             ]); ?>
-        </div>
-    </nav>
-
-<?= \yz\admin\widgets\MainMenu::widget(); ?>
-
-<?php echo \yii\widgets\Breadcrumbs::widget([
-    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-]); ?>
-
-<?php echo \yz\admin\widgets\Alerts::widget(); ?>
-
-    <div class="container-fluid b-content">
-        <div class="col-md-12">
-
-            <?= \yz\admin\widgets\Alerts::widget(); ?>
-
-            <?= $content; ?>
-        </div>
+        </nav>
+    </header>
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <aside class="left-side sidebar-offcanvas">
+            <section class="sidebar">
+                <?= \yz\admin\widgets\MainMenu::widget(); ?>
+            </section>
+        </aside>
+        <aside class="right-side">
+            <section class="content-header">
+                <?php echo \yii\widgets\Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]); ?>
+            </section>
+            <section class="content">
+                <?php echo \yz\admin\widgets\Alerts::widget(); ?>
+                <?= $content; ?>
+            </section>
+        </aside>
     </div>
 <?php $this->endContent(); ?>

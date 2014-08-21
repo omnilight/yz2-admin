@@ -4,10 +4,10 @@ namespace yz\admin\helpers;
 
 
 /**
- * Class AdminHelper
+ * Class AdminUrl
  * @package yz\admin\helpers
  */
-class AdminHelper
+class AdminUrl
 {
     /**
      * Returns URL of the referencing page
