@@ -11,10 +11,9 @@ use yz\admin\widgets\ActionButtons;
 
 $this->title = \Yii::t('admin/t','Your profile');
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['header'] = $this->title;
 ?>
 <div class="profile-edit">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?php echo $this->render('_form', [
         'model' => $model,

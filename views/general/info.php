@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yz\admin\helpers\SystemInfo;
+use yz\admin\widgets\Box;
 
 /**
  * @var \yii\web\View $this
@@ -8,22 +10,61 @@ use yii\helpers\Url;
 
 $this->title = Yii::t('admin/sysinfo','General system info');
 $this->params['breadcrumbs'][] = $this->title;
-
+$this->params['header'] = Yii::t('admin/sysinfo','General system info')
 ?>
 
-<h1><?= Yii::t('admin/sysinfo','General system info') ?></h1>
+<div class="row">
+    <div class="col-md-6">
+        <?php Box::begin(['title' => Yii::t('admin/sysinfo','Server')]) ?>
+        <table class="table">
+            <tr>
+                <td><?= Yii::t('admin/sysinfo','OS') ?></td>
+                <td><?= SystemInfo::getOS() ?></td>
+            </tr>
+            <tr>
+                <td><?= Yii::t('admin/sysinfo','Server system') ?></td>
+                <td><?= SystemInfo::getServerSoftware() ?></td>
+            </tr>
+            <tr>
+                <td><?= Yii::t('admin/sysinfo','CPU Architecture') ?></td>
+                <td><?= SystemInfo::getArchitecture() ?></td>
+            </tr>
+            <tr>
+                <td><?= Yii::t('admin/sysinfo','Load averages') ?></td>
+                <td><?= implode(', ', SystemInfo::getLoadAverage()) ?></td>
+            </tr>
+        </table>
+        <?php Box::end() ?>
+    </div>
+    <div class="col-md-6">
+        <?php Box::begin(['title' => Yii::t('admin/sysinfo','Software')]) ?>
+        <table class="table">
+            <tr>
+                <td><?= Yii::t('admin/sysinfo','PHP') ?></td>
+                <td><?= SystemInfo::getPhpVersion() ?></td>
+            </tr>
+            <tr>
+                <td><?= Yii::t('admin/sysinfo','DB') ?></td>
+                <td><?= SystemInfo::getDbType() ?></td>
+            </tr>
+            <tr>
+                <td><?= Yii::t('admin/sysinfo','DB Version') ?></td>
+                <td><?= SystemInfo::getDbVersion() ?></td>
+            </tr>
+        </table>
+        <?php Box::end() ?>
+    </div>
+</div>
 
-<table class="table">
-    <tr>
-        <td><?= Yii::t('admin/sysinfo','Server') ?></td>
-        <td><?= php_uname() ?></td>
-    </tr>
-    <tr>
-        <td><?= Yii::t('admin/sysinfo','PHP version') ?></td>
-        <td><?= phpversion() ?></td>
-    </tr>
-    <tr>
-        <td><?= Yii::t('admin/sysinfo','Yii version') ?></td>
-        <td><?= Yii::getVersion() ?></td>
-    </tr>
-</table>
+<div class="row">
+    <div class="col-md-6">
+        <?php Box::begin(['title' => Yii::t('admin/sysinfo','Engine')]) ?>
+        <table class="table">
+            <tr>
+                <td><?= Yii::t('admin/sysinfo','Yii') ?></td>
+                <td><?= Yii::getVersion() ?></td>
+            </tr>
+        </table>
+        <?php Box::end() ?>
+    </div>
+</div>

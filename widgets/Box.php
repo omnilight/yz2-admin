@@ -34,6 +34,8 @@ class Box extends Widget
     public $bodyOptions = ['class' => 'box-body'];
     public $footerOptions = ['class' => 'box-footer'];
 
+    protected $_hasBody = false;
+
     public function init()
     {
         ob_start();
@@ -47,6 +49,14 @@ class Box extends Widget
         Html::addCssClass($this->options, 'box');
         if ($this->cssClass)
             Html::addCssClass($this->options, $this->cssClass);
+
+        if ($this->_hasBody == false) {
+            ob_start();
+            $this->beginBody();
+            echo $boxContent;
+            $this->endBody();
+            $boxContent = ob_get_clean();
+        }
 
         echo strtr($this->template, [
             '{options}' => Html::renderTagAttributes($this->options),
@@ -70,6 +80,7 @@ class Box extends Widget
      */
     public function beginBody($options = [])
     {
+        $this->_hasBody = true;
         echo Html::beginTag('div', array_merge($this->bodyOptions, $options));
     }
 

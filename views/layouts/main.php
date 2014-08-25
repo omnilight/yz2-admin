@@ -18,24 +18,33 @@ use yz\icons\Icons;
         <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
             <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only"><?= Yii::t('admin/t','Toggle navigation') ?></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <?php echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'encodeLabels' => false,
-                'items' => [
-                    [
-                        'label' => Icons::p('user fa-fw') . Html::encode(Yii::$app->user->identity->name),
-                        'items' => [
-                            ['label' => Icons::p('user fa-fw') . Yii::t('admin/t', 'Your profile'), 'url' => ['/admin/profile/index']],
-                            ['label' => Icons::p('power-off fa-fw') . Yii::t('admin/t', 'Logout'), 'url' => ['/admin/main/logout']],
+            <div class="navbar-right">
+                <?php echo Nav::widget([
+                    'options' => ['class' => 'navbar-nav'],
+                    'encodeLabels' => false,
+                    'items' => [
+                        [
+                            'label' => Icons::p('user fa-fw') . Html::encode(Yii::$app->user->identity->name),
+                            'items' => [
+                                [
+                                    'label' => Icons::p('user fa-fw') . Yii::t('admin/t', 'Your profile'),
+                                    'url' => ['/admin/profile/index']
+                                ],
+                                [
+                                    'label' => Icons::p('power-off fa-fw') . Yii::t('admin/t', 'Logout'),
+                                    'url' => ['/admin/main/logout']
+                                ],
+                            ],
+                            'options' => ['class' => 'user user-menu'],
                         ]
                     ]
-                ]
-            ]); ?>
+                ]); ?>
+            </div>
         </nav>
     </header>
     <div class="wrapper row-offcanvas row-offcanvas-left">
@@ -46,6 +55,9 @@ use yz\icons\Icons;
         </aside>
         <aside class="right-side">
             <section class="content-header">
+                <?php if (isset($this->params['header'])): ?>
+                    <h1><?= $this->params['header'] ?></h1>
+                <?php endif ?>
                 <?php echo \yii\widgets\Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ]); ?>

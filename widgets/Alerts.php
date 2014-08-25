@@ -4,6 +4,7 @@ namespace yz\admin\widgets;
 
 use yii\bootstrap\Alert;
 use yii\bootstrap\Widget;
+use yz\icons\Icons;
 use yz\Yz;
 
 
@@ -25,6 +26,16 @@ class Alerts extends Widget
         Yz::FLASH_INFO => 'alert-info',
         Yz::FLASH_WARNING => 'alert-warning'
     ];
+    /**
+     * @var array the alert icons
+     */
+    public $alertIcons = [
+        Yz::FLASH_ERROR => 'ban',
+        Yz::FLASH_SUCCESS => 'info',
+        Yz::FLASH_INFO => 'warning',
+        Yz::FLASH_WARNING => 'check'
+    ];
+
     /**
      * @var string
      */
@@ -53,8 +64,10 @@ class Alerts extends Widget
                 /* assign unique id to each alert box */
                 $this->options['id'] = $this->getId() . '-' . $type;
 
+                $body = Icons::p($this->alertIcons[$type]) . $message;
+
                 $alerts .= Alert::widget([
-                    'body' => $message,
+                    'body' => $body,
                     'closeButton' => $this->closeButton,
                     'options' => $this->options,
                 ]);

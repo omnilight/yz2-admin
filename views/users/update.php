@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yz\admin\widgets\ActionButtons;
+use yz\admin\widgets\Box;
 
 /**
  * @var yii\web\View $this
@@ -9,27 +10,29 @@ use yz\admin\widgets\ActionButtons;
  * @var \yz\admin\forms\ChangeUserPasswordForm $passwordForm
  */
 
-$this->title = \Yii::t('admin/t','Update object "{item}": {title}', [
-	'item' => \yz\admin\models\User::modelTitle(),
-	'title' => $model->name,
+$this->title = \Yii::t('admin/t', 'Update object "{item}": {title}', [
+    'item' => \yz\admin\models\User::modelTitle(),
+    'title' => $model->name,
 ]);
 $this->params['breadcrumbs'][] = ['label' => \yz\admin\models\User::modelTitlePlural(), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['header'] = $this->title;
 ?>
 <div class="user-update">
 
-	<div class="btn-toolbar pull-right">
-		<?=  ActionButtons::widget([
-			'order' => [['index', 'update', 'return']],
-			'addReturnUrl' => false,
-		]) ?>
-	</div>
+    <div class="text-right">
+        <?php Box::begin() ?>
+        <?php echo ActionButtons::widget([
+            'order' => [['index', 'create', 'return',]],
+            'addReturnUrl' => false,
+        ]) ?>
+        <?php Box::end() ?>
+    </div>
 
-	<h1><?= Html::encode($this->title) ?></h1>
-
-	<?php echo $this->render('_form', [
-		'model' => $model,
+    <?php echo $this->render('_form', [
+        'model' => $model,
         'passwordForm' => $passwordForm,
-	]); ?>
+    ]); ?>
+
 
 </div>
