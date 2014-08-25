@@ -3,6 +3,7 @@
 namespace yz\admin\widgets;
 
 use yii\base\Widget;
+use Yii;
 use yz\admin\components\AuthManager;
 
 /**
@@ -13,8 +14,29 @@ class MainMenu extends Widget
 {
     const ADMIN_MENU_ITEMS_KEY = 'AdminMenuItemsKey';
 
+    /**
+     * @var string the route used to determine if a menu item is active or not.
+     * If not set, it will use the route of the current request.
+     * @see params
+     * @see isItemActive()
+     */
+    public $route;
+    /**
+     * @var array the parameters used to determine if a menu item is active or not.
+     * If not set, it will use `$_GET`.
+     * @see route
+     * @see isItemActive()
+     */
+    public $params;
+
     public function run()
     {
+        if ($this->route === null && Yii::$app->controller !== null) {
+            $this->route = Yii::$app->controller->getRoute();
+        }
+        if ($this->params === null) {
+            $this->params = Yii::$app->request->getQueryParams();
+        }
         echo $this->render('mainMenu', [
             'menuItems' => $this->getMenuItems(),
         ]);
@@ -22,11 +44,11 @@ class MainMenu extends Widget
 
     protected function getMenuItems()
     {
-        if (($menuItems = \Yii::$app->cache->get(static::ADMIN_MENU_ITEMS_KEY)) === false) {
+        if (($menuItems = Yii::$app->cache->get(static::ADMIN_MENU_ITEMS_KEY)) === false) {
             $menuItems = [];
-            foreach (\Yii::$app->getModules() as $id => $module) {
+            foreach (Yii::$app->getModules() as $id => $module) {
                 if (is_array($module)) {
-                    $module = \Yii::$app->getModule($id);
+                    $module = Yii::$app->getModule($id);
                 }
                 if ($module instanceof \yz\Module) {
                     $moduleMenu = $module->getAdminMenu();
@@ -35,7 +57,7 @@ class MainMenu extends Widget
                         $groupItems = [];
                         foreach ($group['items'] as $item) {
                             if (isset($item['authItem']))
-                                $hasAccess = \Yii::$app->user->can($item['authItem']);
+                                $hasAccess = Yii::$app->user->can($item['authItem']);
                             elseif (isset($item['route']) && is_array($item['route']))
                                 $hasAccess = $this->checkAccessByRoute($item['route'][0]);
                             else
@@ -58,7 +80,16 @@ class MainMenu extends Widget
             if (!empty($menuItems))
                 $menuItems = call_user_func_array('array_merge', $menuItems);
 
-            \Yii::$app->cache->set(static::ADMIN_MENU_ITEMS_KEY, $menuItems, 10000);
+            Yii::$app->cache->set(static::ADMIN_MENU_ITEMS_KEY, $menuItems, 10000);
+        }
+
+        foreach ($menuItems as &$group) {
+            $hasActive = false;
+            foreach ($group['items'] as &$item) {
+                $item['active'] = $this->isItemActive($item);
+                $hasActive = $item['active'] ? true : $hasActive;
+            }
+            $group['active'] = $hasActive;
         }
 
         return $menuItems;
@@ -71,7 +102,7 @@ class MainMenu extends Widget
         if (isset($_routes[$route]))
             return $_routes[$route];
 
-        if (($ca = \Yii::$app->createController($route)) === false) {
+        if (($ca = Yii::$app->createController($route)) === false) {
             return true;
         }
 
@@ -79,6 +110,41 @@ class MainMenu extends Widget
 
         $operation = AuthManager::getOperationName($controller, $action);
 
-        return ($_routes[$route] = \Yii::$app->user->can($operation));
+        return ($_routes[$route] = Yii::$app->user->can($operation));
+    }
+
+    /**
+     * Checks whether a menu item is active.
+     * This is done by checking if [[route]] and [[params]] match that specified in the `url` option of the menu item.
+     * When the `url` option of a menu item is specified in terms of an array, its first element is treated
+     * as the route for the item and the rest of the elements are the associated parameters.
+     * Only when its route and parameters match [[route]] and [[params]], respectively, will a menu item
+     * be considered active.
+     * @param array $item the menu item to be checked
+     * @return boolean whether the menu item is active
+     */
+    protected function isItemActive($item)
+    {
+        if (isset($item['route']) && is_array($item['route']) && isset($item['route'][0])) {
+            $route = $item['route'][0];
+            if ($route[0] !== '/' && Yii::$app->controller) {
+                $route = Yii::$app->controller->module->getUniqueId() . '/' . $route;
+            }
+            if (ltrim($route, '/') !== $this->route) {
+                return false;
+            }
+            unset($item['route']['#']);
+            if (count($item['route']) > 1) {
+                foreach (array_splice($item['route'], 1) as $name => $value) {
+                    if ($value !== null && (!isset($this->params[$name]) || $this->params[$name] != $value)) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 } 
