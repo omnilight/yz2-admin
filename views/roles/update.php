@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yz\admin\widgets\ActionButtons;
+use yz\admin\widgets\Box;
 
 /**
  * @var yii\web\View $this
