@@ -21,7 +21,7 @@ class AdminLTEAsset extends AssetBundle
      * @inheritdoc
      */
     public $css = [
-        'css/adminLTE.css',
+        'css/AdminLTE.css',
     ];
     /**
      * @inheritdoc
