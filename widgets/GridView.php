@@ -42,7 +42,7 @@ class GridView extends \yii\grid\GridView
             if ($this->checkIfResumeExport() == false)
                 break;
 
-            $pages = $this->renderSinglePage($page);
+            $pages[] = $this->renderSinglePage($page);
 
             $this->endExportIteration($page);
         }
