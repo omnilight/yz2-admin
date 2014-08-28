@@ -66,6 +66,7 @@ class ExportAction extends Action
         $gridColumns = call_user_func($this->getGridColumns());
 
         $grid = GridView::widget([
+            'renderAllPages' => true,
             'layout' => "{items}",
             'tableOptions' => ['class' => ''],
             'dataProvider' => $dataProvider,
