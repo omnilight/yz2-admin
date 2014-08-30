@@ -57,6 +57,4 @@ class MainController extends Controller
             ]
         ], parent::getAccessRules());
     }
-
-
 }

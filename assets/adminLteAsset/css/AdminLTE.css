@@ -863,8 +863,6 @@ body > .header .logo .icon {
 .navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a,
 .navbar-nav > .tasks-menu > .dropdown-menu > li .menu > li > a {
   display: block;
-  white-space: nowrap;
-  /* Prevent text from breaking */
   border-bottom: 1px solid #f4f4f4;
 }
 .navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a:hover,
@@ -877,9 +875,9 @@ body > .header .logo .icon {
   font-size: 12px;
   color: #444444;
 }
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .glyphicon,
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .fa,
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .ion {
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .glyphicon,
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .fa,
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .ion {
   font-size: 20px;
   width: 50px;
   text-align: center;
@@ -891,24 +889,24 @@ body > .header .logo .icon {
   /* Fallback for browsers that doesn't support rgba */
   color: rgba(255, 255, 255, 0.7);
 }
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .glyphicon.danger,
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .fa.danger,
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .ion.danger {
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .glyphicon.danger,
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .fa.danger,
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .ion.danger {
   background: #f56954;
 }
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .glyphicon.warning,
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .fa.warning,
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .ion.warning {
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .glyphicon.warning,
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .fa.warning,
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .ion.warning {
   background: #f39c12;
 }
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .glyphicon.success,
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .fa.success,
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .ion.success {
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .glyphicon.success,
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .fa.success,
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .ion.success {
   background: #00a65a;
 }
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .glyphicon.info,
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .fa.info,
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .ion.info {
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .glyphicon.info,
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .fa.info,
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a .ion.info {
   background: #00c0ef;
 }
 .navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a {
@@ -2227,7 +2225,7 @@ Component: timeline
 }
 /* Nav tabs bottom */
 .tabs-bottom.nav-3 li a {
-  width: 3333.3333333333335% !important;
+  width: 3333.33333333% !important;
 }
 .tabs-bottom li a {
   border: 0;

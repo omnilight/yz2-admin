@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\bootstrap\NavBar;
 use yii\bootstrap\Nav;
 use yii\helpers\Url;
+use yz\admin\widgets\SystemEvents;
 use yz\icons\Icons;
 
 /**
@@ -24,26 +25,60 @@ use yz\icons\Icons;
                 <span class="icon-bar"></span>
             </a>
             <div class="navbar-right">
-                <?php echo Nav::widget([
-                    'options' => ['class' => 'navbar-nav'],
-                    'encodeLabels' => false,
-                    'items' => [
-                        [
-                            'label' => Icons::p('user fa-fw') . Html::encode(Yii::$app->user->identity->name),
-                            'items' => [
-                                [
-                                    'label' => Icons::p('user fa-fw') . Yii::t('admin/t', 'Your profile'),
-                                    'url' => ['/admin/profile/index']
-                                ],
-                                [
-                                    'label' => Icons::p('power-off fa-fw') . Yii::t('admin/t', 'Logout'),
-                                    'url' => ['/admin/main/logout']
-                                ],
-                            ],
-                            'options' => ['class' => 'user user-menu'],
-                        ]
-                    ]
-                ]); ?>
+                <ul class="nav navbar-nav">
+
+                    <?php $events = SystemEvents::begin() ?>
+                    <?php if ($events->items): ?>
+                        <li class="dropdown notifications-menu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <?= Icons::i('warning fa-fw') ?>
+                                <span class="label label-warning"><?= count($events->items) ?></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">
+                                    <?= Yii::t('admin/t', 'You have {n} notifications', ['n' => count($events->items)]) ?>
+                                </li>
+                                <li>
+                                    <ul class="menu">
+                                        <?php foreach ($events->items as $event): ?>
+                                            <li>
+                                                <a href="<?= Url::to(['/admin/system-events/view', 'id' => $event->id]) ?>" class="clearfix">
+                                                    <div class="pull-left"><?= Icons::i('warning ' . $event->type) ?></div>
+                                                    <span><?= $event->message ?></span>
+                                                </a>
+                                            </li>
+                                        <?php endforeach ?>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php endif ?>
+                    <?php SystemEvents::end() ?>
+
+                    <li class="dropdown user user-menu">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <?= Icons::i('user fa-fw') ?>
+                            <span><?= Html::encode(Yii::$app->user->identity->name) ?> <i class="caret"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header bg-light-blue">
+                                <p>
+                                    <?= Yii::$app->user->identity->name ?>
+                                    <small><?= Yii::$app->user->identity->email ?></small>
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a class="btn btn-default btn-flat" href="<?= Url::to(['/admin/profile/index']) ?>"><?= Yii::t('admin/t', 'Your profile') ?></a>
+                                </div>
+                                <div class="pull-right">
+                                    <a class="btn btn-default btn-flat" href="<?= Url::to(['/admin/main/logout']) ?>"><?= Yii::t('admin/t', 'Logout') ?></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
             </div>
         </nav>
     </header>
