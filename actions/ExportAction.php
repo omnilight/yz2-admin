@@ -73,12 +73,11 @@ class ExportAction extends Action
             'columns' => $gridColumns,
         ]);
 
-        Yii::$app->response->headers['Content-Type'] = 'application/msexcel';
-        Yii::$app->response->headers['Content-Disposition'] = 'attachment; filename=' . $this->reportName . '.xls';
-        return strtr(self::EXPORT_TEMPLATE, [
+        $content = strtr(self::EXPORT_TEMPLATE, [
             '{name}' => $this->reportName,
             '{grid}' => $grid,
         ]);
+        return Yii::$app->response->sendContentAsFile($content, $this->reportName . '.xls', 'application/msexcel');
     }
 
     const EXPORT_TEMPLATE = <<<HTML

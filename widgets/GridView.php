@@ -1,10 +1,20 @@
 <?php
 
 namespace yz\admin\widgets;
+use yii\base\InvalidConfigException;
+use yii\grid\Column;
+use yii\grid\DataColumn;
+use yii\helpers\Json;
+use yii\grid\GridViewAsset;
+use yii\widgets\BaseListView;
+use Yii;
 
 
 /**
- * Class GridView
+ * Class GridView extends base Yii's GridView. It provides such options as:
+ *  - rendering all pages together (gives ability to reduce memory usage)
+ *  - control execution time of the rendering (when we have a lot of rows, this could save us from ran out of time)
+ *  - run in console mode (suppress all unsupported in console application options)
  * @package yz\admin\widgets
  */
 class GridView extends \yii\grid\GridView
@@ -20,9 +30,23 @@ class GridView extends \yii\grid\GridView
      * time to prevent error
      */
     public $controlExecutionTime = true;
+    /**
+     * @var bool If true gridview will not do things that are not available in the console application
+     */
+    public $runInConsoleMode = false;
 
     protected $_startExportTime;
     protected $_averageIterationTime;
+
+    public function run()
+    {
+        if ($this->runInConsoleMode == false) {
+            parent::run();
+        } else {
+            BaseListView::run();
+        }
+    }
+
 
     public function renderTableBody()
     {
@@ -48,6 +72,18 @@ class GridView extends \yii\grid\GridView
         }
         return '<tbody>' . implode('', $pages) . '</tbody>';
     }
+
+    protected function initColumns()
+    {
+        parent::initColumns();
+        if ($this->runInConsoleMode) {
+            array_map(function($column){
+                /** @var DataColumn $column */
+                $column->enableSorting = false;
+            }, $this->columns);
+        }
+    }
+
 
     /**
      * Marks start of exporting
