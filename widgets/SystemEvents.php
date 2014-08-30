@@ -27,8 +27,6 @@ class SystemEvents extends Widget
         if (!Instance::ensure(\Yii::$app->user->identity, User::className()))
             return;
 
-        SystemEvent::create('info', \Yii::$app->user->id, 'Тестовое сообщение о завершении загрузки', ['/admin/users/index']);
-
         /** @var SystemEvent[] $events */
         $this->_items = SystemEvent::find()
             ->where(['is_viewed' => '0', 'user_id' => \Yii::$app->user->id])
