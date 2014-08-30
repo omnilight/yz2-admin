@@ -122,10 +122,8 @@ class SystemEvent extends \yz\db\ActiveRecord implements ModelInfoInterface
 
     public function beforeSave($insert)
     {
-        if ($insert) {
-            if ($this->is_viewed == 1 && $this->isAttributeChanged('is_viewed')) {
-                $this->last_viewed_at = new Expression('NOW()');
-            }
+        if ($this->is_viewed == 1 && $this->isAttributeChanged('is_viewed')) {
+            $this->last_viewed_at = new Expression('NOW()');
         }
         return parent::beforeSave($insert);
     }
