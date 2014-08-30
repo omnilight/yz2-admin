@@ -16,9 +16,17 @@
  *
  * NOTE: this file must be saved in UTF-8 encoding.
  */
-return array (
+return [
+    'CPU Architecture' => 'Архитектура процессора',
+    'DB' => 'База данных',
+    'DB Version' => 'Версия базы',
+    'Engine' => 'Движок',
+    'Load averages' => 'Средняя загрузка ЦП',
+    'OS' => 'Операционная система',
+    'PHP' => '',
+    'Server system' => 'Система на сервере',
+    'Software' => 'Программное обеспечения',
+    'Yii' => '',
     'General system info' => 'Общая системная информация',
-    'PHP version' => 'Версия PHP',
     'Server' => 'Сервер',
-    'Yii version' => 'Версия Yii',
-);
+];
