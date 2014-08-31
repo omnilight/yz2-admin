@@ -10,6 +10,9 @@ use yii\web\AssetBundle;
  */
 class ActionButtonsAsset extends AssetBundle
 {
+    public $publishOptions = [
+        'forceCopy' => YII_DEBUG
+    ];
     /**
      * @inheritdoc
      */
