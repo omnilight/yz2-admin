@@ -17,11 +17,11 @@ yii.yz.admin.actionButtons = (function($) {
                 var grid = $('#'+$(this).data('grid'));
                 var url = $(this).attr('href');
                 var data = {id: grid.yiiGridView('getSelectedRows')};
+                url = url + (url.indexOf('?') > 0 ? '&':'?') + $.param(data);
 
                 $(this).data('method', 'post');
-                $(this).attr('href', url + $.param(data));
-                //return yii.handleAction(this);
-                return false;
+                $(this).attr('href', url);
+                return yii.handleAction(this);
             })
         }
     };
