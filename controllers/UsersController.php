@@ -118,7 +118,7 @@ class UsersController extends Controller
      * @param mixed $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete(array $id)
     {
         if (is_array($id)) {
             $message = \Yii::t('admin/t', 'Records were successfully deleted');

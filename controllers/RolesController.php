@@ -104,10 +104,10 @@ class RolesController extends Controller
     /**
      * Deletes an existing Role model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * * @param string $id
+     * @param mixed $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete(array $id)
     {
         if (is_array($id)) {
             $message = \Yii::t('admin/t', 'Records were successfully deleted');
