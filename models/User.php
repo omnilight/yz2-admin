@@ -75,6 +75,16 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     }
 
     /**
+     * @param $login
+     * @return User
+     */
+    public static function findByLogin($login)
+    {
+        return static::find()
+            ->where(['login' => $login])->one();
+    }
+
+    /**
      * @inheritdoc
      * @return UsersQuery
      */
@@ -83,6 +93,42 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
         return Yii::createObject(UsersQuery::className(), [get_called_class()]);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['access_token' => $token, 'is_active' => 1]);
+    }
+
+    /**
+     * @param $password
+     * @return string
+     */
+    public static function hashPassword($password)
+    {
+        return \Yii::$app->security->generatePasswordHash($password);
+    }
+
+    /**
+     * @param UserEvent $event
+     */
+    public static function onAfterLoginHandler($event)
+    {
+        /** @var User $identity */
+        $identity = $event->identity;
+        $identity->updateAttributes([
+            'logged_at' => new Expression('NOW()'),
+        ]);
+    }
 
     public function behaviors()
     {
@@ -94,12 +140,11 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
                 'value' => function ($event) {
-                        return new Expression('NOW()');
-                    }
+                    return new Expression('NOW()');
+                }
             ]
         ];
     }
-
 
     /**
      * @inheritdoc
@@ -144,25 +189,6 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     }
 
     /**
-     * @return DbManager
-     */
-    public function getAuthManager()
-    {
-        if ($this->_authManager == null) {
-            $this->_authManager = \Yii::$app->authManager;
-        }
-        return $this->_authManager;
-    }
-
-    /**
-     * @param array $rolesItems
-     */
-    public function setRolesItems($rolesItems)
-    {
-        $this->_rolesItems = $rolesItems;
-    }
-
-    /**
      * @return array
      */
     public function getRolesItems()
@@ -176,6 +202,25 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     }
 
     /**
+     * @param array $rolesItems
+     */
+    public function setRolesItems($rolesItems)
+    {
+        $this->_rolesItems = $rolesItems;
+    }
+
+    /**
+     * @return DbManager
+     */
+    public function getAuthManager()
+    {
+        if ($this->_authManager == null) {
+            $this->_authManager = \Yii::$app->authManager;
+        }
+        return $this->_authManager;
+    }
+
+    /**
      * @return array
      */
     public function getRolesItemsValues()
@@ -185,7 +230,6 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
             ->where(['type' => [Item::TYPE_ROLE]]);
         return ArrayHelper::map($query->all(), 'name', 'description');
     }
-
 
     /**
      * @return bool
@@ -205,33 +249,6 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     }
 
     /**
-     * @param $login
-     * @return User
-     */
-    public static function findByLogin($login)
-    {
-        return static::find()
-            ->where(['login' => $login])->one();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
-    {
-        return static::findOne($id);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        return static::findOne(['access_token' => $token, 'is_active' => 1]);
-    }
-
-
-    /**
      * @inheritdoc
      */
     public function getId()
@@ -242,17 +259,17 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     /**
      * @inheritdoc
      */
-    public function getAuthKey()
+    public function validateAuthKey($authKey)
     {
-        return $this->auth_key;
+        return $this->getAuthKey() === $authKey;
     }
 
     /**
      * @inheritdoc
      */
-    public function validateAuthKey($authKey)
+    public function getAuthKey()
     {
-        return $this->getAuthKey() === $authKey;
+        return $this->auth_key;
     }
 
     /**
@@ -265,15 +282,6 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
             return false;
 
         return \Yii::$app->security->validatePassword($password, $this->passhash);
-    }
-
-    /**
-     * @param $password
-     * @return string
-     */
-    public static function hashPassword($password)
-    {
-        return \Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
@@ -311,17 +319,5 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     {
         return $this->hasMany(Role::className(), ['name' => 'item_name'])
             ->viaTable('{{%admin_auth_assignment}}', ['user_id' => 'id']);
-    }
-
-    /**
-     * @param UserEvent $event
-     */
-    public static function onAfterLoginHandler($event)
-    {
-        /** @var User $identity */
-        $identity = $event->identity;
-        $identity->updateAttributes([
-            'logged_at' => new Expression('NOW()'),
-        ]);
     }
 }
