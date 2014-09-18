@@ -40,9 +40,9 @@ $this->params['header'] = $this->title;
         'is_super_admin:boolean',
         'is_active:boolean',
         // 'email:email',
-        'logged_at',
-        'created_at',
-        'updated_at',
+        'logged_at:datetime',
+        'created_at:datetime',
+        'updated_at:datetime',
 
         [
             'class' => 'yz\admin\widgets\ActionColumn',
