@@ -11,9 +11,6 @@ use yii\web\AssetBundle;
  */
 class AdminAsset extends AssetBundle
 {
-	public $publishOptions = [
-		'forceCopy' => YII_DEBUG,
-	];
     /**
      * @inheritdoc
      */

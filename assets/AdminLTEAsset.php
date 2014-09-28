@@ -10,9 +10,6 @@ use yii\web\AssetBundle;
  */
 class AdminLTEAsset extends AssetBundle
 {
-    public $publishOptions = [
-        'forceCopy' => YII_DEBUG,
-    ];
     /**
      * @inheritdoc
      */
