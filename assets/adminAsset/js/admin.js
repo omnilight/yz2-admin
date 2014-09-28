@@ -1,5 +1,5 @@
 
-yii.yz.admin = (function($) {
+yz_admin = (function($) {
     var pub = {
 
     };
