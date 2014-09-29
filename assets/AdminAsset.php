@@ -2,6 +2,8 @@
 
 namespace yz\admin\assets;
 
+use yii\helpers\Json;
+use yii\helpers\Url;
 use yii\web\AssetBundle;
 
 
@@ -37,4 +39,17 @@ class AdminAsset extends AssetBundle
         'yii\bootstrap\BootstrapPluginAsset',
         'yz\assets\YzAsset'
     ];
+
+    public function registerAssetFiles($view)
+    {
+        parent::registerAssetFiles($view);
+
+        $url = Json::encode(Url::to(['/admin/general/route-to-url'], true));
+        $js =<<<JS
+yii.yz.admin.settings.routeToUrl = $url;
+JS;
+        $view->registerJs($js);
+    }
+
+
 }
