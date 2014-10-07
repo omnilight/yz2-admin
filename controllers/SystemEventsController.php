@@ -2,6 +2,7 @@
 
 namespace yz\admin\controllers;
 use backend\base\Controller;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yz\admin\models\SystemEvent;
 
@@ -30,5 +31,16 @@ class SystemEventsController extends Controller
             return $this->goBack();
         else
             return $this->redirect($url);
+    }
+
+    protected function getAccessRules()
+    {
+        return ArrayHelper::merge([
+            [
+                'allow' => true,
+                'actions' => ['view'],
+                'roles' => ['@'],
+            ]
+        ], parent::getAccessRules());
     }
 } 
