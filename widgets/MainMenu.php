@@ -12,8 +12,6 @@ use yz\admin\components\AuthManager;
  */
 class MainMenu extends Widget
 {
-    const ADMIN_MENU_ITEMS_KEY = 'AdminMenuItemsKey';
-
     /**
      * @var string the route used to determine if a menu item is active or not.
      * If not set, it will use the route of the current request.
@@ -44,7 +42,8 @@ class MainMenu extends Widget
 
     protected function getMenuItems()
     {
-        if (($menuItems = Yii::$app->cache->get(static::ADMIN_MENU_ITEMS_KEY)) === false) {
+        $key = [__CLASS__, 'menuItems'];
+        if (($menuItems = Yii::$app->cache->get($key)) === false) {
             $menuItems = [];
             foreach (Yii::$app->getModules() as $id => $module) {
                 if (is_array($module)) {
@@ -80,7 +79,7 @@ class MainMenu extends Widget
             if (!empty($menuItems))
                 $menuItems = call_user_func_array('array_merge', $menuItems);
 
-            Yii::$app->cache->set(static::ADMIN_MENU_ITEMS_KEY, $menuItems, 10000);
+            Yii::$app->cache->set($key, $menuItems, 3600);
         }
 
         foreach ($menuItems as &$group) {
