@@ -3,7 +3,6 @@
 namespace yz\admin\widgets;
 
 use Yii;
-use yii\helpers\Html;
 
 
 /**
@@ -22,7 +21,7 @@ class ActiveForm extends \yii\bootstrap\ActiveForm
             'offset' => 'col-sm-offset-2',
             'wrapper' => 'col-sm-8',
             'error' => '',
-            'hint' => '',
+            'hint' => 'col-sm-offset-2 col-sm-8',
         ],
     ];
 }
