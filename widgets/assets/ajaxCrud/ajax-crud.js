@@ -1,13 +1,25 @@
 
 var ajaxCrud = (function($) {
     var pub = {
-        load: function(container, url) {
+        spinner: '<i class="fa fa-spinner fa-spin"></i>',
+        load: function(container, url, append) {
+            append = append || false;
+            if (append) {
+                $(container).append($(pub.spinner).addClass('ajax-crud-spinner'));
+            } else {
+                $(container).html($(pub.spinner).addClass('ajax-crud-spinner'));
+            }
             $.ajax({
                 type: 'get',
                 url: url,
                 dataType: 'html',
                 success: function(html) {
-                    $(container).append(html);
+                    if (append) {
+                        $(container).append(html);
+                    } else {
+                        $(container).html(html);
+                    }
+                    $(container).find('.ajax-crud-spinner').remove();
                 }
             });
         },
@@ -17,6 +29,11 @@ var ajaxCrud = (function($) {
             index.on('click', '.js-btn-ajax-crud-create', function() {
                 var container = $(this).closest('.ajax-crud-container');
                 pub.load(container.data('container-create'), $(this).attr('href'));
+                return false;
+            });
+            index.on('click', '.js-btn-ajax-crud-update', function() {
+                var container = $(this).closest('.ajax-crud-container');
+                pub.load(container.data('container-update'), $(this).attr('href'), false);
                 return false;
             });
         }
