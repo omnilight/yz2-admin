@@ -1536,6 +1536,9 @@ body > .header .logo .icon {
   padding: 10px;
   background-color: #ffffff;
 }
+.box .box-footer .btn {
+  margin-top: 10px;
+}
 .box.box-solid {
   border-top: 0px;
 }
