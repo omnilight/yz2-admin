@@ -41,7 +41,7 @@ class ActionColumn extends \yii\grid\ActionColumn
             };
         }
         if (!isset($this->buttons['update-ajax'])) {
-            $this->buttons['update'] = function ($url, $model) {
+            $this->buttons['update-ajax'] = function ($url, $model) {
                 return Html::a(Icons::i('pencil-square-o fa-lg'), $url, [
                     'title' => Yii::t('admin/t', 'Update'),
                     'class' => 'btn btn-success btn-sm js-btn-ajax-crud-update',
