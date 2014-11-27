@@ -9,6 +9,7 @@ use yii\bootstrap\Button;
 use yii\bootstrap\ButtonDropdown;
 use yii\bootstrap\ButtonGroup;
 use yii\helpers\Html;
+use yii\helpers\Inflector;
 use yii\helpers\Url;
 use yz\admin\helpers\AdminUrl;
 use yz\icons\Icon;
@@ -34,6 +35,10 @@ class ActionButtons extends Widget
      * @var array|string
      */
     public $createUrl = ['create'];
+    /**
+     * @var array|string
+     */
+    public $createAjaxUrl = ['create'];
     /**
      * @var array|string
      */
@@ -101,10 +106,11 @@ class ActionButtons extends Widget
         ActionButtonsAsset::register($this->getView());
 
         $customButtons = $this->buttons;
-        $standardButtons = ['index', 'create', 'update', 'delete', 'return', 'search', 'export',];
+        $standardButtons = ['index', 'create', 'create-ajax', 'update', 'delete', 'return', 'search', 'export',];
         // List of the buttons that will be done in the future
         $reservedButtons = [];
 
+        echo Html::beginTag('div', ['class' => 'action-buttons']);
         foreach ($this->order as $group) {
             $buttons = [];
             foreach ($group as $name) {
@@ -114,7 +120,7 @@ class ActionButtons extends Widget
                 } elseif (isset($customButtons[$name])) {
                     $buttons[] = $this->createCustomButton($customButtons[$name]);
                 } elseif (in_array($name, $standardButtons)) {
-                    if (($button = $this->{$name . 'Button'}) !== false)
+                    if (($button = $this->{Inflector::id2camel($name) . 'Button'}) !== false)
                         $buttons[] = $button;
                 } elseif (in_array($name, $reservedButtons)) {
                     continue;
@@ -127,6 +133,7 @@ class ActionButtons extends Widget
                 'buttons' => $buttons,
             ]);
         }
+        echo Html::endTag('div');
     }
 
     /**
@@ -234,6 +241,35 @@ class ActionButtons extends Widget
             }
         }
         return $this->_createButton;
+    }
+
+    /**
+     * @param \yii\bootstrap\Button $createButton
+     */
+    public function setCreateAjaxButton($createAjaxButton)
+    {
+        $this->_createAjaxButton = $createAjaxButton;
+    }
+
+    /**
+     * @return \yii\bootstrap\Button
+     */
+    public function getCreateAjaxButton()
+    {
+        if ($this->_createAjaxButton === null) {
+            $url = $this->createAjaxUrl;
+                $this->_createAjaxButton = Button::widget([
+                    'tagName' => 'a',
+                    'label' => Icons::p('plus') . \Yii::t('admin/t', 'Add'),
+                    'encodeLabel' => false,
+                    'options' => [
+                        'href' => Url::to($url),
+                        'class' => 'btn btn-success js-btn-ajax-crud-create',
+                    ],
+                ]);;
+
+        }
+        return $this->_createAjaxButton;
     }
 
     /**
@@ -408,6 +444,10 @@ class ActionButtons extends Widget
      * @var Button
      */
     protected $_exportButton = null;
+    /**
+     * @var Button
+     */
+    protected $_createAjaxButton = null;
 
     /**
      * @return array

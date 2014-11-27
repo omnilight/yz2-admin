@@ -4,6 +4,7 @@ namespace yz\admin\widgets;
 
 use yii\base\Widget;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\View;
 
@@ -40,9 +41,47 @@ class AjaxCrud extends Widget
     protected function registerScripts()
     {
         AjaxCrudAsset::register($this->view);
+        $this->registerAjaxCrudStyles();
         if ($this->type == self::TYPE_INDEX) {
             $this->registerIndexLoader();
         }
+    }
+
+    protected function registerAjaxCrudStyles()
+    {
+        $cancel = \Yii::t('admin/t', 'Cancel');
+
+        $title = \Yii::t('admin/t', 'Add record');
+        $html =<<<HTML
+<div class="box box-primary ajax-crud-item">
+    <div class="box-header">
+        <h4 class="box-title">{$title}</h4>
+        <div class="box-tools pull-right">
+            <button class="btn btn-danger btn-xs js-btn-ajax-crud-cancel"><i class="fa fa-times"></i> {$cancel}</button>
+        </div>
+    </div>
+    <div class="box-body">{content}</div>
+</div>
+HTML;
+        $createWrapper = Json::encode($html);
+
+        $title = \Yii::t('admin/t', 'Edit record');
+        $html =<<<HTML
+<div class="box box-success ajax-crud-item">
+    <div class="box-header">
+        <h4 class="box-title">{$title}</h4>
+        <div class="box-tools pull-right">
+            <button class="btn btn-primary btn-xs js-btn-ajax-crud-cancel"><i class="fa fa-times"></i> {$cancel}</button>
+        </div>
+    </div>
+    <div class="box-body">{content}</div>
+</div>
+HTML;
+        $updateWrapper = Json::encode($html);
+        $this->view->registerJs(implode("\n", [
+            "ajaxCrud.createItemWrapper = {$createWrapper};",
+            "ajaxCrud.updateItemWrapper = {$updateWrapper};",
+        ]), View::POS_READY, __CLASS__.'.ajax-crud-styles');
     }
 
     protected function registerIndexLoader()

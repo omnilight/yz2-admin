@@ -1437,6 +1437,9 @@ body > .header .logo .icon {
   float: left;
   cursor: default;
 }
+.box .box-header h4.box-title {
+  font-size: 16px;
+}
 .box .box-header a {
   color: #444;
 }
@@ -1473,7 +1476,7 @@ body > .header .logo .icon {
 }
 .box .box-body > .chart svg,
 .box .box-body > .chart canvas {
-  width: 100%!important;
+  width: 100% !important;
 }
 .box .box-body .fc {
   margin-top: 5px;
@@ -1537,7 +1540,7 @@ body > .header .logo .icon {
   border-top: 0px;
 }
 .box.box-solid > .box-header {
-  padding-bottom: 0px!important;
+  padding-bottom: 0px !important;
 }
 .box.box-solid > .box-header .btn.btn-default {
   background: transparent;
