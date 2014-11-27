@@ -1,6 +1,11 @@
 .ajax-crud-container.ajax-crud-type-index {
   margin-bottom: 20px;
 }
+.required > label:after {
+  content: " *";
+  color: #d60000;
+  font-weight: bold;
+}
 .action-buttons {
   margin-bottom: 5px;
 }
