@@ -2,7 +2,9 @@
 
 namespace yz\admin\components;
 
+use yii\helpers\Inflector;
 use yii\rbac\DbManager;
+use yii\web\Controller;
 use yz\admin\models\User;
 
 /**
@@ -39,7 +41,7 @@ class AuthManager extends DbManager
         if (is_object($controller))
             $controller = $controller->className();
         /** @var string $controller */
-        return $controller . ':' . $action;
+        return $controller . ':' . Inflector::id2camel($action);
     }
 
 } 
