@@ -191,13 +191,19 @@ class Role extends AuthItem
         parent::afterSave($insert, $changedAttributes);
 
         if ($this->_childPermissions !== null) {
-            foreach ($this->_childPermissions as $name)
-                $this->getAuthManager()->addChild($this->getAuthItem(), $this->getAuthManager()->getPermission($name));
+            foreach ($this->_childPermissions as $name) {
+                $permission = $this->getAuthManager()->getPermission($name);
+                if ($this->getAuthManager()->hasChild($this->getAuthItem(), $permission) === false)
+                    $this->getAuthManager()->addChild($this->getAuthItem(), $permission);
+            }
         }
 
         if ($this->_childRoles !== null) {
-            foreach ($this->_childRoles as $name)
-                $this->getAuthManager()->addChild($this->getAuthItem(), $this->getAuthManager()->getRole($name));
+            foreach ($this->_childRoles as $name) {
+                $role = $this->getAuthManager()->getRole($name);
+                if ($this->getAuthManager()->hasChild($this->getAuthItem(), $role) === false)
+                    $this->getAuthManager()->addChild($this->getAuthItem(), $role);
+            }
         }
     }
 
