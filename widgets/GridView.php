@@ -20,6 +20,10 @@ use Yii;
 class GridView extends \yii\grid\GridView
 {
     /**
+     * @inheritdoc
+     */
+    public $dataColumnClass = 'yz\admin\widgets\DataColumn';
+    /**
      * @var bool When this property is true, all pages that DataProvider reports, will be rendered
      * in this current page. The difference between using this option and setting pagination property of DataProvider
      * to false is that this thing allows to render very large amount of data on the single page
