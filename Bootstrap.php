@@ -16,7 +16,17 @@ class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $app->i18n->translations['admin/*'] = [
+        $app->i18n->translations['admin/t'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@yz/admin/messages',
+            'sourceLanguage' => 'en-US',
+        ];
+        $app->i18n->translations['admin/gridview'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@yz/admin/messages',
+            'sourceLanguage' => 'en-US',
+        ];
+        $app->i18n->translations['admin/menu'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'basePath' => '@yz/admin/messages',
             'sourceLanguage' => 'en-US',
