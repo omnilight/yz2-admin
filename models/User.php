@@ -34,6 +34,7 @@ use yz\interfaces\ModelInfoInterface;
  * @property array $rolesItemsValues
  *
  * @property Role $roles Roles of the user
+ * @property UserSetting $settings Settings for the current user
  *
  * @package yz\admin\models
  */
@@ -319,5 +320,33 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     {
         return $this->hasMany(Role::className(), ['name' => 'item_name'])
             ->viaTable('{{%admin_auth_assignment}}', ['user_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getSettings()
+    {
+        return $this->hasMany(UserSetting::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @param $group
+     * @param $name
+     * @param $value
+     */
+    public function addSetting($group, $name, $value)
+    {
+        UserSetting::set($this->id, $group, $name, $value);
+    }
+
+    /**
+     * @param $group
+     * @param $name
+     * @return UserSetting
+     */
+    public function getSetting($group, $name)
+    {
+        return UserSetting::get($this->id, $group, $name);
     }
 }

@@ -17,8 +17,10 @@ class m141128_154947_yz_admin_add_user_settings extends Migration
             'user_id' => Schema::TYPE_INTEGER,
             'group' => Schema::TYPE_STRING,
             'name' => Schema::TYPE_STRING,
-            'value' => Schema::TYPE_TEXT,
+            'value_raw' => Schema::TYPE_TEXT,
         ], $tableOptions);
+        $this->createIndex('user_id', '{{%admin_users_settings}}', 'user_id');
+        $this->addForeignKey('{{%fk_admin_user_settings_users}}', '{{%admin_users_settings}}', 'user_id', '{{%admin_users}}', 'id');
     }
 
     public function down()
