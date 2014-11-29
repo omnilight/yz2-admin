@@ -36,10 +36,12 @@ class DataColumn extends \yii\grid\DataColumn
                     return DatePicker::widget([
                         'model' => $model,
                         'attribute' => $this->attribute,
-                        'options' => ['class' => 'form-control'],
+                        'options' => ['class' => 'form-control', 'placeholder' => \Yii::t('admin/gridview', 'Search')],
                     ]);
                 } else {
-                    return Html::activeTextInput($model, $this->attribute, $this->filterInputOptions) . ' ' . $error;
+                    return Html::activeTextInput($model, $this->attribute, array_merge([
+                        'placeholder' => \Yii::t('admin/gridview', 'Search'),
+                    ], $this->filterInputOptions)) . ' ' . $error;
                 }
             }
         } else {

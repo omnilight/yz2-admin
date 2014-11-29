@@ -12,3 +12,15 @@
 .action-buttons .btn-group {
   margin-left: 5px;
 }
+.grid-view .filters input::-moz-placeholder {
+  font-size: 0.8em;
+}
+.grid-view .filters input::-webkit-input-placeholder {
+  font-size: 0.8em;
+}
+.grid-view .filters input:-moz-placeholder {
+  font-size: 0.8em;
+}
+.grid-view .filters input:-ms-input-placeholder {
+  font-size: 0.8em;
+}

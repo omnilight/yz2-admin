@@ -22,3 +22,29 @@
     margin-left: 5px;
   }
 }
+
+.grid-view {
+  .filters {
+    .placeholders() {
+      .styles() {
+        font-size: 0.8em;
+      }
+      &::-moz-placeholder {
+        .styles();
+      }
+      &::-webkit-input-placeholder {
+        .styles();
+      }
+      &:-moz-placeholder {
+        .styles();
+      }
+      &:-ms-input-placeholder {
+        .styles();
+      }
+    }
+    input {
+      .placeholders;
+    }
+  }
+
+}
