@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yz\admin\components\AfterFormRenderingEvent;
 use yz\admin\widgets\ActionButtons;
 use yz\admin\widgets\Box;
 
