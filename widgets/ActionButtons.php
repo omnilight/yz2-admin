@@ -34,6 +34,10 @@ class ActionButtons extends Widget
     /**
      * @var array|string
      */
+    public $indexViewUrl = ['index-view'];
+    /**
+     * @var array|string
+     */
     public $createUrl = ['create'];
     /**
      * @var array|string
@@ -332,6 +336,34 @@ class ActionButtons extends Widget
     }
 
     /**
+     * @param \yii\bootstrap\Button $indexButton
+     */
+    public function setIndexViewButton($indexViewButton)
+    {
+        $this->_indexViewButton = $indexViewButton;
+    }
+
+    /**
+     * @return \yii\bootstrap\Button
+     */
+    public function getIndexViewButton()
+    {
+        if ($this->_indexViewButton === null) {
+            $url = $this->indexViewUrl + ($this->addReturnUrl ? AdminUrl::returnUrlRoute() : []);
+            $this->_indexButton = Button::widget([
+                'tagName' => 'a',
+                'label' => Icons::p('list') . \Yii::t('admin/t', 'List'),
+                'encodeLabel' => false,
+                'options' => [
+                    'href' => Url::to($url),
+                    'class' => 'btn btn-info',
+                ],
+            ]);
+        }
+        return $this->_indexViewButton;
+    }
+
+    /**
      * @param \yii\bootstrap\Button $updateButton
      */
     public function setUpdateButton($updateButton)
@@ -424,6 +456,10 @@ class ActionButtons extends Widget
      * @var Button
      */
     protected $_indexButton = null;
+    /**
+     * @var Button
+     */
+    protected $_indexViewButton = null;
     /**
      * @var Button
      */
