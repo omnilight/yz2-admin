@@ -110,7 +110,10 @@ class ActionButtons extends Widget
         ActionButtonsAsset::register($this->getView());
 
         $customButtons = $this->buttons;
-        $standardButtons = ['index', 'create', 'create-ajax', 'update', 'delete', 'return', 'search', 'export',];
+        $standardButtons = [
+            'index', 'index-view', 'create', 'create-ajax',
+            'update', 'delete', 'return', 'search', 'export',
+        ];
         // List of the buttons that will be done in the future
         $reservedButtons = [];
 
