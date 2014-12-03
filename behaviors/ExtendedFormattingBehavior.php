@@ -12,7 +12,7 @@ use yii\i18n\Formatter;
  */
 class ExtendedFormattingBehavior extends Behavior
 {
-    public function asBooleanLabeled($value)
+    public function asBooleanColored($value)
     {
         /** @var Formatter $owner */
         $owner = $this->owner;
