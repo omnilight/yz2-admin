@@ -1,6 +1,7 @@
 <?php
 
 namespace yz\admin\widgets;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 
@@ -20,8 +21,17 @@ class ActiveField extends \yii\bootstrap\ActiveField
     public function staticInput($options = [])
     {
         $options = array_merge($this->inputOptions, $options);
-        $value = Html::encode(Html::getAttributeValue($this->model, $this->attribute));
         $this->adjustLabelFor($options);
+        $value = isset($options['value']) ? $options['value'] : Html::getAttributeValue($this->model, $this->attribute);
+        if (!array_key_exists('id', $options)) {
+            $options['id'] = Html::getInputId($this->model, $this->attribute);
+        }
+        $format = ArrayHelper::remove($options, 'format');
+        if ($format !== null) {
+            $value = \Yii::$app->formatter->format($value, $format);
+        } else {
+            $value = Html::encode($value);
+        }
         $this->parts['{input}'] = Html::tag('p', $value, ['class' => 'form-control-static']);
 
         return $this;
