@@ -1,6 +1,7 @@
 <?php
 
 namespace yz\admin;
+
 use yii\base\Application;
 use yii\base\BootstrapInterface;
 
@@ -36,6 +37,11 @@ class Bootstrap implements BootstrapInterface
             'basePath' => '@yz/admin/messages',
             'sourceLanguage' => 'en-US',
         ];
+
+        // Setup for formatter
+        \Yii::$app->formatter->attachBehavior('extendedFormatting', [
+            'class' => 'yz\admin\behaviors\ExtendedFormattingBehavior',
+        ]);
     }
 
 
