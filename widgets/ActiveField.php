@@ -36,4 +36,21 @@ class ActiveField extends \yii\bootstrap\ActiveField
 
         return $this;
     }
+
+    /**
+     * Renders TinyMCE widget using https://github.com/omnilight/yz2-admin-tinymce
+     * If this extension is not installed, simple textarea will be shown instead
+     * @see https://github.com/omnilight/yz2-admin-tinymce
+     * @param array $options
+     * @return static the field object itself
+     */
+    public function tinyMce($options = [])
+    {
+        if (class_exists('yz\admin\tinymce\TinyMCE')) {
+            return $this->widget('yz\admin\tinymce\TinyMCE', [
+                'clientOptions' => $options,
+            ]);
+        }
+        return $this->textarea($options);
+    }
 } 
