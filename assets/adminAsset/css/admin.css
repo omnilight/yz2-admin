@@ -24,3 +24,6 @@
 .grid-view .filters input:-ms-input-placeholder {
   font-size: 0.8em;
 }
+.label-grid-view {
+  font-size: inherit;
+}

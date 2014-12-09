@@ -4,6 +4,7 @@ namespace yz\admin\widgets;
 
 use yii\base\Model;
 use yii\grid\Column;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
 
@@ -13,6 +14,22 @@ use yii\jui\DatePicker;
  */
 class DataColumn extends \yii\grid\DataColumn
 {
+    const LABEL_DEFAULT = 'default';
+    const LABEL_PRIMARY = 'primary';
+    const LABEL_SUCCESS = 'success';
+    const LABEL_INFO = 'success';
+    const LABEL_WARNING = 'warning';
+    const LABEL_DANGER = 'danger';
+
+    /**
+     * @var array The array of titles that should replace original values.
+     */
+    public $titles;
+    /**
+     * @var array The array of key-value pairs that should color the titles
+     */
+    public $labels;
+
     protected function renderFilterCellContent()
     {
         if (is_string($this->filter)) {
@@ -48,4 +65,22 @@ class DataColumn extends \yii\grid\DataColumn
             return Column::renderFilterCellContent();
         }
     }
+
+    protected function renderDataCellContent($model, $key, $index)
+    {
+        $content = parent::renderDataCellContent($model, $key, $index);
+        if ($this->titles) {
+            $value = ArrayHelper::getValue($this->titles, $content, $content);
+        } else {
+            $value = $content;
+        }
+        if ($this->labels) {
+            $content = Html::tag('span', $value, ['class' => 'label label-grid-view label-'.ArrayHelper::getValue($this->labels, $content, self::LABEL_DEFAULT)]);
+        } else {
+            $content = $value;
+        }
+        return $content;
+    }
+
+
 }
