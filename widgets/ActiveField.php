@@ -3,6 +3,7 @@
 namespace yz\admin\widgets;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\widgets\MaskedInput;
 
 
 /**
@@ -52,5 +53,18 @@ class ActiveField extends \yii\bootstrap\ActiveField
             ]);
         }
         return $this->textarea($options);
+    }
+
+    /**
+     * Outputs masked input
+     * @param string $mask
+     * @param array $options
+     * @return static the field object itself
+     */
+    public function maskedInput($mask = '', $options = [])
+    {
+        return $this->widget(MaskedInput::className(), array_merge([
+            'mask' => $mask,
+        ], $options));
     }
 } 
