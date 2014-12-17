@@ -17,7 +17,7 @@ class DataColumn extends \yii\grid\DataColumn
     const LABEL_DEFAULT = 'default';
     const LABEL_PRIMARY = 'primary';
     const LABEL_SUCCESS = 'success';
-    const LABEL_INFO = 'success';
+    const LABEL_INFO = 'info';
     const LABEL_WARNING = 'warning';
     const LABEL_DANGER = 'danger';
 
