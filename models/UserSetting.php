@@ -10,7 +10,6 @@ use yii\helpers\Json;
  *
  * @property integer $id
  * @property integer $user_id
- * @property string $group
  * @property string $name
  * @property string $value_raw
  *
@@ -37,7 +36,7 @@ class UserSetting extends \yz\db\ActiveRecord
         return [
             [['user_id'], 'integer'],
             [['value_raw'], 'string'],
-            [['group', 'name'], 'string', 'max' => 255]
+            [['name'], 'string', 'max' => 255]
         ];
     }
 
@@ -49,7 +48,6 @@ class UserSetting extends \yz\db\ActiveRecord
         return [
             'id' => Yii::t('admin/t', 'ID'),
             'user_id' => Yii::t('admin/t', 'User ID'),
-            'group' => Yii::t('admin/t', 'Group'),
             'name' => Yii::t('admin/t', 'Name'),
             'value_raw' => Yii::t('admin/t', 'Value Raw'),
         ];
@@ -85,13 +83,12 @@ class UserSetting extends \yz\db\ActiveRecord
         $this->value_raw = Json::encode($this->_value);
     }
 
-    public static function set($userId, $group, $name, $value)
+    public static function set($userId, $name, $value)
     {
-        $setting = self::findOne(['user_id' => $userId, 'group' => $group, 'name' => $name]);
+        $setting = self::findOne(['user_id' => $userId, 'name' => $name]);
         if ($setting === null) {
             $setting = new UserSetting();
             $setting->user_id = $userId;
-            $setting->group = $group;
             $setting->name = $name;
         }
         $setting->value = $value;
@@ -100,13 +97,12 @@ class UserSetting extends \yz\db\ActiveRecord
 
     /**
      * @param int $userId
-     * @param string $group
      * @param string $name
      * @return UserSetting
      */
-    public static function get($userId, $group, $name)
+    public static function get($userId, $name)
     {
-        $setting = self::findOne(['user_id' => $userId, 'group' => $group, 'name' => $name]);
+        $setting = self::findOne(['user_id' => $userId, 'name' => $name]);
         if ($setting === null)
             return null;
         else
@@ -115,12 +111,11 @@ class UserSetting extends \yz\db\ActiveRecord
 
     /**
      * @param int $userId
-     * @param string $group
      * @param string $name
      * @return int
      */
-    public static function remove($userId, $group, $name)
+    public static function remove($userId, $name)
     {
-        return self::deleteAll(['user_id' => $userId, 'group' => $group, 'name' => $name]);
+        return self::deleteAll(['user_id' => $userId, 'name' => $name]);
     }
 }
