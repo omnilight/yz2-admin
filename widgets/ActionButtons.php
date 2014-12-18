@@ -438,7 +438,7 @@ class ActionButtons extends Widget
             $url = $this->exportUrl + $params;
             $this->_exportButton = Button::widget([
                 'tagName' => 'a',
-                'label' => Icons::p('download') . \Yii::t('admin/t', 'Export to MS Excel'),
+                'label' => Icons::p('file-excel-o') . \Yii::t('admin/t', 'Экспорт в Excel'),
                 'encodeLabel' => false,
                 'options' => [
                     'href' => Url::to($url),

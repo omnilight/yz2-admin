@@ -4,6 +4,7 @@ namespace yz\admin\widgets;
 use yii\base\InvalidConfigException;
 use yii\grid\Column;
 use yii\grid\DataColumn;
+use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\grid\GridViewAsset;
 use yii\widgets\BaseListView;
@@ -38,6 +39,16 @@ class GridView extends \yii\grid\GridView
      * @var bool If true gridview will not do things that are not available in the console application
      */
     public $runInConsoleMode = false;
+    /**
+     * @var string the layout that determines how different sections of the list view should be organized.
+     * The following tokens will be replaced with the corresponding section contents:
+     *
+     * - `{summary}`: the summary section. See [[renderSummary()]].
+     * - `{items}`: the list items. See [[renderItems()]].
+     * - `{sorter}`: the sorter. See [[renderSorter()]].
+     * - `{pager}`: the pager. See [[renderPager()]].
+     */
+    public $layout = "{settings}\n{summary}\n{items}\n{pager}";
 
     protected $_startExportTime;
     protected $_averageIterationTime;
@@ -76,6 +87,22 @@ class GridView extends \yii\grid\GridView
         }
         return '<tbody>' . implode('', $pages) . '</tbody>';
     }
+
+    public function renderSection($name)
+    {
+        switch ($name) {
+            case "{settings}":
+                return $this->renderSettings();
+            default:
+                return parent::renderSection($name);
+        }
+    }
+
+    public function renderSettings()
+    {
+        return '';
+    }
+
 
     protected function initColumns()
     {
