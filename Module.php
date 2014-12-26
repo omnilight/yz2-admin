@@ -85,4 +85,13 @@ class Module extends \yz\Module
             ]
         ]);
     }
+
+    /**
+     * @return Module
+     */
+    public static function instance()
+    {
+        $module = self::getInstance();
+        return $module ?: \Yii::$app->getModule('admin');
+    }
 }
