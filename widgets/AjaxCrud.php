@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\View;
+use yii\widgets\Pjax;
 
 
 /**
@@ -25,6 +26,12 @@ class AjaxCrud extends Widget
     public function run()
     {
         $this->registerScripts();
+        if ($this->type == self::TYPE_INDEX) {
+            Pjax::begin([
+                'enablePushState' => false,
+                'enableReplaceState' => false,
+            ]);
+        }
         echo Html::tag('div', '', [
             'class' => 'ajax-crud-container ajax-crud-type-'.$this->type.' ajax-crud-name-'.$this->name,
             'id' => $this->getContainerId(),
@@ -36,6 +43,9 @@ class AjaxCrud extends Widget
                 'container-update' => '#'.$this->getContainerId(self::TYPE_UPDATE),
             ]
         ]);
+        if ($this->type == self::TYPE_INDEX) {
+            Pjax::end();
+        }
     }
 
     protected function registerScripts()
