@@ -30,6 +30,7 @@ class AjaxCrud extends Widget
             Pjax::begin([
                 'enablePushState' => false,
                 'enableReplaceState' => false,
+                'linkSelector' => '.pagination a'
             ]);
         }
         echo Html::tag('div', '', [
