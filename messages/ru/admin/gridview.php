@@ -18,4 +18,8 @@
  */
 return [
     'Search' => 'Искать',
+    'Save & Apply' => 'Сохранить и применить',
+    'Grid Settings' => 'Настройки списка',
+    'Grid settings' => 'Настройки списка',
+    'Elements on page' => 'Число записей на странице',
 ];

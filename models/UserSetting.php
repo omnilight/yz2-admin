@@ -98,13 +98,14 @@ class UserSetting extends \yz\db\ActiveRecord
     /**
      * @param int $userId
      * @param string $name
-     * @return UserSetting
+     * @param mixed $default
+     * @return mixed
      */
-    public static function get($userId, $name)
+    public static function get($userId, $name, $default = null)
     {
         $setting = self::findOne(['user_id' => $userId, 'name' => $name]);
         if ($setting === null)
-            return null;
+            return $default;
         else
             return $setting->value;
     }

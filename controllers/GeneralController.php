@@ -4,9 +4,11 @@ namespace yz\admin\controllers;
 
 use backend\base\Controller;
 use yii\base\NotSupportedException;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\NotAcceptableHttpException;
 use yii\web\Response;
+use yz\admin\forms\GridViewSettingsForm;
 
 
 /**
@@ -36,7 +38,37 @@ class GeneralController extends Controller
                     throw new NotSupportedException();
             }
         } else {
-            return ['success' => true, 'url' => Url::to($route)];
+            if (ArrayHelper::isIndexed($route)) {
+                $url = Url::to($route);
+            } else {
+                $url = Url::to(array_merge(
+                    [ArrayHelper::getValue($route, 'route', '')],
+                    ArrayHelper::getValue($route, 'params', [])
+                ));
+            }
+            return ['success' => true, 'url' => $url];
         }
+    }
+
+    public function actionGridViewSettings()
+    {
+        $params = \Yii::$app->request->get('data');
+        if ($params === null) {
+            throw new NotAcceptableHttpException();
+        }
+
+        $model = new GridViewSettingsForm();
+        $model->userId = \Yii::$app->user->id;
+        $model->gridId = ArrayHelper::getValue($params, 'griduniqueid');
+        $model->pageSizeValues = ArrayHelper::getValue($params, 'pagesizes', [20, 30, 50, 100]);
+        $model->pageSize = ArrayHelper::getValue($params, 'currentpagesize', 20);
+
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(\Yii::$app->request->referrer);
+        }
+
+        return $this->renderAjax('grid-view-settings', [
+            'model' => $model,
+        ]);
     }
 } 

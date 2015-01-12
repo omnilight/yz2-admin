@@ -1,16 +1,12 @@
 <?php
 
 namespace yz\admin\widgets;
-use yii\base\InvalidConfigException;
-use yii\bootstrap\ButtonGroup;
-use yii\grid\Column;
+
+use Yii;
 use yii\grid\DataColumn;
 use yii\helpers\Html;
-use yii\helpers\Json;
-use yii\grid\GridViewAsset;
-use yii\helpers\Url;
 use yii\widgets\BaseListView;
-use Yii;
+use yz\admin\models\UserSetting;
 use yz\icons\Icons;
 
 
@@ -19,7 +15,9 @@ use yz\icons\Icons;
  *  - rendering all pages together (gives ability to reduce memory usage)
  *  - control execution time of the rendering (when we have a lot of rows, this could save us from ran out of time)
  *  - run in console mode (suppress all unsupported in console application options)
- * @package yz\admin\widgets
+ * This is the main component for displaying grid view in the admin panel
+ *
+ * @property string $gridId Unique id of the grid that consists of the action id and grid id
  */
 class GridView extends \yii\grid\GridView
 {
@@ -43,6 +41,14 @@ class GridView extends \yii\grid\GridView
      */
     public $runInConsoleMode = false;
     /**
+     * @var bool When this property is true, settings button will be shown on the top of the grid view
+     */
+    public $showSettings = true;
+    /**
+     * @var array Allowed pagesize
+     */
+    public $allowedPageSizes = [20, 30, 50, 100, 200];
+    /**
      * @var string the layout that determines how different sections of the list view should be organized.
      * The following tokens will be replaced with the corresponding section contents:
      *
@@ -56,9 +62,25 @@ class GridView extends \yii\grid\GridView
     protected $_startExportTime;
     protected $_averageIterationTime;
 
+    public function init()
+    {
+        $this->setupGrid();
+        parent::init();
+    }
+
+    protected function setupGrid()
+    {
+        $pageSize = UserSetting::get(Yii::$app->user->id, $this->getGridId() . '.pageSize');
+        if ($pageSize !== null) {
+            $this->dataProvider->getPagination()->pageSize = $pageSize;
+        }
+    }
+
+
     public function run()
     {
         if ($this->runInConsoleMode == false) {
+            GridViewAsset::register($this->getView());
             parent::run();
         } else {
             BaseListView::run();
@@ -101,9 +123,27 @@ class GridView extends \yii\grid\GridView
         }
     }
 
+    /**
+     * @return string
+     */
+    public function getGridId()
+    {
+        return Yii::$app->controller->action->getUniqueId() . '.' . $this->getId();
+    }
+
     public function renderSettings()
     {
-        return '';
+        if ($this->showSettings == false)
+            return '';
+
+        return Html::a(Icons::p('gears') . Yii::t('admin/gridview', 'Grid Settings'), ['#'], [
+            'class' => 'pull-right btn btn-default btn-xs btn-grid-settings js-btn-admin-grid-settings',
+            'data' => [
+                'gridUniqueId' => $this->getGridId(),
+                'currentPageSize' => $this->dataProvider->getPagination()->pageSize,
+                'pageSizes' => $this->allowedPageSizes,
+            ]
+        ]);
     }
 
 
@@ -111,7 +151,7 @@ class GridView extends \yii\grid\GridView
     {
         parent::initColumns();
         if ($this->runInConsoleMode) {
-            array_map(function($column){
+            array_map(function ($column) {
                 /** @var DataColumn $column */
                 $column->enableSorting = false;
             }, $this->columns);

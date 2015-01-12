@@ -10,7 +10,7 @@ yii.yz.admin = (function($) {
             $.ajax({
                 url: url,
                 data: {route: route},
-                dataType: 'ajax',
+                dataType: 'json',
                 success:  function(data) {
                     callback(data.url);
                 }
