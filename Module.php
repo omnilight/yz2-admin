@@ -7,7 +7,7 @@ use yz\icons\Icons;
 
 /**
  * Class Module
- * @package yz\admin
+ * @method static Module instance()
  */
 class Module extends \yz\Module
 {
@@ -84,14 +84,5 @@ class Module extends \yz\Module
                 ],
             ]
         ]);
-    }
-
-    /**
-     * @return Module
-     */
-    public static function instance()
-    {
-        $module = self::getInstance();
-        return $module ?: \Yii::$app->getModule('admin');
     }
 }
