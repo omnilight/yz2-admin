@@ -13,9 +13,11 @@ $context = $this->context;
     <?php foreach ($menuItems as $group): ?>
         <li class="treeview <?= $group['active']?'active':'' ?>">
             <a href="#">
-                <?= (isset($group['icon']) ? $group['icon']->ac('fa-fw') . ' ' : '') ?>
-                <span><?= Html::encode($group['label']); ?></span>
                 <?= Icons::i('angle-left fa-fw pull-right') ?>
+                <div>
+                    <?= (isset($group['icon']) ? $group['icon']->ac('fa-fw') . ' ' : '') ?>
+                    <span><?= Html::encode($group['label']); ?></span>
+                </div>
             </a>
             <?php if (is_array($group['items']) && count($group['items']) > 0): ?>
                 <ul class="treeview-menu">

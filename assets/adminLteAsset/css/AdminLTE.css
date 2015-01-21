@@ -644,13 +644,16 @@ body > .header .logo .icon {
   margin: 0;
   padding: 0;
 }
-.sidebar .sidebar-menu > li > a {
+.sidebar .sidebar-menu > li > div {
+  max-width: 185px;
+}
+.sidebar .sidebar-menu > li > div > a {
   padding: 12px 5px 12px 15px;
   display: block;
 }
-.sidebar .sidebar-menu > li > a > .fa,
-.sidebar .sidebar-menu > li > a > .glyphicon,
-.sidebar .sidebar-menu > li > a > .ion {
+.sidebar .sidebar-menu > li > div > a > .fa,
+.sidebar .sidebar-menu > li > div > a > .glyphicon,
+.sidebar .sidebar-menu > li > div > a > .ion {
   width: 20px;
 }
 .sidebar .sidebar-menu .treeview-menu {
