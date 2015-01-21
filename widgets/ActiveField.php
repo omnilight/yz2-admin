@@ -1,6 +1,7 @@
 <?php
 
 namespace yz\admin\widgets;
+
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\MaskedInput;
@@ -41,7 +42,7 @@ class ActiveField extends \yii\bootstrap\ActiveField
     /**
      * Renders TinyMCE widget using https://github.com/omnilight/yz2-admin-tinymce
      * If this extension is not installed, simple textarea will be shown instead
-     * @see https://github.com/omnilight/yz2-admin-tinymce
+     * @link https://github.com/omnilight/yz2-admin-tinymce
      * @param array $options
      * @return static the field object itself
      */
@@ -53,6 +54,28 @@ class ActiveField extends \yii\bootstrap\ActiveField
             ]);
         }
         return $this->textarea($options);
+    }
+
+    /**
+     * Renders Select2 widget using https://github.com/vova07/yii2-select2-widget
+     * If this extension is not installed,simple dropdown control will be shown instead
+     * @link https://github.com/vova07/yii2-select2-widget
+     * @param $items
+     * @param $options
+     * @return static
+     */
+    public function select2($items, $options)
+    {
+        $settings = ArrayHelper::remove($options, 'settings', []);
+        if (class_exists('vova07\select2\Widget')) {
+            return $this->widget('vova07\select2\Widget', [
+                'bootstrap' => true,
+                'items' => $items,
+                'options' => $options,
+                'settings' => $settings,
+            ]);
+        }
+        return $this->dropDownList($items, $options);
     }
 
     /**
