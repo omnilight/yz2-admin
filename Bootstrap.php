@@ -42,6 +42,8 @@ class Bootstrap implements BootstrapInterface
         \Yii::$app->formatter->attachBehavior('extendedFormatting', [
             'class' => 'yz\admin\behaviors\ExtendedFormattingBehavior',
         ]);
+
+        \Yii::$app->params['yii.migrations'][] = '@yz/admin/migrations';
     }
 
 
