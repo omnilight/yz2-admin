@@ -633,7 +633,7 @@ body > .header .logo .icon {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  border-color: transparent!important;
+  border-color: transparent !important;
 }
 .sidebar .sidebar-menu {
   list-style: none;
@@ -644,36 +644,36 @@ body > .header .logo .icon {
   margin: 0;
   padding: 0;
 }
-.sidebar .sidebar-menu > li > div {
-  max-width: 185px;
-}
-.sidebar .sidebar-menu > li > div > a {
+.sidebar .sidebar-menu > li > a {
   padding: 12px 5px 12px 15px;
   display: block;
 }
-.sidebar .sidebar-menu > li > div > a > .fa,
-.sidebar .sidebar-menu > li > div > a > .glyphicon,
-.sidebar .sidebar-menu > li > div > a > .ion {
+.sidebar .sidebar-menu > li > a > div {
+  max-width: 185px;
+}
+.sidebar .sidebar-menu > li > a > .fa,
+.sidebar .sidebar-menu > li > a > .glyphicon,
+.sidebar .sidebar-menu > li > a > .ion {
   width: 20px;
 }
-.sidebar .sidebar-menu .treeview-menu {
+.sidebar .treeview-menu {
   display: none;
   list-style: none;
   padding: 0;
   margin: 0;
 }
-.sidebar .sidebar-menu .treeview-menu > li {
+.sidebar .treeview-menu > li {
   margin: 0;
 }
-.sidebar .sidebar-menu .treeview-menu > li > a {
+.sidebar .treeview-menu > li > a {
   padding: 5px 5px 5px 15px;
   display: block;
   font-size: 14px;
   margin: 0px 0px;
 }
-.sidebar .sidebar-menu .treeview-menu > li > a > .fa,
-.sidebar .sidebar-menu .treeview-menu > li > a > .glyphicon,
-.sidebar .sidebar-menu .treeview-menu > li > a > .ion {
+.sidebar .treeview-menu > li > a > .fa,
+.sidebar .treeview-menu > li > a > .glyphicon,
+.sidebar .treeview-menu > li > a > .ion {
   width: 20px;
 }
 .user-panel {
