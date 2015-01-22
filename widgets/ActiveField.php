@@ -75,12 +75,13 @@ class ActiveField extends \yii\bootstrap\ActiveField
      */
     public function select2($items, $options)
     {
-        $defaultSettings = [
-            'width' => '100%',
-        ];
+
         $settings = ArrayHelper::remove($options, 'settings', []);
-        $settings = ArrayHelper::merge($defaultSettings, $settings);
         if (class_exists('vova07\select2\Widget')) {
+            $defaultSettings = [
+                'width' => '100%',
+            ];
+            $settings = ArrayHelper::merge($defaultSettings, $settings);
             return $this->widget('vova07\select2\Widget', [
                 'bootstrap' => true,
                 'items' => $items,
