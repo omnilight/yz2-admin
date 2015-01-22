@@ -49,6 +49,15 @@ class ActiveField extends \yii\bootstrap\ActiveField
     public function tinyMce($options = [])
     {
         if (class_exists('yz\admin\tinymce\TinyMCE')) {
+            $defaultOptions = [
+                'plugins' => [
+                    "advlist autolink lists link charmap anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            ];
+            $options = ArrayHelper::merge($defaultOptions, $options);
             return $this->widget('yz\admin\tinymce\TinyMCE', [
                 'clientOptions' => $options,
             ]);
@@ -66,7 +75,11 @@ class ActiveField extends \yii\bootstrap\ActiveField
      */
     public function select2($items, $options)
     {
+        $defaultSettings = [
+            'width' => '100%',
+        ];
         $settings = ArrayHelper::remove($options, 'settings', []);
+        $settings = ArrayHelper::merge($defaultSettings, $settings);
         if (class_exists('vova07\select2\Widget')) {
             return $this->widget('vova07\select2\Widget', [
                 'bootstrap' => true,
