@@ -19,8 +19,8 @@ use yz\admin\widgets\FormBox;
     <?php $box->beginBody() ?>
         <?= $form->field($model, 'description')->textInput() ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
-        <?= $form->field($model, 'childRoles')->dropDownList($model->getChildRolesValues(),['multiple' => 'multiple', 'size' => 10]) ?>
-        <?= $form->field($model, 'childPermissions')->dropDownList($model->getChildPermissionsValues(),['multiple' => 'multiple', 'size' => 20]) ?>
+        <?= $form->field($model, 'childRoles')->select2($model->getChildRolesValues(),['multiple' => 'multiple', 'size' => 10]) ?>
+        <?= $form->field($model, 'childPermissions')->select2($model->getChildPermissionsValues(),['multiple' => 'multiple', 'size' => 20]) ?>
 
     <?php $box->endBody() ?>
 

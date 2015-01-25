@@ -23,7 +23,7 @@ use yz\admin\widgets\FormBox;
         <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
         <?= $form->field($model, 'is_super_admin')->checkbox() ?>
         <?= $form->field($model, 'is_active')->checkbox() ?>
-        <?= $form->field($model, 'rolesItems')->dropDownList($model->getRolesItemsValues(), ['multiple' => 'multiple', 'size' => 10]) ?>
+        <?= $form->field($model, 'rolesItems')->select2($model->getRolesItemsValues(), ['multiple' => 'multiple', 'size' => 10]) ?>
 
         <?php if ($model->isNewRecord): ?>
             <?= $form->field($model, 'password')->passwordInput() ?>
