@@ -73,9 +73,8 @@ class ActiveField extends \yii\bootstrap\ActiveField
      * @param $options
      * @return static
      */
-    public function select2($items, $options)
+    public function select2($items, $options = [])
     {
-
         $settings = ArrayHelper::remove($options, 'settings', []);
         if (class_exists('vova07\select2\Widget')) {
             $defaultSettings = [
