@@ -140,29 +140,43 @@ class RolesController extends Controller
         $items = [];
         foreach ($authItems as $name => $authItem) {
             /** @var array $authItem [Name, type, [child1, child2, ...]] */
-            if ($item = $authManager->getPermission($name)) {
-                $items[$name] = $item;
-                continue;
+            list($itemDescription, $itemType, $itemChildren) = $authItem;
+
+            $item = null;
+            if ($item === null) {
+                $item = $authManager->getPermission($name);
             }
-            if ($authManager->getRole($name)) {
-                $items[$name] = $item;
-                continue;
+            if ($item === null) {
+                $item = $authManager->getRole($name);
             }
-            $item = new Item();
-            $item->type = $authItem[1];
-            $item->name = $name;
-            $item->description = $authItem[0];
-            $authManager->add($item);
+
+            if ($item !== null) {
+                if ($item->description != $itemDescription) {
+                    $item->description = $itemDescription;
+                    $authManager->update($name, $item);
+                }
+            } else {
+                $item = new Item();
+                $item->type = $itemType;
+                $item->name = $name;
+                $item->description = $itemDescription;
+                $authManager->add($item);
+            }
             $items[$name] = $item;
         }
+        unset($itemDescription, $itemType, $itemChildren);
+
         foreach ($authItems as $name => $authItem) {
             /** @var array $authItem [Name, type, [child1, child2, ...]] */
+            list($itemDescription, $itemType, $itemChildren) = $authItem;
+
             $children = ArrayHelper::getColumn($authManager->getChildren($name), 'name');
-            foreach ($authItem[2] as $childName) {
+            foreach ($itemChildren as $childName) {
                 if (!in_array($childName, $children))
                     $authManager->addChild($items[$name], $items[$childName]);
             }
         }
+        unset($itemDescription, $itemType, $itemChildren);
 
         Yii::$app->session->setFlash(Yz::FLASH_SUCCESS, Yii::t('admin/t', 'Tasks and operations were successfully discovered'));
 
