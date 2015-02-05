@@ -46,7 +46,6 @@ class Role extends AuthItem
         return parent::find()->where(['type' => Item::TYPE_ROLE]);
     }
 
-
     public function rules()
     {
         return array_merge(parent::rules(), [
@@ -54,8 +53,8 @@ class Role extends AuthItem
             [['name', 'description'], 'unique'],
             [['name'], 'match', 'pattern' => '/[a-zA-Z0-9_\-]+/',
                 'message' => \Yii::t('admin/t', 'Name of the role must contain only characters from the list: {chars}', [
-                        'chars' => 'a-z, A-Z, 0-9, -'
-                    ])],
+                    'chars' => 'a-z, A-Z, 0-9, -'
+                ])],
             [['childRoles', 'childPermissions'], 'safe'],
         ]);
     }
@@ -66,6 +65,42 @@ class Role extends AuthItem
             'childRoles' => \Yii::t('admin/t', 'Child roles'),
             'childPermissions' => \Yii::t('admin/t', 'Child permissions'),
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    public function getChildRoles()
+    {
+        if ($this->_childRoles === null && !$this->isNewRecord) {
+            $this->_childRoles =
+                ArrayHelper::getColumn(self::filterItems($this->getAuthManager()->getChildren($this->name), [Item::TYPE_ROLE]), 'name');
+        } elseif ($this->_childRoles == null) {
+            $this->_childRoles = [];
+        }
+        return $this->_childRoles;
+    }
+
+    /**
+     * @param array $childRoles
+     */
+    public function setChildRoles($childRoles)
+    {
+        $this->_childRoles = $childRoles;
+    }
+
+    /**
+     * @param Item[] $items
+     * @param integer|array $type
+     * @return Item[]
+     */
+    protected static function filterItems($items, $type)
+    {
+        $type = (array)$type;
+        return array_filter($items, function ($item) use ($type) {
+            /** @var Item $item */
+            return in_array($item->type, $type);
+        });
     }
 
     /**
@@ -88,50 +123,6 @@ class Role extends AuthItem
     }
 
     /**
-     * @return \yii\rbac\Role
-     */
-    public function getAuthItem()
-    {
-        return $this->getAuthManager()->getRole($this->name);
-    }
-
-    /**
-     * @param Item[] $items
-     * @param integer|array $type
-     * @return Item[]
-     */
-    protected static function filterItems($items, $type)
-    {
-        $type = (array)$type;
-        return array_filter($items, function ($item) use ($type) {
-            /** @var Item $item */
-            return in_array($item->type, $type);
-        });
-    }
-
-    /**
-     * @param array $childRoles
-     */
-    public function setChildRoles($childRoles)
-    {
-        $this->_childRoles = $childRoles;
-    }
-
-    /**
-     * @return array
-     */
-    public function getChildRoles()
-    {
-        if ($this->_childRoles === null && !$this->isNewRecord) {
-            $this->_childRoles =
-                ArrayHelper::getColumn(self::filterItems($this->getAuthManager()->getChildren($this->name), [Item::TYPE_ROLE]), 'name');
-        } elseif ($this->_childRoles == null) {
-            $this->_childRoles = [];
-        }
-        return $this->_childRoles;
-    }
-
-    /**
      * @return array
      */
     public function getChildRolesValues()
@@ -142,14 +133,6 @@ class Role extends AuthItem
         if (!$this->isNewRecord)
             $query->andWhere('name != :name', [':name' => $this->name]);
         return ArrayHelper::map($query->all(), 'name', 'description');
-    }
-
-    /**
-     * @param array $childOperationsAndTasks
-     */
-    public function setChildPermissions($childOperationsAndTasks)
-    {
-        $this->_childPermissions = $childOperationsAndTasks;
     }
 
     /**
@@ -164,6 +147,14 @@ class Role extends AuthItem
             $this->_childPermissions = [];
         }
         return $this->_childPermissions;
+    }
+
+    /**
+     * @param array $childOperationsAndTasks
+     */
+    public function setChildPermissions($childOperationsAndTasks)
+    {
+        $this->_childPermissions = $childOperationsAndTasks;
     }
 
     /**
@@ -190,21 +181,31 @@ class Role extends AuthItem
     {
         parent::afterSave($insert, $changedAttributes);
 
-        if ($this->_childPermissions !== null) {
+        if ($this->_childPermissions !== null || $this->_childRoles !== null) {
+            if ($this->_childPermissions === null)
+                $this->getChildPermissions();
+            if ($this->_childRoles === null)
+                $this->getChildRoles();
+
+            $this->getAuthManager()->removeChildren($this->getAuthItem());
+
             foreach ($this->_childPermissions as $name) {
                 $permission = $this->getAuthManager()->getPermission($name);
-                if ($this->getAuthManager()->hasChild($this->getAuthItem(), $permission) === false)
-                    $this->getAuthManager()->addChild($this->getAuthItem(), $permission);
+                $this->getAuthManager()->addChild($this->getAuthItem(), $permission);
             }
-        }
-
-        if ($this->_childRoles !== null) {
             foreach ($this->_childRoles as $name) {
                 $role = $this->getAuthManager()->getRole($name);
-                if ($this->getAuthManager()->hasChild($this->getAuthItem(), $role) === false)
-                    $this->getAuthManager()->addChild($this->getAuthItem(), $role);
+                $this->getAuthManager()->addChild($this->getAuthItem(), $role);
             }
         }
+    }
+
+    /**
+     * @return \yii\rbac\Role
+     */
+    public function getAuthItem()
+    {
+        return $this->getAuthManager()->getRole($this->name);
     }
 
 
