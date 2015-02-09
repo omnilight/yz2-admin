@@ -53,6 +53,7 @@ class DataColumn extends \yii\grid\DataColumn
                         'model' => $model,
                         'attribute' => $this->attribute,
                         'items' => $this->filter,
+                        'options' => $options,
                     ]);
                 } else {
                     return Html::activeDropDownList($model, $this->attribute, $this->filter, $options) . ' ' . $error;
