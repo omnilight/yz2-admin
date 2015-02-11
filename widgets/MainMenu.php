@@ -2,8 +2,8 @@
 
 namespace yz\admin\widgets;
 
-use yii\base\Widget;
 use Yii;
+use yii\base\Widget;
 use yz\admin\components\AuthManager;
 
 /**
@@ -42,45 +42,40 @@ class MainMenu extends Widget
 
     protected function getMenuItems()
     {
-        $key = [__CLASS__, 'menuItems'];
-        if (($menuItems = Yii::$app->cache->get($key)) === false) {
-            $menuItems = [];
-            foreach (Yii::$app->getModules() as $id => $module) {
-                if (is_array($module)) {
-                    $module = Yii::$app->getModule($id);
-                }
-                if ($module instanceof \yz\Module) {
-                    $moduleMenu = $module->getAdminMenu();
+        $menuItems = [];
+        foreach (Yii::$app->getModules() as $id => $module) {
+            if (is_array($module)) {
+                $module = Yii::$app->getModule($id);
+            }
+            if ($module instanceof \yz\Module) {
+                $moduleMenu = $module->getAdminMenu();
 
-                    foreach ($moduleMenu as $group) {
-                        $groupItems = [];
-                        foreach ($group['items'] as $item) {
-                            if (isset($item['authItem']))
-                                $hasAccess = Yii::$app->user->can($item['authItem']);
-                            elseif (isset($item['route']) && is_array($item['route']))
-                                $hasAccess = $this->checkAccessByRoute($item['route'][0]);
-                            else
-                                $hasAccess = true;
+                foreach ($moduleMenu as $group) {
+                    $groupItems = [];
+                    foreach ($group['items'] as $item) {
+                        if (isset($item['authItem']))
+                            $hasAccess = Yii::$app->user->can($item['authItem']);
+                        elseif (isset($item['route']) && is_array($item['route']))
+                            $hasAccess = $this->checkAccessByRoute($item['route'][0]);
+                        else
+                            $hasAccess = true;
 
-                            if ($hasAccess) {
-                                $groupItems[] = $item;
-                            }
+                        if ($hasAccess) {
+                            $groupItems[] = $item;
                         }
-                        if (count($groupItems) > 0) {
-                            $group['items'] = $groupItems;
-                            $menuItems[$module->adminMenuOrder][] = $group;
-                        }
+                    }
+                    if (count($groupItems) > 0) {
+                        $group['items'] = $groupItems;
+                        $menuItems[$module->adminMenuOrder][] = $group;
                     }
                 }
             }
-
-            ksort($menuItems);
-
-            if (!empty($menuItems))
-                $menuItems = call_user_func_array('array_merge', $menuItems);
-
-            Yii::$app->cache->set($key, $menuItems, 3600);
         }
+
+        ksort($menuItems);
+
+        if (!empty($menuItems))
+            $menuItems = call_user_func_array('array_merge', $menuItems);
 
         foreach ($menuItems as &$group) {
             $hasActive = false;
