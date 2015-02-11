@@ -47,7 +47,17 @@ class DataColumn extends \yii\grid\DataColumn
             }
             if (is_array($this->filter)) {
                 $options = array_merge(['prompt' => ''], $this->filterInputOptions);
-                return Html::activeDropDownList($model, $this->attribute, $this->filter, $options) . ' ' . $error;
+                if (ArrayHelper::remove($this->filterInputOptions, 'filterSuggest', false) && class_exists('vova07\select2\Widget')) {
+                    return \vova07\select2\Widget::widget([
+                        'bootstrap' => true,
+                        'model' => $model,
+                        'attribute' => $this->attribute,
+                        'items' => $this->filter,
+                        'options' => $options,
+                    ]);
+                } else {
+                    return Html::activeDropDownList($model, $this->attribute, $this->filter, $options) . ' ' . $error;
+                }
             } else {
                 if ($this->format == 'datetime') {
                     return DatePicker::widget([
@@ -75,7 +85,7 @@ class DataColumn extends \yii\grid\DataColumn
             $value = $content;
         }
         if ($this->labels) {
-            $content = Html::tag('span', $value, ['class' => 'label label-grid-view label-'.ArrayHelper::getValue($this->labels, $content, self::LABEL_DEFAULT)]);
+            $content = Html::tag('span', $value, ['class' => 'label label-grid-view label-' . ArrayHelper::getValue($this->labels, $content, self::LABEL_DEFAULT)]);
         } else {
             $content = $value;
         }
