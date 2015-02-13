@@ -48,6 +48,7 @@ return [
     'Child permissions' => 'Дочерние разрешения',
     'Child roles' => 'Дочерние роли',
     'Create' => 'Создать',
+    'Create {item}' => 'Добавление {item}',
     'Create & Exit' => 'Создать и выйти',
     'Create & Then Create Another One' => 'Создать, а затем создать еще одну запись',
     'Create Time' => 'Дата создания',
