@@ -98,6 +98,7 @@ class GridView extends \yii\grid\GridView
 
     public function renderAllPages()
     {
+        $this->dataProvider->prepare(true);
         $totalPages = $this->dataProvider->getPagination()->pageCount;
         $pages = [];
         $this->startExportCycle();
