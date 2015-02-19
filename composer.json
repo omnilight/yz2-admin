@@ -16,6 +16,7 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-jui": "*",
         "vova07/yii2-select2-widget": "*",
+        "omnilight/yii2-bootstrap-datepicker": "*",
         "omnilight/icons": "*",
         "omnilight/yz2": "*"
     },

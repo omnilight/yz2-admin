@@ -92,6 +92,24 @@ class ActiveField extends \yii\bootstrap\ActiveField
     }
 
     /**
+     * @param array $config
+     * @return static
+     */
+    public function datePicker($config = [])
+    {
+        if (class_exists('vova07\select2\Widget')) {
+            $defaults = [
+                'options' => [
+                    'class' => 'form-control',
+                ],
+            ];
+            $config = ArrayHelper::merge($defaults, $config);
+            return $this->widget('omnilight\widgets\DatePicker', $config);
+        }
+        return $this->textInput();
+    }
+
+    /**
      * Outputs masked input
      * @param string $mask
      * @param array $options
