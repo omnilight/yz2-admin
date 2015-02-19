@@ -97,7 +97,7 @@ class ActiveField extends \yii\bootstrap\ActiveField
      */
     public function datePicker($config = [])
     {
-        if (class_exists('vova07\select2\Widget')) {
+        if (class_exists('omnilight\widgets\DatePicker')) {
             $defaults = [
                 'options' => [
                     'class' => 'form-control',
