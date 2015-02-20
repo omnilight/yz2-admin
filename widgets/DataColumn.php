@@ -3,6 +3,7 @@
 namespace yz\admin\widgets;
 
 use yii\base\Model;
+use yii\db\Expression;
 use yii\grid\Column;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -29,6 +30,10 @@ class DataColumn extends \yii\grid\DataColumn
      * @var array The array of key-value pairs that should color the titles
      */
     public $labels;
+    /**
+     * @var string|array
+     */
+    public $total;
 
     protected function renderFilterCellContent()
     {
@@ -92,5 +97,22 @@ class DataColumn extends \yii\grid\DataColumn
         return $content;
     }
 
+    /**
+     * @return string
+     */
+    public function renderTotalCell()
+    {
+        return Html::tag('td', $this->renderTotalCellContent());
+    }
 
+    protected function renderTotalCellContent()
+    {
+        if (is_array($this->total)) {
+            /** @var GridView $grid */
+            $grid = $this->grid;
+            return $grid->getTotalData()[array_keys($this->total)[0]];
+        } else {
+            return $this->total;
+        }
+    }
 }

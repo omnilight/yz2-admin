@@ -3,6 +3,9 @@
 namespace yz\admin\widgets;
 
 use Yii;
+use yii\data\ActiveDataProvider;
+use yii\db\Query;
+use yii\grid\Column;
 use yii\grid\DataColumn;
 use yii\helpers\Html;
 use yii\widgets\BaseListView;
@@ -45,6 +48,10 @@ class GridView extends \yii\grid\GridView
      */
     public $showSettings = true;
     /**
+     * @var bool
+     */
+    public $showTotal = false;
+    /**
      * @var array Allowed pagesize
      */
     public $allowedPageSizes = [20, 30, 50, 100, 200];
@@ -76,6 +83,13 @@ class GridView extends \yii\grid\GridView
         }
     }
 
+    /**
+     * @return string
+     */
+    public function getGridId()
+    {
+        return Yii::$app->controller->action->getUniqueId() . '.' . $this->getId();
+    }
 
     public function run()
     {
@@ -86,7 +100,6 @@ class GridView extends \yii\grid\GridView
             BaseListView::run();
         }
     }
-
 
     public function renderTableBody()
     {
@@ -113,52 +126,6 @@ class GridView extends \yii\grid\GridView
         }
         return '<tbody>' . implode('', $pages) . '</tbody>';
     }
-
-    public function renderSection($name)
-    {
-        switch ($name) {
-            case "{settings}":
-                return $this->renderSettings();
-            default:
-                return parent::renderSection($name);
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getGridId()
-    {
-        return Yii::$app->controller->action->getUniqueId() . '.' . $this->getId();
-    }
-
-    public function renderSettings()
-    {
-        if ($this->showSettings == false)
-            return '';
-
-        return Html::a(Icons::p('gears') . Yii::t('admin/gridview', 'Grid Settings'), ['#'], [
-            'class' => 'pull-right btn btn-default btn-xs btn-grid-settings js-btn-admin-grid-settings',
-            'data' => [
-                'gridUniqueId' => $this->getGridId(),
-                'currentPageSize' => $this->dataProvider->getPagination()->pageSize,
-                'pageSizes' => $this->allowedPageSizes,
-            ]
-        ]);
-    }
-
-
-    protected function initColumns()
-    {
-        parent::initColumns();
-        if ($this->runInConsoleMode) {
-            array_map(function ($column) {
-                /** @var DataColumn $column */
-                $column->enableSorting = false;
-            }, $this->columns);
-        }
-    }
-
 
     /**
      * Marks start of exporting
@@ -202,5 +169,109 @@ class GridView extends \yii\grid\GridView
     protected function endExportIteration($iteration)
     {
         $this->_averageIterationTime = (time() - $this->_startExportTime) / ($iteration + 1);
+    }
+
+    public function renderSection($name)
+    {
+        switch ($name) {
+            case "{settings}":
+                return $this->renderSettings();
+            default:
+                return parent::renderSection($name);
+        }
+    }
+
+    public function renderSettings()
+    {
+        if ($this->showSettings == false)
+            return '';
+
+        return Html::a(Icons::p('gears') . Yii::t('admin/gridview', 'Grid Settings'), ['#'], [
+            'class' => 'pull-right btn btn-default btn-xs btn-grid-settings js-btn-admin-grid-settings',
+            'data' => [
+                'gridUniqueId' => $this->getGridId(),
+                'currentPageSize' => $this->dataProvider->getPagination()->pageSize,
+                'pageSizes' => $this->allowedPageSizes,
+            ]
+        ]);
+    }
+
+    public function renderTableHeader()
+    {
+        $cells = [];
+        foreach ($this->columns as $column) {
+            /* @var $column Column */
+            $cells[] = $column->renderHeaderCell();
+        }
+        $content = Html::tag('tr', implode('', $cells), $this->headerRowOptions);
+        if ($this->filterPosition == self::FILTER_POS_HEADER) {
+            $content = $this->renderFilters() . $content;
+        } elseif ($this->filterPosition == self::FILTER_POS_BODY) {
+            $content .= $this->renderFilters();
+        }
+
+        $content .= $this->renderTotal();
+
+        return "<thead>\n" . $content . "\n</thead>";
+    }
+
+    public function renderTotal()
+    {
+        if ($this->showTotal) {
+            $cells = [];
+            foreach ($this->columns as $column) {
+                /* @var $column Column */
+                if (method_exists($column, 'renderTotalCell')) {
+                    $cells[] = $column->renderTotalCell();
+                } else {
+                    $cells[] = Html::tag('td');
+                }
+            }
+            return Html::tag('tr', implode('', $cells), []);
+        } else {
+            return '';
+        }
+    }
+
+    protected function initColumns()
+    {
+        parent::initColumns();
+        if ($this->runInConsoleMode) {
+            array_map(function ($column) {
+                /** @var DataColumn $column */
+                $column->enableSorting = false;
+            }, $this->columns);
+        }
+    }
+
+    protected $_totalData;
+
+    /**
+     * @return array|null
+     */
+    public function getTotalData()
+    {
+        if ($this->dataProvider instanceof ActiveDataProvider) {
+            if ($this->_totalData === null) {
+                $query = $this->dataProvider->query;
+                $totalQuery = (new Query())
+                    ->from(['t' => $query]);
+                $select = [];
+                foreach ($this->columns as $column) {
+                    /* @var $column Column */
+                    if ($column->canGetProperty('total')) {
+                        $total = $column->total;
+                        if (is_array($total)) {
+                            $select = array_merge($select, $total);
+                        }
+                    }
+                }
+                $totalQuery->select($select);
+                $this->_totalData = $totalQuery->one();
+            }
+            return $this->_totalData;
+        } else {
+            return null;
+        }
     }
 } 
