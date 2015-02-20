@@ -68,6 +68,8 @@ class ExportAction extends Action
         $grid = GridView::widget([
             'renderAllPages' => true,
             'layout' => "{items}",
+            'showSettings' => false,
+            'showTotal' => false,
             'tableOptions' => ['class' => '', 'border' => 1],
             'dataProvider' => $dataProvider,
             'columns' => $gridColumns,
