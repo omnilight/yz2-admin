@@ -9,6 +9,7 @@ use yii\helpers\Url;
 use yii\web\NotAcceptableHttpException;
 use yii\web\Response;
 use yz\admin\forms\GridViewSettingsForm;
+use yz\admin\helpers\OpCacheDataModel;
 
 
 /**
@@ -20,6 +21,15 @@ class GeneralController extends Controller
     public function actionInfo()
     {
         return $this->render('info');
+    }
+
+    public function actionOpCache()
+    {
+        $this->layout = false;
+        $dataModel = new OpCacheDataModel();
+        return $this->renderPartial('op-cache', [
+            'dataModel' => $dataModel
+        ]);
     }
 
     public function actionRouteToUrl()
