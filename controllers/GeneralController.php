@@ -18,6 +18,17 @@ use yz\admin\helpers\OpCacheDataModel;
  */
 class GeneralController extends Controller
 {
+    protected function getAccessRules()
+    {
+        return ArrayHelper::merge([
+            [
+                'allow' => true,
+                'actions' => ['grid-view-settings'],
+                'roles' => ['@'],
+            ]
+        ], parent::getAccessRules());
+    }
+
     public function actionInfo()
     {
         return $this->render('info');
