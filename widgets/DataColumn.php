@@ -52,13 +52,18 @@ class DataColumn extends \yii\grid\DataColumn
                 $error = '';
             }
             if (is_array($this->filter)) {
-                $options = array_merge(['prompt' => ''], $this->filterInputOptions);
+                $options = array_merge([
+                    'prompt' => '',
+                    'class' => 'form-control',
+                ], $this->filterInputOptions);
                 if (ArrayHelper::remove($this->filterInputOptions, 'filterSuggest', false) && class_exists('vova07\select2\Widget')) {
                     return \vova07\select2\Widget::widget([
                         'bootstrap' => true,
                         'model' => $model,
                         'attribute' => $this->attribute,
-                        'items' => $this->filter,
+                        'items' => array_merge([
+                            '' => '',
+                        ], $this->filter),
                         'options' => $options,
                     ]);
                 } else {
