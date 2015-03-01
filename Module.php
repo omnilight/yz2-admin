@@ -23,7 +23,10 @@ class Module extends \yz\Module
      * @var string Title of the admin panel that is showed in the top of the layout. Default is 'Admin Panel'
      */
     public $adminTitle;
-
+    /**
+     * @var bool Defines whether to show system info menu in admin panel
+     */
+    public $showSystemInfoMenu = true;
     /**
      * @var array Extra menu items
      */
@@ -72,6 +75,7 @@ class Module extends \yz\Module
                     ]
                 ],
             ],
+        ], $this->showSystemInfoMenu ? [
             [
                 'label' => \Yii::t('admin/menu', 'System'),
                 'icon' => Icons::o('gear'),
@@ -83,6 +87,6 @@ class Module extends \yz\Module
                     ],
                 ],
             ]
-        ]);
+        ]: []);
     }
 }
