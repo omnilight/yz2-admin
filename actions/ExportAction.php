@@ -10,16 +10,32 @@ use yz\admin\widgets\GridView;
 
 /**
  * Class ExportAction
- * @property callable $gridColumns Function that provides columns of the grid that should be exported
+ * @property callable $gridColumns Function that provides columns of the grid that should be exported. Have the following
+ * form:
+ * ```php
+ * function($searchModel, $dataProvider, $params) {
+ *  return [...];
+ * }
+ * ```
+ * If this property is null, then we guess, that controller has getGridColumns method
  * @package \yz\admin\actions
  */
 class ExportAction extends Action
 {
     /**
-     * Callback that provides data provider for exporting. Example:
+     * Callback that provides searching model for exporting. Example:
      * ~~~
      * function($params) {
-     *  $searchModel = new SearchModel();
+     *  return new SearchModel();
+     * }
+     * ~~~
+     * @var callable
+     */
+    public $searchModel;
+    /**
+     * Callback that provides data provider for exporting. Example:
+     * ~~~
+     * function($params, $searchModel) {
      *  $dataProvider = $searchModel->search($params);
      *  $dataProvider->pagination = false;
      *  $dataProvider->sort = false;
@@ -60,10 +76,16 @@ class ExportAction extends Action
 
     public function run()
     {
+        $params = Yii::$app->request->getQueryParams();
+        if (is_callable($this->searchModel)) {
+            $searchModel = call_user_func($this->searchModel, $params);
+        } else {
+            $searchModel = $this->searchModel;
+        }
         /** @var DataProviderInterface $dataProvider */
-        $dataProvider = call_user_func($this->dataProvider, Yii::$app->request->getQueryParams());
+        $dataProvider = call_user_func($this->dataProvider, $params, $searchModel);
         /** @var array $gridColumns */
-        $gridColumns = call_user_func($this->getGridColumns());
+        $gridColumns = call_user_func($this->getGridColumns(), $searchModel, $dataProvider, $params);
 
         $grid = GridView::widget([
             'renderAllPages' => true,
