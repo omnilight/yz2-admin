@@ -31,7 +31,8 @@ class DataColumn extends \yii\grid\DataColumn
      */
     public $labels;
     /**
-     * @var string|array
+     * @var string|array The string or array (in case of using active records) to represent expression for total counting
+     * of this column
      */
     public $total;
 
