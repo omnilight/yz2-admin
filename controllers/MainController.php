@@ -52,7 +52,7 @@ class MainController extends Controller
             ],
             [
                 'allow' => true,
-                'actions' => ['index', 'logout', 'accessDenied'],
+                'actions' => ['index', 'logout', 'access-denied'],
                 'roles' => ['@'],
             ]
         ], parent::getAccessRules());

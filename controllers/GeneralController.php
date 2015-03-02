@@ -23,7 +23,7 @@ class GeneralController extends Controller
         return ArrayHelper::merge([
             [
                 'allow' => true,
-                'actions' => ['grid-view-settings'],
+                'actions' => ['grid-view-settings', 'route-to-url'],
                 'roles' => ['@'],
             ]
         ], parent::getAccessRules());
