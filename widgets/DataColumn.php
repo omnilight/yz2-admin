@@ -116,9 +116,9 @@ class DataColumn extends \yii\grid\DataColumn
         if (is_array($this->total)) {
             /** @var GridView $grid */
             $grid = $this->grid;
-            return $grid->getTotalData()[array_keys($this->total)[0]];
+            return \Yii::$app->formatter->format($grid->getTotalData()[array_keys($this->total)[0]], $this->format);
         } else {
-            return $this->total;
+            return \Yii::$app->formatter->format($this->total, $this->format);
         }
     }
 }
