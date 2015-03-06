@@ -35,6 +35,13 @@ class DataColumn extends \yii\grid\DataColumn
      * of this column
      */
     public $total;
+    /**
+     * @var array the HTML attributes for the filter input fields. This property is used in combination with
+     * the [[filter]] property. When [[filter]] is not set or is an array, this property will be used to
+     * render the HTML attributes for the generated filter input fields.
+     * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
+     */
+    public $filterInputOptions = ['class' => 'form-control input-sm', 'id' => null];
 
     protected function renderFilterCellContent()
     {
@@ -56,7 +63,7 @@ class DataColumn extends \yii\grid\DataColumn
                     'prompt' => '',
                     'class' => 'form-control',
                 ], $this->filterInputOptions);
-                if (ArrayHelper::remove($this->filterInputOptions, 'filterSuggest', false) && class_exists('vova07\select2\Widget')) {
+                if (ArrayHelper::remove($this->filterInputOptions, 'filterSuggest', false)) {
                     return \vova07\select2\Widget::widget([
                         'bootstrap' => true,
                         'model' => $model,
@@ -67,7 +74,15 @@ class DataColumn extends \yii\grid\DataColumn
                         'options' => $options,
                     ]);
                 } else {
-                    return Html::activeDropDownList($model, $this->attribute, $this->filter, $options) . ' ' . $error;
+                    return \vova07\select2\Widget::widget([
+                        'bootstrap' => true,
+                        'model' => $model,
+                        'attribute' => $this->attribute,
+                        'items' => array_merge([
+                            '' => '',
+                        ], $this->filter),
+                        'options' => $options,
+                    ]);
                 }
             } else {
                 if ($this->format == 'datetime') {
