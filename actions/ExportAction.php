@@ -5,7 +5,6 @@ namespace yz\admin\actions;
 use yii\base\Action;
 use Yii;
 use yii\data\DataProviderInterface;
-use yii\helpers\FileHelper;
 use yz\admin\widgets\GridView;
 
 
@@ -102,11 +101,7 @@ class ExportAction extends Action
             '{name}' => $this->reportName,
             '{grid}' => $grid,
         ]);
-
-        $exportFile = Yii::getAlias('@runtime/') . $this->reportName.'_'.time(). '.xls';
-        file_put_contents($exportFile, $content);
-
-        return Yii::$app->response->sendFile($exportFile);
+        return Yii::$app->response->sendContentAsFile($content, $this->reportName . '.xls', 'application/msexcel');
     }
 
     const EXPORT_TEMPLATE = <<<HTML
