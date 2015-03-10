@@ -4,6 +4,7 @@ namespace yz\admin\widgets;
 
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\data\SqlDataProvider;
 use yii\db\Query;
 use yii\grid\Column;
 use yii\grid\DataColumn;
@@ -256,6 +257,25 @@ class GridView extends \yii\grid\GridView
                 $query = $this->dataProvider->query;
                 $totalQuery = (new Query())
                     ->from(['t' => $query]);
+                $select = [];
+                foreach ($this->columns as $column) {
+                    /* @var $column Column */
+                    if ($column->canGetProperty('total')) {
+                        $total = $column->total;
+                        if (is_array($total)) {
+                            $select = array_merge($select, $total);
+                        }
+                    }
+                }
+                $totalQuery->select($select);
+                $this->_totalData = $totalQuery->one();
+            }
+            return $this->_totalData;
+        } elseif ($this->dataProvider instanceof SqlDataProvider) {
+            if ($this->_totalData === null) {
+                $sql = $this->dataProvider->sql;
+                $totalQuery = (new Query())
+                    ->from(['t' => "({$sql})"])->params($this->dataProvider->params);
                 $select = [];
                 foreach ($this->columns as $column) {
                     /* @var $column Column */
