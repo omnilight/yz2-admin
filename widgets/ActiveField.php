@@ -80,7 +80,11 @@ class ActiveField extends \yii\bootstrap\ActiveField
             $defaultSettings = [
                 'width' => '100%',
             ];
+            $defaultOptions = [
+                'class' => 'form-control',
+            ];
             $settings = ArrayHelper::merge($defaultSettings, $settings);
+            $options = ArrayHelper::merge($defaultOptions, $options);
             return $this->widget('vova07\select2\Widget', [
                 'bootstrap' => true,
                 'items' => $items,
