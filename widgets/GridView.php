@@ -225,10 +225,10 @@ class GridView extends \yii\grid\GridView
                 if (method_exists($column, 'renderTotalCell')) {
                     $cells[] = $column->renderTotalCell();
                 } else {
-                    $cells[] = Html::tag('td');
+                    $cells[] = Html::tag('td', '', ['class' => 'grid-total-cell-empty']);
                 }
             }
-            return Html::tag('tr', implode('', $cells), []);
+            return Html::tag('tr', implode('', $cells), ['class' => 'grid-total-row']);
         } else {
             return '';
         }
