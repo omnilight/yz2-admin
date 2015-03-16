@@ -24,6 +24,11 @@
 .grid-view .filters input:-ms-input-placeholder {
   font-size: 0.8em;
 }
+.grid-view-row-total td {
+  background: #ffffff;
+  font-weight: bold;
+  font-style: italic;
+}
 .label-grid-view {
   font-size: inherit;
   font-weight: inherit;
