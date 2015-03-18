@@ -53,6 +53,16 @@ class GridView extends \yii\grid\GridView
      */
     public $showTotal = false;
     /**
+     * Total condition that will be added to the total query. Could be string or a function in the form of:
+     * ```
+     * function (Query $query) {
+     *
+     * }
+     * ```
+     * @var string | callable
+     */
+    public $totalCondition;
+    /**
      * @var array Allowed pagesize
      */
     public $allowedPageSizes = [20, 30, 50, 100, 200];
@@ -249,6 +259,7 @@ class GridView extends \yii\grid\GridView
 
     /**
      * @return array|null
+     * @TODO Refactor
      */
     public function getTotalData()
     {
@@ -257,6 +268,11 @@ class GridView extends \yii\grid\GridView
                 $query = $this->dataProvider->query;
                 $totalQuery = (new Query())
                     ->from(['t' => $query]);
+                if (is_callable($this->totalCondition)) {
+                    call_user_func($this->totalCondition, $totalQuery);
+                } elseif (is_string($this->totalCondition) || is_array($this->totalCondition)) {
+                    $totalQuery->andWhere($this->totalCondition);
+                }
                 $select = [];
                 foreach ($this->columns as $column) {
                     /* @var $column Column */
@@ -275,7 +291,13 @@ class GridView extends \yii\grid\GridView
             if ($this->_totalData === null) {
                 $sql = $this->dataProvider->sql;
                 $totalQuery = (new Query())
-                    ->from(['t' => "({$sql})"])->params($this->dataProvider->params);
+                    ->from(['t' => "({$sql})"])
+                    ->params($this->dataProvider->params);
+                if (is_callable($this->totalCondition)) {
+                    call_user_func($this->totalCondition, $totalQuery);
+                } elseif (is_string($this->totalCondition) || is_array($this->totalCondition)) {
+                    $totalQuery->andWhere($this->totalCondition);
+                }
                 $select = [];
                 foreach ($this->columns as $column) {
                     /* @var $column Column */
