@@ -90,10 +90,10 @@ class AuthItemsFinder extends Object
             $relativePath = basename($file);
             $controllerBaseClassName = substr($relativePath, 0, -4); // Removing .php
             $controllerName = substr($controllerBaseClassName, 0, -10); // Removing Controller
-            $controllerClassName = ltrim($this->controllerNamespace . '\\' . $controllerBaseClassName);
+            $controllerClassName = ltrim($this->app->controllerNamespace . '\\' . $controllerBaseClassName);
             if (is_subclass_of($controllerClassName, Controller::className())) {
                 $controllerAuthItemName = $controllerClassName;
-                $controllerDescription = \Yii::t('yz', 'Access to the section "Application/{controller}"', [
+                $controllerDescription = \Yii::t('admint/t', 'Access to the section "Application/{controller}"', [
                     'controller' => $controllerName,
                 ]);
                 $controllerAuthItem = [
