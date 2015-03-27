@@ -17,11 +17,17 @@ trait CrudControllerTrait
 {
     /**
      * @param ActiveRecord $model
-     * @param array $actions
-     * @throws BadRequestHttpException
+     * @param array $actions Custom actions array in the form of
+     * ```php
+     * 'name' => function() {
+     *
+     * }
+     * ```
+     * @param bool $addDefaultActions If true default actions will be added
      * @return \yii\web\Response
+     * @throws BadRequestHttpException
      */
-    protected function getCreateUpdateResponse($model, $actions = [])
+    protected function getCreateUpdateResponse($model, $actions = [], $addDefaultActions = true)
     {
         /** @var Controller $this */
         $me = $this;
@@ -37,7 +43,9 @@ trait CrudControllerTrait
                 },
         ];
 
-        $actions = array_merge($defaultActions, $actions);
+        if ($addDefaultActions) {
+            $actions = array_merge($defaultActions, $actions);
+        }
         $actionName = \Yii::$app->request->post(AdminHtml::ACTION_BUTTON_NAME, AdminHtml::ACTION_SAVE_AND_LEAVE);
 
         if (isset($actions[$actionName]))
