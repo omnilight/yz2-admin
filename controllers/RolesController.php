@@ -9,6 +9,7 @@ use yii\rbac\Item;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
+use yz\admin\components\AuthItemsFinder;
 use yz\admin\models\AuthItem;
 use yz\admin\models\Role;
 use yz\admin\models\search\RoleSearch;
@@ -126,57 +127,8 @@ class RolesController extends Controller
 
     public function actionDiscoverAuthItems()
     {
-        $modules = Yii::$app->getModules();
-
-        $authItems = [];
-        foreach ($modules as $id => $config) {
-            $module = Yii::$app->getModule($id);
-            if (!($module instanceof Module))
-                continue;
-            $authItems = array_merge($authItems, $module->getAuthItems());
-        }
-
-        $authManager = Yii::$app->authManager;
-        $items = [];
-        foreach ($authItems as $name => $authItem) {
-            /** @var array $authItem [Name, type, [child1, child2, ...]] */
-            list($itemDescription, $itemType, $itemChildren) = $authItem;
-
-            $item = null;
-            if ($item === null) {
-                $item = $authManager->getPermission($name);
-            }
-            if ($item === null) {
-                $item = $authManager->getRole($name);
-            }
-
-            if ($item !== null) {
-                if ($item->description != $itemDescription) {
-                    $item->description = $itemDescription;
-                    $authManager->update($name, $item);
-                }
-            } else {
-                $item = new Item();
-                $item->type = $itemType;
-                $item->name = $name;
-                $item->description = $itemDescription;
-                $authManager->add($item);
-            }
-            $items[$name] = $item;
-        }
-        unset($itemDescription, $itemType, $itemChildren);
-
-        foreach ($authItems as $name => $authItem) {
-            /** @var array $authItem [Name, type, [child1, child2, ...]] */
-            list($itemDescription, $itemType, $itemChildren) = $authItem;
-
-            $children = ArrayHelper::getColumn($authManager->getChildren($name), 'name');
-            foreach ($itemChildren as $childName) {
-                if (!in_array($childName, $children))
-                    $authManager->addChild($items[$name], $items[$childName]);
-            }
-        }
-        unset($itemDescription, $itemType, $itemChildren);
+        $finder = new AuthItemsFinder(['app' => Yii::$app]);
+        $finder->findAndSave();
 
         Yii::$app->session->setFlash(Yz::FLASH_SUCCESS, Yii::t('admin/t', 'Tasks and operations were successfully discovered'));
 

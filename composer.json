@@ -12,13 +12,13 @@
     "type": "yii2-extension",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": "*",
-        "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-jui": "*",
+        "yiisoft/yii2": "2.0.*",
+        "yiisoft/yii2-bootstrap": "2.0.*",
+        "yiisoft/yii2-jui": "2.0.*",
         "vova07/yii2-select2-widget": "*",
-        "omnilight/yii2-bootstrap-datepicker": "*",
-        "omnilight/icons": "*",
-        "omnilight/yz2": "*"
+        "omnilight/yii2-bootstrap-datepicker": "1.*",
+        "omnilight/icons": "1.*",
+        "omnilight/yz2": "1.*"
     },
     "autoload": {
         "psr-4": { "yz\\admin\\": "" }

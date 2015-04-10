@@ -92,9 +92,11 @@ class GridView extends \yii\grid\GridView
     protected function setupGrid()
     {
         $this->trigger(self::EVENT_SETUP_GRID);
-        $pageSize = UserSetting::get(Yii::$app->user->id, $this->getGridId() . '.pageSize');
-        if ($pageSize !== null) {
-            $this->dataProvider->getPagination()->pageSize = $pageSize;
+        if ($this->runInConsoleMode == false) {
+            $pageSize = UserSetting::get(Yii::$app->user->id, $this->getGridId() . '.pageSize');
+            if ($pageSize !== null) {
+                $this->dataProvider->getPagination()->pageSize = $pageSize;
+            }
         }
     }
 

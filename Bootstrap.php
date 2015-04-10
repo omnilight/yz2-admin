@@ -39,11 +39,16 @@ class Bootstrap implements BootstrapInterface
         ];
 
         // Setup for formatter
-        \Yii::$app->formatter->attachBehavior('extendedFormatting', [
+        $app->formatter->attachBehavior('extendedFormatting', [
             'class' => 'yz\admin\behaviors\ExtendedFormattingBehavior',
         ]);
 
-        \Yii::$app->params['yii.migrations'][] = '@yz/admin/migrations';
+        if ($app instanceof \yii\console\Application) {
+            $app->params['yii.migrations'][] = '@yz/admin/migrations';
+            if (!isset($app->controllerMap['admin-users'])) {
+                $app->controllerMap['admin-users'] = 'yz\admin\commands\AdminUsersController';
+            }
+        }
     }
 
 
