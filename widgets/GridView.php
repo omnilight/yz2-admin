@@ -25,6 +25,9 @@ use yz\icons\Icons;
  */
 class GridView extends \yii\grid\GridView
 {
+    /** This event is triggered on grid setup */
+    const EVENT_SETUP_GRID = 'setupGrid';
+
     /**
      * @inheritdoc
      */
@@ -88,6 +91,7 @@ class GridView extends \yii\grid\GridView
 
     protected function setupGrid()
     {
+        $this->trigger(self::EVENT_SETUP_GRID);
         $pageSize = UserSetting::get(Yii::$app->user->id, $this->getGridId() . '.pageSize');
         if ($pageSize !== null) {
             $this->dataProvider->getPagination()->pageSize = $pageSize;
