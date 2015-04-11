@@ -23,8 +23,6 @@ use yz\icons\Icons;
 			]
 		]) ?>
 
-		<?= $form->errorSummary([$loginForm]); ?>
-
 		<?= $form->field($loginForm, 'login')->textInput(['autofocus' => '']); ?>
 
 		<?= $form->field($loginForm, 'password')->passwordInput(); ?>
