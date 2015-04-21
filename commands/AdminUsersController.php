@@ -53,6 +53,9 @@ class AdminUsersController extends Controller
         $user->delete();
     }
 
+    /**
+     * Creates admin user
+     */
     public function actionCreate()
     {
         $user = new User();
@@ -70,6 +73,21 @@ class AdminUsersController extends Controller
             $this->stderr("Errors: ".Json::encode($user->getErrors()));
             return self::EXIT_CODE_ERROR;
         }
+    }
+
+    /**
+     * Creates default admin user with login admin and password password
+     */
+    public function actionCreateDefaultAdmin()
+    {
+        $this->run('create', [
+            'name' => \Yii::t('admin/t', 'Administrator'),
+            'login' => 'admin',
+            'email' => 'admin@domain.com',
+            'is_active' => 1,
+            'is_super_admin' => 1,
+            'password' => 'qwerty',
+        ]);
     }
 
     public function actionUpdate($login)
