@@ -84,8 +84,8 @@ class AdminUsersController extends Controller
             'name' => \Yii::t('admin/t', 'Administrator'),
             'login' => 'admin',
             'email' => 'admin@domain.com',
-            'is_active' => 1,
-            'is_super_admin' => 1,
+            'active' => 1,
+            'superadmin' => 1,
             'password' => 'qwerty',
         ]);
     }
