@@ -28,7 +28,7 @@ class AdminUsersController extends Controller
     }
 
 
-    public function actionList()
+    public function actionIndex()
     {
         foreach (User::find()->each() as $user) {
             /** @var User $user */
