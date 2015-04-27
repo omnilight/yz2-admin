@@ -1,3 +1,16 @@
-<h1>Добро пожаловать в панель администрирования!</h1>
+<?php
+/**
+ * @var yii\web\View $this
+ */
 
-<p>Выберите пункт меню слева для начала работы</p>
+$this->title = 'Главная страница';
+$this->params['breadcrumbs'][] = $this->title;
+$this->params['header'] = $this->title;
+?>
+<?php \yz\admin\widgets\Box::begin(['cssClass' => 'box-info']) ?>
+
+    <h1>Добро пожаловать в панель администрирования!</h1>
+
+    <p>Выберите пункт меню слева для начала работы</p>
+
+<?php \yz\admin\widgets\Box::end() ?>

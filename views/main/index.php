@@ -1,3 +1,14 @@
-<h1>Wellcome to the Administration panel!</h1>
+<?php
+/**
+ * @var yii\web\View $this
+ */
 
-<p>Please, select menu item to the left to perform some action</p>
+$this->title = 'Main page';
+$this->params['breadcrumbs'][] = $this->title;
+$this->params['header'] = $this->title;
+?>
+<?php \yz\admin\widgets\Box::begin(['cssClass' => 'box-info']) ?>
+    <h1>Wellcome to the Administration panel!</h1>
+
+    <p>Please, select menu item to the left to perform some action</p>
+<?php \yz\admin\widgets\Box::end() ?>
