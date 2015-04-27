@@ -11,6 +11,7 @@ use yii\rbac\DbManager;
 use yii\rbac\Item;
 use yii\web\IdentityInterface;
 use yii\web\UserEvent;
+use yz\admin\components\AuthManager;
 use yz\db\ActiveRecord;
 use yz\interfaces\ModelInfoInterface;
 
@@ -217,6 +218,9 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     {
         if ($this->_authManager == null) {
             $this->_authManager = \Yii::$app->authManager;
+            if (!($this->_authManager instanceof AuthManager)) {
+                $this->_authManager = new AuthManager();
+            }
         }
         return $this->_authManager;
     }
