@@ -13,6 +13,15 @@ use yz\admin\forms\LoginForm;
  */
 class MainController extends Controller
 {
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+        ];
+    }
+
     public function actionLogin()
     {
         $this->layout = '//base';
