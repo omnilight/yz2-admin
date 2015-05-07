@@ -64,7 +64,7 @@ class Alerts extends Widget
                 /* assign unique id to each alert box */
                 $this->options['id'] = $this->getId() . '-' . $type;
 
-                $body = Icons::p($this->alertIcons[$type]) . $message;
+                $body = Icons::p($this->alertIcons[$type], ['class' => 'icon']) . $message;
 
                 $alerts .= Alert::widget([
                     'body' => $body,
