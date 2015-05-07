@@ -29,6 +29,9 @@
   font-weight: bold;
   font-style: italic;
 }
+.grid-view-toggle-cell {
+  vertical-align: middle;
+}
 .label-grid-view {
   font-size: inherit;
   font-weight: inherit;
