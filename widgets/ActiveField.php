@@ -85,7 +85,7 @@ class ActiveField extends \yii\bootstrap\ActiveField
             ];
             $settings = ArrayHelper::merge($defaultSettings, $settings);
             $options = ArrayHelper::merge($defaultOptions, $options);
-            return $this->widget('vova07\select2\Widget', [
+            return $this->widget(Select2::className(), [
                 'bootstrap' => true,
                 'items' => $items,
                 'options' => $options,
