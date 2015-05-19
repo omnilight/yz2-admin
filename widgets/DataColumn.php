@@ -3,7 +3,6 @@
 namespace yz\admin\widgets;
 
 use yii\base\Model;
-use yii\db\Expression;
 use yii\grid\Column;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -43,6 +42,25 @@ class DataColumn extends \yii\grid\DataColumn
      */
     public $filterInputOptions = ['class' => 'form-control input-sm', 'id' => null];
 
+    /**
+     * @return string
+     */
+    public function renderTotalCell()
+    {
+        return Html::tag('td', $this->renderTotalCellContent());
+    }
+
+    protected function renderTotalCellContent()
+    {
+        if (is_array($this->total)) {
+            /** @var GridView $grid */
+            $grid = $this->grid;
+            return \Yii::$app->formatter->format($grid->getTotalData()[array_keys($this->total)[0]], $this->format);
+        } else {
+            return \Yii::$app->formatter->format($this->total, $this->format);
+        }
+    }
+
     protected function renderFilterCellContent()
     {
         if (is_string($this->filter)) {
@@ -63,27 +81,17 @@ class DataColumn extends \yii\grid\DataColumn
                     'prompt' => '',
                     'class' => 'form-control',
                 ], $this->filterInputOptions);
-                if (ArrayHelper::remove($this->filterInputOptions, 'filterSuggest', false)) {
-                    return \vova07\select2\Widget::widget([
-                        'bootstrap' => true,
-                        'model' => $model,
-                        'attribute' => $this->attribute,
-                        'items' => array_merge([
-                            '' => '',
-                        ], $this->filter),
-                        'options' => $options,
-                    ]);
-                } else {
-                    return \vova07\select2\Widget::widget([
-                        'bootstrap' => true,
-                        'model' => $model,
-                        'attribute' => $this->attribute,
-                        'items' => array_merge([
-                            '' => '',
-                        ], $this->filter),
-                        'options' => $options,
-                    ]);
-                }
+                ArrayHelper::remove($this->filterInputOptions, 'filterSuggest', false);
+                return Select2::widget([
+                    'bootstrap' => true,
+                    'model' => $model,
+                    'attribute' => $this->attribute,
+                    'items' => ArrayHelper::merge([
+                        '' => '',
+                    ], $this->filter),
+                    'options' => $options,
+                ]);
+
             } else {
                 if ($this->format == 'datetime') {
                     return DatePicker::widget([
@@ -116,24 +124,5 @@ class DataColumn extends \yii\grid\DataColumn
             $content = $value;
         }
         return $content;
-    }
-
-    /**
-     * @return string
-     */
-    public function renderTotalCell()
-    {
-        return Html::tag('td', $this->renderTotalCellContent());
-    }
-
-    protected function renderTotalCellContent()
-    {
-        if (is_array($this->total)) {
-            /** @var GridView $grid */
-            $grid = $this->grid;
-            return \Yii::$app->formatter->format($grid->getTotalData()[array_keys($this->total)[0]], $this->format);
-        } else {
-            return \Yii::$app->formatter->format($this->total, $this->format);
-        }
     }
 }
