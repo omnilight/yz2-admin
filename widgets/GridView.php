@@ -27,6 +27,8 @@ class GridView extends \yii\grid\GridView
 {
     /** This event is triggered on grid setup */
     const EVENT_SETUP_GRID = 'setupGrid';
+    /** This event is triggered after page rendering */
+    const EVENT_AFTER_RENDER_PAGE = 'afterRenderPage';
 
     /**
      * @inheritdoc
@@ -128,6 +130,7 @@ class GridView extends \yii\grid\GridView
 
     public function renderAllPages()
     {
+        $this->dataProvider->getPagination()->pageSize = 200;
         $this->dataProvider->prepare(true);
         $totalPages = $this->dataProvider->getPagination()->pageCount;
         $pages = [];
@@ -138,6 +141,8 @@ class GridView extends \yii\grid\GridView
                 break;
 
             $pages[] = $this->renderSinglePage($page);
+
+            $this->trigger(self::EVENT_AFTER_RENDER_PAGE);
 
             $this->endExportIteration($page);
         }
