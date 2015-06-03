@@ -30,6 +30,8 @@ class AuthItemsFinder extends Object
     {
         $authItems = array_merge($this->getAuthItemsFromApp(), $this->getAuthItemsFromModules());
 
+        $transaction = $this->app->db->beginTransaction();
+
         $authManager = $this->app->authManager;
         $items = [];
         foreach ($authItems as $name => $authItem) {
@@ -71,6 +73,8 @@ class AuthItemsFinder extends Object
             }
         }
         unset($itemDescription, $itemType, $itemChildren);
+
+        $transaction->commit();
     }
 
     /**
@@ -93,7 +97,7 @@ class AuthItemsFinder extends Object
             $controllerClassName = ltrim($this->app->controllerNamespace . '\\' . $controllerBaseClassName);
             if (is_subclass_of($controllerClassName, Controller::className())) {
                 $controllerAuthItemName = $controllerClassName;
-                $controllerDescription = \Yii::t('admint/t', 'Access to the section "Application/{controller}"', [
+                $controllerDescription = \Yii::t('admin/t', 'Access to the section "Application/{controller}"', [
                     'controller' => $controllerName,
                 ]);
                 $controllerAuthItem = [
@@ -118,7 +122,7 @@ class AuthItemsFinder extends Object
                         $action = $m[1];
                     }
                     $actionAuthItemName = AuthManager::getOperationName($controllerClassName, $action);
-                    $actionDescription = \Yii::t('yz', 'Access to the action "Application/{controller}/{action}"', [
+                    $actionDescription = \Yii::t('admin/t', 'Access to the action "Application/{controller}/{action}"', [
                         'action' => $action,
                         'controller' => $controllerName,
                     ]);
