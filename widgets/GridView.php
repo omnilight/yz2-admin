@@ -135,18 +135,31 @@ class GridView extends \yii\grid\GridView
         $totalPages = $this->dataProvider->getPagination()->pageCount;
         $pages = [];
         $this->startExportCycle();
+
+        $tmpFile = tmpfile();
+
         for ($page = 0; $page < $totalPages; $page++) {
 
             if ($this->checkIfResumeExport() == false)
                 break;
 
-            $pages[] = $this->renderSinglePage($page);
+            fwrite($tmpFile, $this->renderSinglePage($page));
 
             $this->trigger(self::EVENT_AFTER_RENDER_PAGE);
 
             $this->endExportIteration($page);
         }
-        return '<tbody>' . implode('', $pages) . '</tbody>';
+
+        fseek($tmpFile, 0);
+
+        $content = '';
+        while (!feof($tmpFile)) {
+            $content .= fread($tmpFile, 1024);
+        }
+
+        fclose($tmpFile);
+
+        return '<tbody>' . $content . '</tbody>';
     }
 
     /**
