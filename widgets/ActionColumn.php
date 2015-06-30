@@ -34,7 +34,7 @@ class ActionColumn extends \yii\grid\ActionColumn
         if (!isset($this->buttons['update'])) {
             $this->buttons['update'] = function ($url, $model) {
                 return Html::a(Icons::i('pencil-square-o fa-lg'), $url, [
-                    'title' => Yii::t('admin/t', 'Update'),
+                    'title' => Yii::t('admin/t', 'Edit'),
                     'class' => 'btn btn-success btn-sm',
                     'data-pjax' => '0',
                 ]);
