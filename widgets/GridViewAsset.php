@@ -5,23 +5,9 @@ use yii\web\AssetBundle;
 
 
 /**
- * Class GridViewAsset
+ * @deprecated Moved to grid namespace
  */
-class GridViewAsset extends AssetBundle
+class GridViewAsset extends \yz\admin\grid\GridViewAsset
 {
-    /**
-     * @var string
-     */
-    public $sourcePath = '@yz/admin/widgets/assets/gridView';
 
-    public $js = [
-        'grid-view.js',
-    ];
-
-    public function registerAssetFiles($view)
-    {
-        parent::registerAssetFiles($view);
-
-        $view->registerJs('adminGridView.init();');
-    }
 }

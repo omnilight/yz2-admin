@@ -5,7 +5,7 @@ namespace yz\admin\actions;
 use yii\base\Action;
 use Yii;
 use yii\data\DataProviderInterface;
-use yz\admin\widgets\GridView;
+use yz\admin\grid\GridView;
 
 
 /**

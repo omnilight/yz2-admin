@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yz\admin\widgets\Box;
-use yz\admin\widgets\GridView;
+use yz\admin\grid\GridView;
 use yz\admin\widgets\ActionButtons;
 
 /**
