@@ -7,6 +7,7 @@ use omnilight\datetime\DateTimeRangeBehavior;
 use yii\base\Behavior;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 use yz\admin\search\SearchModelEvent;
 use yz\admin\search\SearchModelInterface;
 use yz\db\ActiveRecord;
@@ -78,6 +79,8 @@ class DateRangeFilteringBehavior extends Behavior
             'targetFormat' => ['date', 'dd.MM.yyyy'],
             'attributes' => $rangeAttributes,
         ]);
+
+        $owner->ensureBehaviors();
     }
 
     public function canGetProperty($name, $checkVars = true)
@@ -128,11 +131,11 @@ class DateRangeFilteringBehavior extends Behavior
         $this->_rangeAttributes[$name] = $value;
     }
 
-    public function getAttribute($name)
+    public function getAttribute($name, $initIfNull = true)
     {
         $value = ArrayHelper::getValue($this->_rangeAttributes, $name);
 
-        if ($value === null) {
+        if ($value === null && $initIfNull) {
             $this->initAttribute($this->getOriginalAttribute($name));
             $value = ArrayHelper::getValue($this->_rangeAttributes, $name);
         }
@@ -169,8 +172,8 @@ class DateRangeFilteringBehavior extends Behavior
             $query->andFilterWhere([
                 'between',
                 "DATE({$dbAttribute})",
-                $this->getAttribute($attribute . '_start'),
-                $this->getAttribute($attribute . '_end')
+                $this->getAttribute($attribute . '_start', false),
+                $this->getAttribute($attribute . '_end', false)
             ]);
         }
     }
