@@ -103,6 +103,7 @@ class DateRangeFilteringBehavior extends Behavior
     {
         if ($this->hasAttribute($name)) {
             $this->setAttribute($name, $value);
+            return;
         }
         parent::__set($name, $value);
     }
