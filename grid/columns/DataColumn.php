@@ -123,7 +123,9 @@ class DataColumn extends \yii\grid\DataColumn
         }
 
         if ($this->format == 'datetime') {
-            return \Yii::createObject(DatePickerFilter::instance(), [$this]);
+            return \Yii::createObject([
+                'class' => DatePickerFilter::class,
+            ], [$this]);
         }
 
         return \Yii::createObject([
