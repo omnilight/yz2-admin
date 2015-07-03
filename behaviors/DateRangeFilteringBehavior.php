@@ -40,7 +40,7 @@ class DateRangeFilteringBehavior extends Behavior
     {
         if ($this->owner instanceof SearchModelInterface) {
             return [
-                SearchModelInterface::EVENT_AFTER_PREPARE_QUERY => 'afterPrepareQuery'
+                SearchModelInterface::EVENT_AFTER_PREPARE_FILTERS => 'afterPrepareFilters'
             ];
         }
 
@@ -79,8 +79,6 @@ class DateRangeFilteringBehavior extends Behavior
             'targetFormat' => ['date', 'dd.MM.yyyy'],
             'attributes' => $rangeAttributes,
         ]);
-
-        $owner->ensureBehaviors();
     }
 
     public function canGetProperty($name, $checkVars = true)
@@ -161,7 +159,7 @@ class DateRangeFilteringBehavior extends Behavior
         return $this->hasAttribute($name) || parent::__isset($name);
     }
 
-    public function afterPrepareQuery(SearchModelEvent $e)
+    public function afterPrepareFilters(SearchModelEvent $e)
     {
         $query = $e->query;
 
