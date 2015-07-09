@@ -23,7 +23,7 @@ trait WithExtraColumns
     protected static function selectWithExtraColumns($select)
     {
         $select = (array)$select;
-        return array_merge($select, array_map([get_called_class(), 'columnName'], self::extraColumns()));
+        return array_merge($select, array_map([get_called_class(), 'columnName'], static::extraColumns()));
     }
 
     /**
