@@ -167,7 +167,10 @@ class Role extends AuthItem
             ->where(['type' => [Item::TYPE_PERMISSION]]);
         if (!$this->isNewRecord)
             $query->andWhere('name != :name', [':name' => $this->name]);
-        return ArrayHelper::map($query->all(), 'name', 'description');
+        $items = $query
+            ->orderBy(['description' => SORT_ASC])
+            ->all();
+        return ArrayHelper::map($items, 'name', 'description');
     }
 
     public function beforeValidate()
