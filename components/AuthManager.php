@@ -38,10 +38,25 @@ class AuthManager extends DbManager
      */
     public static function getOperationName($controller, $action)
     {
-        if (is_object($controller))
+        if (is_object($controller)) {
             $controller = $controller->className();
+        }
         /** @var string $controller */
-        return $controller . ':' . Inflector::id2camel($action);
+        return self::authItemName($controller . ':' . Inflector::id2camel($action));
+    }
+
+    /**
+     * Generates correct auth item name event for long strings
+     * @param $authItem
+     * @return string
+     */
+    public static function authItemName($authItem)
+    {
+        if (strlen($authItem) > 32) {
+            return sprintf('%x', crc32($authItem)) . '_' . substr($authItem, -(32-9));
+        }
+
+        return $authItem;
     }
 
 } 

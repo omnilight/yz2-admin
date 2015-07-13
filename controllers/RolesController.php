@@ -39,7 +39,7 @@ class RolesController extends Controller
      * @param string $export Set export type
      * @return mixed
      */
-    public function actionIndex($export = null)
+    public function actionIndex()
     {
         $searchModel = new RoleSearch;
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
