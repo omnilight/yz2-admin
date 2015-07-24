@@ -144,8 +144,8 @@ class DateRangeFilteringBehavior extends Behavior
     public function initAttribute($name)
     {
         if ($this->owner instanceof ActiveRecord) {
-            $this->setAttribute($name.'_start', $this->owner->find()->min($name));
-            $this->setAttribute($name.'_end', $this->owner->find()->max($name));
+            $this->setAttribute($name.'_start', $this->owner->find()->min(strtr('DATE({attr})', ['{attr}' => $name])));
+            $this->setAttribute($name.'_end', $this->owner->find()->max(strtr('DATE({attr})', ['{attr}' => $name])));
         }
     }
 
