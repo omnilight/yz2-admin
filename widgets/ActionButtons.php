@@ -56,6 +56,10 @@ class ActionButtons extends Widget
      */
     public $exportUrl = ['export'];
     /**
+     * @var array|string
+     */
+    public $importUrl = ['import'];
+    /**
      * Buttons order. Format:
      * ~~~
      * [ // Button group
@@ -101,6 +105,46 @@ class ActionButtons extends Widget
      * @var string
      */
     public $modelClass = null;
+    /**
+     * @var Button
+     */
+    protected $_importButton;
+    /**
+     * @var Button
+     */
+    protected $_returnButton = null;
+    /**
+     * @var Button
+     */
+    protected $_indexButton = null;
+    /**
+     * @var Button
+     */
+    protected $_indexViewButton = null;
+    /**
+     * @var Button
+     */
+    protected $_createButton = null;
+    /**
+     * @var Button
+     */
+    protected $_updateButton = null;
+    /**
+     * @var Button
+     */
+    protected $_deleteButton = null;
+    /**
+     * @var Button
+     */
+    protected $_searchButton = null;
+    /**
+     * @var Button
+     */
+    protected $_exportButton = null;
+    /**
+     * @var Button
+     */
+    protected $_createAjaxButton = null;
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -113,6 +157,7 @@ class ActionButtons extends Widget
         $standardButtons = [
             'index', 'index-view', 'create', 'create-ajax',
             'update', 'delete', 'return', 'search', 'export',
+            'import',
         ];
         // List of the buttons that will be done in the future
         $reservedButtons = [];
@@ -168,14 +213,6 @@ class ActionButtons extends Widget
     }
 
     /**
-     * @param Button $returnButton
-     */
-    public function setReturnButton($returnButton)
-    {
-        $this->_returnButton = $returnButton;
-    }
-
-    /**
      * @return Button
      */
     public function getReturnButton()
@@ -199,11 +236,11 @@ class ActionButtons extends Widget
     }
 
     /**
-     * @param \yii\bootstrap\Button $createButton
+     * @param Button $returnButton
      */
-    public function setCreateButton($createButton)
+    public function setReturnButton($returnButton)
     {
-        $this->_createButton = $createButton;
+        $this->_returnButton = $returnButton;
     }
 
     /**
@@ -253,9 +290,27 @@ class ActionButtons extends Widget
     /**
      * @param \yii\bootstrap\Button $createButton
      */
-    public function setCreateAjaxButton($createAjaxButton)
+    public function setCreateButton($createButton)
     {
-        $this->_createAjaxButton = $createAjaxButton;
+        $this->_createButton = $createButton;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getModelAttributes()
+    {
+        if ($this->searchModel === null || $this->modelClass === null)
+            return [];
+
+        $attributes = [];
+        $model = new $this->modelClass;
+        foreach ($this->searchModel->getAttributes() as $name => $value) {
+            if ($value !== null)
+                $attributes[Html::getInputName($model, $name)] = $value;
+        }
+
+        return $attributes;
     }
 
     /**
@@ -265,26 +320,26 @@ class ActionButtons extends Widget
     {
         if ($this->_createAjaxButton === null) {
             $url = $this->createAjaxUrl;
-                $this->_createAjaxButton = Button::widget([
-                    'tagName' => 'a',
-                    'label' => Icons::p('plus') . \Yii::t('admin/t', 'Add'),
-                    'encodeLabel' => false,
-                    'options' => [
-                        'href' => Url::to($url),
-                        'class' => 'btn btn-success js-btn-ajax-crud-create',
-                    ],
-                ]);;
+            $this->_createAjaxButton = Button::widget([
+                'tagName' => 'a',
+                'label' => Icons::p('plus') . \Yii::t('admin/t', 'Add'),
+                'encodeLabel' => false,
+                'options' => [
+                    'href' => Url::to($url),
+                    'class' => 'btn btn-success js-btn-ajax-crud-create',
+                ],
+            ]);;
 
         }
         return $this->_createAjaxButton;
     }
 
     /**
-     * @param \yii\bootstrap\Button $deleteButton
+     * @param \yii\bootstrap\Button $createButton
      */
-    public function setDeleteButton($deleteButton)
+    public function setCreateAjaxButton($createAjaxButton)
     {
-        $this->_deleteButton = $deleteButton;
+        $this->_createAjaxButton = $createAjaxButton;
     }
 
     /**
@@ -311,11 +366,11 @@ class ActionButtons extends Widget
     }
 
     /**
-     * @param \yii\bootstrap\Button $indexButton
+     * @param \yii\bootstrap\Button $deleteButton
      */
-    public function setIndexButton($indexButton)
+    public function setDeleteButton($deleteButton)
     {
-        $this->_indexButton = $indexButton;
+        $this->_deleteButton = $deleteButton;
     }
 
     /**
@@ -341,9 +396,9 @@ class ActionButtons extends Widget
     /**
      * @param \yii\bootstrap\Button $indexButton
      */
-    public function setIndexViewButton($indexViewButton)
+    public function setIndexButton($indexButton)
     {
-        $this->_indexViewButton = $indexViewButton;
+        $this->_indexButton = $indexButton;
     }
 
     /**
@@ -367,11 +422,11 @@ class ActionButtons extends Widget
     }
 
     /**
-     * @param \yii\bootstrap\Button $updateButton
+     * @param \yii\bootstrap\Button $indexButton
      */
-    public function setUpdateButton($updateButton)
+    public function setIndexViewButton($indexViewButton)
     {
-        $this->_updateButton = $updateButton;
+        $this->_indexViewButton = $indexViewButton;
     }
 
     /**
@@ -395,11 +450,11 @@ class ActionButtons extends Widget
     }
 
     /**
-     * @param \yii\bootstrap\Button $searchButton
+     * @param \yii\bootstrap\Button $updateButton
      */
-    public function setSearchButton($searchButton)
+    public function setUpdateButton($updateButton)
     {
-        $this->_searchButton = $searchButton;
+        $this->_updateButton = $updateButton;
     }
 
     /**
@@ -421,11 +476,11 @@ class ActionButtons extends Widget
     }
 
     /**
-     * @param \yii\bootstrap\Button $exportButton
+     * @param \yii\bootstrap\Button $searchButton
      */
-    public function setExportButton($exportButton)
+    public function setSearchButton($searchButton)
     {
-        $this->_exportButton = $exportButton;
+        $this->_searchButton = $searchButton;
     }
 
     /**
@@ -450,59 +505,32 @@ class ActionButtons extends Widget
         return $this->_exportButton;
     }
 
-
     /**
-     * @var Button
+     * @param \yii\bootstrap\Button $exportButton
      */
-    protected $_returnButton = null;
-    /**
-     * @var Button
-     */
-    protected $_indexButton = null;
-    /**
-     * @var Button
-     */
-    protected $_indexViewButton = null;
-    /**
-     * @var Button
-     */
-    protected $_createButton = null;
-    /**
-     * @var Button
-     */
-    protected $_updateButton = null;
-    /**
-     * @var Button
-     */
-    protected $_deleteButton = null;
-    /**
-     * @var Button
-     */
-    protected $_searchButton = null;
-    /**
-     * @var Button
-     */
-    protected $_exportButton = null;
-    /**
-     * @var Button
-     */
-    protected $_createAjaxButton = null;
-
-    /**
-     * @return array
-     */
-    protected function getModelAttributes()
+    public function setExportButton($exportButton)
     {
-        if ($this->searchModel === null || $this->modelClass === null)
-            return [];
+        $this->_exportButton = $exportButton;
+    }
 
-        $attributes = [];
-        $model = new $this->modelClass;
-        foreach ($this->searchModel->getAttributes() as $name => $value) {
-            if ($value !== null)
-                $attributes[Html::getInputName($model, $name)] = $value;
+    /**
+     * @return \yii\bootstrap\Button
+     */
+    public function getImportButton()
+    {
+        if ($this->_importButton === null) {
+            $url = $this->importUrl;
+            $this->_importButton = Button::widget([
+                'tagName' => 'a',
+                'label' => Icons::p('upload') . \Yii::t('admin/t', 'Импорт'),
+                'encodeLabel' => false,
+                'options' => [
+                    'href' => Url::to($url),
+                    'class' => 'btn btn-default',
+                    'id' => 'action-button-import',
+                ],
+            ]);
         }
-
-        return $attributes;
+        return $this->_importButton;
     }
 }

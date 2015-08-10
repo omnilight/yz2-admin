@@ -19,6 +19,7 @@ class ActiveField extends \yii\bootstrap\ActiveField
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as
      * the attributes of the resulting tag. The values will be HTML-encoded using [[Html::encode()]].
      * @return static the field object itself
+     * @deprecated
      */
     public function staticInput($options = [])
     {
