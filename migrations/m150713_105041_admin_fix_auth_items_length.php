@@ -17,7 +17,7 @@ class m150713_105041_admin_fix_auth_items_length extends Migration
                 continue;
             }
 
-            $newItem = sprintf('%x', crc32($item)) . '_' . substr($item, (-32-9));
+            $newItem = sprintf('%x', crc32($item)) . '_' . substr($item, -(32-9));
 
             $this->update('{{%admin_auth_item}}', [
                 'name' => $newItem

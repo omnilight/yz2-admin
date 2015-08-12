@@ -104,6 +104,8 @@ class MainMenu extends Widget
 
         $operation = AuthManager::getOperationName($controller, $action);
 
+        var_dump($operation);
+
         return ($_routes[$route] = Yii::$app->user->can($operation));
     }
 
