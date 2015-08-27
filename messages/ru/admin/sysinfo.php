@@ -29,4 +29,5 @@ return [
     'Yii' => '',
     'General system info' => 'Общая системная информация',
     'Server' => 'Сервер',
+    'Application' => 'Приложение',
 ];
