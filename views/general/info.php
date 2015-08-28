@@ -66,6 +66,12 @@ $this->params['header'] = Yii::t('admin/sysinfo', 'General system info')
                 <td><?= Yii::t('admin/sysinfo', 'Yii') ?></td>
                 <td><?= Yii::getVersion() ?></td>
             </tr>
+            <?php if (defined('APP_VERSION')): ?>
+            <tr>
+                <td><?= Yii::t('admin/sysinfo', 'Application') ?></td>
+                <td><?= \yii\helpers\Html::encode(APP_VERSION) ?></td>
+            </tr>
+            <?php endif ?>
         </table>
         <?php Box::end() ?>
     </div>
