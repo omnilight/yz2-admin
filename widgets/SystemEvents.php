@@ -1,9 +1,9 @@
 <?php
 
 namespace yz\admin\widgets;
+
 use yii\base\Widget;
 use yii\di\Instance;
-use yii\log\Logger;
 use yz\admin\models\SystemEvent;
 use yz\admin\models\User;
 

@@ -1,11 +1,10 @@
-
-var ajaxCrud = (function($) {
+var ajaxCrud = (function ($) {
     var pub = {
         spinner: '<i class="fa fa-spinner fa-spin"></i>',
         itemWrapper: '{content}',
         createItemWrapper: '{content}',
         updateItemWrapper: '{content}',
-        load: function(container, url, append, wrapper) {
+        load: function (container, url, append, wrapper) {
             append = append || false;
             wrapper = wrapper || pub.itemWrapper;
             if (append) {
@@ -17,7 +16,7 @@ var ajaxCrud = (function($) {
                 type: 'get',
                 url: url,
                 dataType: 'html',
-                success: function(html) {
+                success: function (html) {
                     var content = wrapper
                         .replace('{content}', html);
                     if (append) {
@@ -29,19 +28,19 @@ var ajaxCrud = (function($) {
                 }
             });
         },
-        init: function() {
+        init: function () {
             var containers = $('.ajax-crud-container');
-            containers.on('click', '.js-btn-ajax-crud-create', function() {
+            containers.on('click', '.js-btn-ajax-crud-create', function () {
                 var container = $(this).closest('.ajax-crud-container');
                 pub.load(container.data('container-create'), $(this).attr('href'), true, pub.createItemWrapper);
                 return false;
             });
-            containers.on('click', '.js-btn-ajax-crud-update', function() {
+            containers.on('click', '.js-btn-ajax-crud-update', function () {
                 var container = $(this).closest('.ajax-crud-container');
                 pub.load(container.data('container-update'), $(this).attr('href'), false, pub.updateItemWrapper);
                 return false;
             });
-            containers.on('click', '.js-btn-ajax-crud-cancel', function() {
+            containers.on('click', '.js-btn-ajax-crud-cancel', function () {
                 var item = $(this).closest('.ajax-crud-item');
                 item.remove();
                 return false;

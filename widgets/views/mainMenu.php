@@ -11,7 +11,7 @@ $context = $this->context;
 ?>
 <ul class="sidebar-menu">
     <?php foreach ($menuItems as $group): ?>
-        <li class="treeview <?= $group['active']?'active':'' ?>">
+        <li class="treeview <?= $group['active'] ? 'active' : '' ?>">
             <a href="#">
                 <?= Icons::i('angle-left fa-fw pull-right') ?>
                 <div>
@@ -22,8 +22,8 @@ $context = $this->context;
             <?php if (is_array($group['items']) && count($group['items']) > 0): ?>
                 <ul class="treeview-menu">
                     <?php foreach ($group['items'] as $item): ?>
-                        <li class="item <?= $item['active']?'active':'' ?>">
-                            <?= Html::a((isset($item['icon']) ? $item['icon']->ac('fa-fw'): Icons::i('angle-double-right fa-fw')) . ' ' . $item['label'], $item['route']) ?></li>
+                        <li class="item <?= $item['active'] ? 'active' : '' ?>">
+                            <?= Html::a((isset($item['icon']) ? $item['icon']->ac('fa-fw') : Icons::i('angle-double-right fa-fw')) . ' ' . $item['label'], $item['route']) ?></li>
                     <?php endforeach ?>
                 </ul>
             <?php endif ?>
