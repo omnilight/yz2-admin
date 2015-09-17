@@ -10,7 +10,7 @@ use yz\icons\Icons;
 
 /**
  * Class ActionColumn
- * @package yz\admin\widgets
+ * @deprecated Moved to grid namespace
  */
 class ActionColumn extends \yii\grid\ActionColumn
 {

@@ -12,6 +12,8 @@ use yii\rbac\Item;
 use yii\web\IdentityInterface;
 use yii\web\UserEvent;
 use yz\admin\components\AuthManager;
+use yz\admin\contracts\ProfileFinderInterface;
+use yz\admin\contracts\ProfileInterface;
 use yz\db\ActiveRecord;
 use yz\interfaces\ModelInfoInterface;
 
@@ -29,13 +31,18 @@ use yz\interfaces\ModelInfoInterface;
  * @property string $created_at
  * @property string $updated_at
  * @property string $access_token
+ * @property boolean $is_identity If true, then this user is not real admin,
+ * but only identity used to link with real profile
+ * @property string $profile_finder_class Class name of the profile finder. This class should have instance of the
+ * ProfileFinderInterface
  *
  * @property DbManager $authManager
  * @property array $rolesItems
  * @property array $rolesItemsValues
  *
- * @property Role $roles Roles of the user
+ * @property Role[] $roles Roles of the user
  * @property UserSetting $settings Settings for the current user
+ * @property ProfileInterface | null $profile
  *
  * @package yz\admin\models
  */
@@ -187,6 +194,7 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
             'adminAuthAssignment' => \Yii::t('admin/t', 'Admin Auth Assignment'),
             'itemNames' => \Yii::t('admin/t', 'Item Names'),
             'rolesItems' => \Yii::t('admin/t', 'Assigned Roles'),
+            'is_identity' => \Yii::t('admin/t', 'Identity'),
         ];
     }
 
@@ -352,5 +360,19 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
     public function getSetting($group, $name)
     {
         return UserSetting::get($this->id, $group, $name);
+    }
+
+    /**
+     * @return null|ProfileInterface
+     */
+    public function getProfile()
+    {
+        if ($this->is_identity == false) {
+            return null;
+        }
+        /** @var ProfileFinderInterface $class */
+        $class = $this->profile_finder_class;
+
+        return $class::findByIdentityId($this->id);
     }
 }
