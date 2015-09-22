@@ -16,7 +16,7 @@ class Rbac
      * @param string $action
      * @return string
      */
-    public static function getOperationName($controller, $action)
+    public static function operationName($controller, $action)
     {
         if (is_object($controller)) {
             $controller = $controller->className();

@@ -20,7 +20,7 @@ class AuthManager extends \yz\admin\rbac\AuthManager
      */
     public static function getOperationName($controller, $action)
     {
-        return Rbac::getOperationName($controller, $action);
+        return Rbac::operationName($controller, $action);
     }
 
     /**

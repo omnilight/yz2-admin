@@ -102,7 +102,7 @@ class MainMenu extends Widget
 
         list($controller, $action) = $ca;
 
-        $operation = Rbac::getOperationName($controller, $action);
+        $operation = Rbac::operationName($controller, $action);
 
         return ($_routes[$route] = Yii::$app->user->can($operation));
     }
