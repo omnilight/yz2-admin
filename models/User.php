@@ -11,9 +11,9 @@ use yii\rbac\DbManager;
 use yii\rbac\Item;
 use yii\web\IdentityInterface;
 use yii\web\UserEvent;
-use yz\admin\components\AuthManager;
 use yz\admin\contracts\ProfileFinderInterface;
 use yz\admin\contracts\ProfileInterface;
+use yz\admin\rbac\AuthManager;
 use yz\db\ActiveRecord;
 use yz\interfaces\ModelInfoInterface;
 

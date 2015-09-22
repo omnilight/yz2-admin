@@ -4,7 +4,7 @@ namespace yz\admin\widgets;
 
 use Yii;
 use yii\base\Widget;
-use yz\admin\components\AuthManager;
+use yz\admin\helpers\Rbac;
 
 /**
  * Class MainMenu renders main administration menu in the admin panel
@@ -102,7 +102,7 @@ class MainMenu extends Widget
 
         list($controller, $action) = $ca;
 
-        $operation = AuthManager::getOperationName($controller, $action);
+        $operation = Rbac::getOperationName($controller, $action);
 
         return ($_routes[$route] = Yii::$app->user->can($operation));
     }

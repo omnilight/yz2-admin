@@ -1,36 +1,41 @@
 <?php
 
-namespace yz\admin\components;
-
+namespace yz\admin\helpers;
+use yii\helpers\Inflector;
 use yii\web\Controller;
-use yz\admin\helpers\Rbac;
+
 
 /**
- * Class AuthManager
- * * @deprecated Use [[\yz\admin\rbac\AuthManager]] instead
+ * Class Rbac
  */
-class AuthManager extends \yz\admin\rbac\AuthManager
+class Rbac
 {
     /**
      * Returns name of the operation based on controller's class and it's action name
      * @param Controller|string $controller
      * @param string $action
      * @return string
-     * @deprecated Use [[\yz\admin\helpers\Rbac::getOperationName]]
      */
     public static function getOperationName($controller, $action)
     {
-        return Rbac::getOperationName($controller, $action);
+        if (is_object($controller)) {
+            $controller = $controller->className();
+        }
+        /** @var string $controller */
+        return self::authItemName($controller . ':' . Inflector::id2camel($action));
     }
 
     /**
      * Generates correct auth item name event for long strings
      * @param $authItem
      * @return string
-     * @deprecated Use [[\yz\admin\helpers\Rbac::authItemName]]
      */
     public static function authItemName($authItem)
     {
-        return Rbac::authItemName($authItem);
+        if (strlen($authItem) > 32) {
+            return sprintf('%x', crc32($authItem)) . '_' . substr($authItem, -(32-9));
+        }
+
+        return $authItem;
     }
-} 
+}
