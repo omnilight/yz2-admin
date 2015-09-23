@@ -53,12 +53,21 @@ class MainMenu extends Widget
                 foreach ($moduleMenu as $group) {
                     $groupItems = [];
                     foreach ($group['items'] as $item) {
-                        if (isset($item['authItem']))
+                        if (isset($item['authItem'])) {
                             $hasAccess = Yii::$app->user->can($item['authItem']);
-                        elseif (isset($item['route']) && is_array($item['route']))
+                        } elseif (isset($item['roles'])) {
+                            $hasAccess = false;
+                            foreach ($item['roles'] as $role) {
+                                if (Yii::$app->user->can($role)) {
+                                    $hasAccess = true;
+                                    break;
+                                }
+                            }
+                        } elseif (isset($item['route']) && is_array($item['route'])) {
                             $hasAccess = $this->checkAccessByRoute($item['route'][0]);
-                        else
+                        } else {
                             $hasAccess = true;
+                        }
 
                         if ($hasAccess) {
                             $groupItems[] = $item;
