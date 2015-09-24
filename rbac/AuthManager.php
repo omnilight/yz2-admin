@@ -20,11 +20,20 @@ class AuthManager extends DbManager
     public $ruleTable = '{{%admin_auth_rule}}';
 
     /**
+     * @var User[]
+     */
+    private $_users;
+
+    /**
      * @inheritdoc
      */
     public function checkAccess($userId, $permissionName, $params = [])
     {
-        $user = User::findOne($userId);
+        if (!isset($this->_users[$userId])) {
+            $this->_users[$userId] = User::findOne($userId);
+        }
+
+        $user = $this->_users[$userId];
         if (($user instanceof User) && $user->is_super_admin) {
             return true;
         } else
