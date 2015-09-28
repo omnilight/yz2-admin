@@ -35,6 +35,12 @@ $this->params['header'] = $this->title;
         'login',
         'name',
         'email:email',
+        [
+            'attribute' => 'is_identity',
+            'label' => 'Является идентификатором',
+            'format' => 'boolean',
+            'visible' => \yz\admin\models\User::find()->where(['is_identity' => 1])->exists(),
+        ],
         'is_super_admin:boolean',
         'is_active:boolean',
         [
@@ -45,10 +51,8 @@ $this->params['header'] = $this->title;
         ],
         'logged_at:datetime',
         'created_at:datetime',
-        'updated_at:datetime',
-
         [
-            'class' => \yii\grid\ActionColumn::class,
+            'class' => \yz\admin\grid\columns\ActionColumn::class,
             'template' => '{update} {delete}',
         ],
     ],
