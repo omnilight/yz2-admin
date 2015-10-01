@@ -1,6 +1,6 @@
-var adminGridView = (function($) {
+var adminGridView = (function ($) {
     var funcs = {
-        bindEvents: function() {
+        bindEvents: function () {
             $('.js-btn-admin-grid-settings').click(function (e) {
                 e.preventDefault();
 
@@ -10,20 +10,33 @@ var adminGridView = (function($) {
                     params: {
                         data: $this.data()
                     }
-                }, function(url) {
-                    $.get(url, function(html) {
+                }, function (url) {
+                    $.get(url, function (html) {
                         $('#grid-view-settings-wrapper').remove();
                         $('body').append(html);
                     }, 'html');
                 });
 
                 return false;
-            })
+            });
+
+            $('[data-grid-bind="selection"]').on('click', function (event) {
+                var grid = $('#' + $(this).data('grid')),
+                    url = $(this).attr('href'),
+                    param = $(this).data('grid-param');
+                var data = {};
+                data[param] = grid.yiiGridView('getSelectedRows');
+                url = url + (url.indexOf('?') > 0 ? '&' : '?') + $.param(data);
+
+                $(this).data('method', 'post');
+                $(this).attr('href', url);
+                return yii.handleAction(this);
+            });
         }
     };
 
     var pub = {
-        init: function() {
+        init: function () {
             funcs.bindEvents();
         }
     };
