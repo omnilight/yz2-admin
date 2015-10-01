@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yz\admin\assets\AdminAsset;
 use yz\icons\Icons;
@@ -21,7 +22,7 @@ Icons::register($this);
     <?= Html::csrfMetaTags() ?>
     <?php $this->head(); ?>
 </head>
-<body class="skin-blue">
+<body class="<?= ArrayHelper::getValue($this->params, 'body-class', 'skin-blue') ?>">
 <?php $this->beginBody() ?>
     <?= $content; ?>
 <?php $this->endBody() ?>

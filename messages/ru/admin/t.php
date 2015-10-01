@@ -126,4 +126,9 @@ return [
     'Your password was successfully changed' => 'Ваш пароль был успешно изменен',
     'Your profile' => 'Ваш профиль',
     'Your profile was successfully updated' => 'Ваш профиль был успешно обновлен',
+    'Roles' => 'Роли',
+    'Profile type' => 'Тип профиля',
+    'Profile title' => 'Имя профиля',
+    'Identity' => 'Идентификатор',
+    'Access Token' => 'Токен доступа',
 ];

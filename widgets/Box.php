@@ -1,6 +1,7 @@
 <?php
 
 namespace yz\admin\widgets;
+
 use yii\base\Widget;
 use yii\helpers\Html;
 
@@ -66,15 +67,6 @@ class Box extends Widget
     }
 
     /**
-     * Sets title property for the box
-     * @param string $title for the box
-     */
-    public function title($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
      *
      * @param array $options can override class bodyOptions
      */
@@ -87,6 +79,15 @@ class Box extends Widget
     public function endBody()
     {
         echo Html::endTag('div');
+    }
+
+    /**
+     * Sets title property for the box
+     * @param string $title for the box
+     */
+    public function title($title)
+    {
+        $this->title = $title;
     }
 
     public function beginFooter($options = [])

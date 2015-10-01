@@ -34,14 +34,14 @@ class AjaxCrud extends Widget
             ]);
         }
         echo Html::tag('div', '', [
-            'class' => 'ajax-crud-container ajax-crud-type-'.$this->type.' ajax-crud-name-'.$this->name,
+            'class' => 'ajax-crud-container ajax-crud-type-' . $this->type . ' ajax-crud-name-' . $this->name,
             'id' => $this->getContainerId(),
             'data' => [
                 'type' => $this->type,
                 'name' => $this->name,
-                'container-index' => '#'.$this->getContainerId(self::TYPE_INDEX),
-                'container-create' => '#'.$this->getContainerId(self::TYPE_CREATE),
-                'container-update' => '#'.$this->getContainerId(self::TYPE_UPDATE),
+                'container-index' => '#' . $this->getContainerId(self::TYPE_INDEX),
+                'container-create' => '#' . $this->getContainerId(self::TYPE_CREATE),
+                'container-update' => '#' . $this->getContainerId(self::TYPE_UPDATE),
             ]
         ]);
         if ($this->type == self::TYPE_INDEX) {
@@ -63,7 +63,7 @@ class AjaxCrud extends Widget
         $cancel = \Yii::t('admin/t', 'Cancel');
 
         $title = \Yii::t('admin/t', 'Add record');
-        $html =<<<HTML
+        $html = <<<HTML
 <div class="box box-primary ajax-crud-item">
     <div class="box-header">
         <h4 class="box-title">{$title}</h4>
@@ -77,7 +77,7 @@ HTML;
         $createWrapper = Json::encode($html);
 
         $title = \Yii::t('admin/t', 'Edit record');
-        $html =<<<HTML
+        $html = <<<HTML
 <div class="box box-success ajax-crud-item">
     <div class="box-header">
         <h4 class="box-title">{$title}</h4>
@@ -92,23 +92,23 @@ HTML;
         $this->view->registerJs(implode("\n", [
             "ajaxCrud.createItemWrapper = {$createWrapper};",
             "ajaxCrud.updateItemWrapper = {$updateWrapper};",
-        ]), View::POS_READY, __CLASS__.'.ajax-crud-styles');
+        ]), View::POS_READY, __CLASS__ . '.ajax-crud-styles');
     }
 
     protected function registerIndexLoader()
     {
         $url = Url::to($this->url);
         $containerId = $this->getContainerId(self::TYPE_INDEX);
-        $js =<<<JS
+        $js = <<<JS
 ajaxCrud.load('#{$containerId}', '{$url}');
 JS;
-        $this->view->registerJs($js, View::POS_READY, __CLASS__.'.'.$this->name.'.index_loader');
+        $this->view->registerJs($js, View::POS_READY, __CLASS__ . '.' . $this->name . '.index_loader');
     }
 
     public function getContainerId($type = null)
     {
         $type = $type ?: $this->type;
-        return 'ajax-crud-'.$this->name.'-'.$type;
+        return 'ajax-crud-' . $this->name . '-' . $type;
     }
 
     /**

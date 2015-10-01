@@ -1,9 +1,10 @@
 <?php
 
 namespace yz\admin\widgets;
-use vova07\select2\Widget;
-use vova07\select2\Select2Asset;
+
 use vova07\select2\Asset;
+use vova07\select2\Select2Asset;
+use vova07\select2\Widget;
 use yii\helpers\Json;
 
 

@@ -35,17 +35,24 @@ $this->params['header'] = $this->title;
         'login',
         'name',
         'email:email',
-//			'passhash',
-//			'auth_key',
+        [
+            'attribute' => 'is_identity',
+            'label' => 'Является идентификатором',
+            'format' => 'boolean',
+            'visible' => \yz\admin\models\User::find()->where(['is_identity' => 1])->exists(),
+        ],
         'is_super_admin:boolean',
         'is_active:boolean',
-        // 'email:email',
+        [
+            'label' => Yii::t('admin/t', 'Roles'),
+            'value' => function (\yz\admin\models\User $model) {
+                return implode('; ', \yii\helpers\ArrayHelper::getColumn($model->roles, 'description'));
+            }
+        ],
         'logged_at:datetime',
         'created_at:datetime',
-        'updated_at:datetime',
-
         [
-            'class' => 'yz\admin\widgets\ActionColumn',
+            'class' => \yz\admin\grid\columns\ActionColumn::class,
             'template' => '{update} {delete}',
         ],
     ],

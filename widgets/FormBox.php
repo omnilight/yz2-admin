@@ -1,8 +1,7 @@
 <?php
 
 namespace yz\admin\widgets;
-use yii\bootstrap\ActiveForm;
-use yii\di\Instance;
+
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -17,6 +16,19 @@ class FormBox extends Box
         'class' => 'col-sm-offset-2',
     ];
 
+    /**
+     * Renders all actions of the form
+     * @param array|string $actions
+     * @param array $options
+     */
+    public function actions($actions, $options = [])
+    {
+        $actions = (array)$actions;
+        $this->beginFooter($options);
+        echo implode("\n", $actions);
+        $this->endFooter();
+    }
+
     public function beginFooter($options = [])
     {
         $actionsOptions = ArrayHelper::getValue($options, 'actionsOptions', []);
@@ -29,19 +41,5 @@ class FormBox extends Box
     {
         echo Html::endTag('div');
         parent::endFooter();
-    }
-
-
-    /**
-     * Renders all actions of the form
-     * @param array|string $actions
-     * @param array $options
-     */
-    public function actions($actions, $options = [])
-    {
-        $actions = (array)$actions;
-        $this->beginFooter($options);
-        echo implode("\n", $actions);
-        $this->endFooter();
     }
 } 

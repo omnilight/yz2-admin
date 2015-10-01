@@ -86,7 +86,7 @@ class AdminUsersController extends Controller
             'email' => 'admin@domain.com',
             'active' => 1,
             'superadmin' => 1,
-            'password' => 'qwerty',
+            'password' => 'password',
         ]);
     }
 

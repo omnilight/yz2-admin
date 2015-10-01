@@ -1,8 +1,7 @@
-
-yii.yz.admin.actionButtons = (function($) {
+yii.yz.admin.actionButtons = (function ($) {
     var pub = {
-        init: function() {
-            $('#action-button-search').on('click', function() {
+        init: function () {
+            $('#action-button-search').on('click', function () {
                 if ($('#filter-search').hasClass('hidden')) {
                     $('#filter-search')
                         .removeClass('hidden')
@@ -13,11 +12,11 @@ yii.yz.admin.actionButtons = (function($) {
                         .addClass('hidden');
                 }
             });
-            $('#action-button-delete-checked').on('click', function(event) {
-                var grid = $('#'+$(this).data('grid'));
+            $('#action-button-delete-checked').on('click', function (event) {
+                var grid = $('#' + $(this).data('grid'));
                 var url = $(this).attr('href');
                 var data = {id: grid.yiiGridView('getSelectedRows')};
-                url = url + (url.indexOf('?') > 0 ? '&':'?') + $.param(data);
+                url = url + (url.indexOf('?') > 0 ? '&' : '?') + $.param(data);
 
                 $(this).data('method', 'post');
                 $(this).attr('href', url);
