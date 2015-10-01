@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yz\icons\Icons;
 
 /**
- * @var \yii\base\View $this
+ * @var \yii\web\View $this
  * @var \yz\admin\forms\LoginForm $loginForm
  */
 \yz\admin\assets\LoginAsset::register($this);
