@@ -36,3 +36,6 @@
   font-size: inherit;
   font-weight: inherit;
 }
+.error-page {
+  background-color: #d2d6de;
+}

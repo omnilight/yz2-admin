@@ -5,6 +5,7 @@ namespace yz\admin\controllers;
 use backend\base\Controller;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\web\ErrorAction;
 use yz\admin\forms\LoginForm;
 
 /**
@@ -17,10 +18,22 @@ class MainController extends Controller
     {
         return [
             'error' => [
-                'class' => 'yii\web\ErrorAction',
+                'class' => ErrorAction::class,
             ],
         ];
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function beforeAction($action)
+    {
+        if ($action->id == 'error') {
+            $this->layout = '//base';
+        }
+        return parent::beforeAction($action);
+    }
+
 
     public function actionLogin()
     {
@@ -57,7 +70,7 @@ class MainController extends Controller
         return ArrayHelper::merge([
             [
                 'allow' => true,
-                'actions' => ['login'],
+                'actions' => ['login', 'error'],
             ],
             [
                 'allow' => true,

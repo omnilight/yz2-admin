@@ -131,4 +131,6 @@ return [
     'Profile title' => 'Имя профиля',
     'Identity' => 'Идентификатор',
     'Access Token' => 'Токен доступа',
+    'Try to go to' => 'Попробуйте перейти на',
+    'the main page' => 'главную страницу',
 ];

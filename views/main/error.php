@@ -20,6 +20,7 @@ if ($exception instanceof \yii\web\HttpException) {
     $class = 'text-red';
 }
 
+$this->params['body-class'] = 'skin-blue error-page'
 ?>
 <div class="error-page">
     <h2 class="headline <?= $class ?>"><?= Html::encode($code) ?></h2>
@@ -27,6 +28,10 @@ if ($exception instanceof \yii\web\HttpException) {
         <h3><i class="fa fa-warning <?= $class ?>"></i> <?= Html::encode($this->title) ?></h3>
         <p>
             <?= nl2br(Html::encode($message)) ?>
+        </p>
+        <p>
+            <?= Yii::t('admin/t', 'Try to go to') ?>
+            <a href="<?= Url::to(['/admin/main/index']) ?>"><?= Yii::t('admin/t', 'the main page') ?></a>
         </p>
     </div>
 </div>
