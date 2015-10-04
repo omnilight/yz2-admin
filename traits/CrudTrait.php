@@ -57,6 +57,10 @@ trait CrudTrait
             },
             AdminHtml::ACTION_SAVE_AND_LEAVE => function () use ($model) {
                 /** @var Controller | CrudTrait $this */
+                if (($url = Url::previous())) {
+                    Url::remember(null);
+                    return $this->redirect($url);
+                }
                 return $this->redirect(['index']);
             },
         ];
