@@ -11,6 +11,7 @@ use yii\helpers\FileHelper;
 use yii\helpers\Inflector;
 use yii\rbac\Item;
 use yz\admin\contracts\AccessControlInterface;
+use yz\admin\helpers\Rbac;
 use yz\Module;
 
 
@@ -115,7 +116,6 @@ class AuthItemsFinder extends Object
                 $controllerInstance = $this->app->createControllerByID(Inflector::camel2id($controllerName));
                 $actions = array_keys($controllerInstance->actions());
 
-                $ref = new \ReflectionClass($controllerClassName);
                 $methods = $ref->getMethods(\ReflectionMethod::IS_PUBLIC);
 
                 $actionsAuthItems = [];
@@ -128,7 +128,7 @@ class AuthItemsFinder extends Object
                             continue;
                         $action = $m[1];
                     }
-                    $actionAuthItemName = AuthManager::getOperationName($controllerClassName, $action);
+                    $actionAuthItemName = Rbac::operationName($controllerClassName, $action);
                     $actionDescription = \Yii::t('admin/t', 'Access to the action "Application/{controller}/{action}"', [
                         'action' => $action,
                         'controller' => $controllerName,
