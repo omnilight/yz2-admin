@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: User
- * Date: 21.08.14
- * Time: 23:53
- */
-
-namespace yz\admin\components;
+namespace yz\admin\traits;
 
 use yii\base\Action;
 use yii\db\ActiveRecord;
@@ -15,11 +8,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yz\admin\helpers\AdminHtml;
 
-/**
- * Class CrudControllerTrait
- * @deprecated Use [[yz\admin\traits\CrudTrait]]
- */
-trait CrudControllerTrait
+trait CrudTrait
 {
     /**
      * @param Action $action the action just executed.

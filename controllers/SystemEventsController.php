@@ -1,10 +1,12 @@
 <?php
 
 namespace yz\admin\controllers;
-use backend\base\Controller;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yz\admin\models\SystemEvent;
+use yz\admin\traits\CheckAccessTrait;
 
 
 /**
@@ -13,15 +15,26 @@ use yz\admin\models\SystemEvent;
  */
 class SystemEventsController extends Controller
 {
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'accessControl' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['@'],
+                    ]
+                ]
+            ]
+        ]);
+    }
+
+
     public function actionView($id)
     {
-        $event = SystemEvent::findOne([
-            'id' => $id,
-            'user_id' => \Yii::$app->user->id,
-        ]);
-
-        if ($event === null)
-            throw new NotFoundHttpException();
+        $event = $this->findModel($id);
 
         $event->is_viewed = true;
         $event->save();
@@ -33,14 +46,22 @@ class SystemEventsController extends Controller
             return $this->redirect($url);
     }
 
-    protected function getAccessRules()
+    /**
+     * @param $id
+     * @return SystemEvent
+     * @throws NotFoundHttpException
+     */
+    private function findModel($id)
     {
-        return ArrayHelper::merge([
-            [
-                'allow' => true,
-                'actions' => ['view'],
-                'roles' => ['@'],
-            ]
-        ], parent::getAccessRules());
+        /** @var SystemEvent $event */
+        $event = SystemEvent::findOne([
+            'id' => $id,
+            'user_id' => \Yii::$app->user->id,
+        ]);
+
+        if ($event === null) {
+            throw new NotFoundHttpException();
+        }
+        return $event;
     }
 } 

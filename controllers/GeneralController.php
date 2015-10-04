@@ -2,31 +2,39 @@
 
 namespace yz\admin\controllers;
 
-use backend\base\Controller;
 use yii\base\NotSupportedException;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\web\Controller;
 use yii\web\NotAcceptableHttpException;
 use yii\web\Response;
+use yz\admin\contracts\AccessControlInterface;
 use yz\admin\forms\GridViewSettingsForm;
 use yz\admin\helpers\OpCacheDataModel;
+use yz\admin\traits\CheckAccessTrait;
 
 
 /**
  * Class GeneralController
  * @package \yz\admin\controllers
  */
-class GeneralController extends Controller
+class GeneralController extends Controller implements AccessControlInterface
 {
-    protected function getAccessRules()
+    use CheckAccessTrait;
+
+    public function behaviors()
     {
-        return ArrayHelper::merge([
+        $behaviors = parent::behaviors();
+        $behaviors['accessControl'] = $this->accessControlBehavior();
+        $behaviors['accessControl']['rules'] = array_merge([
             [
                 'allow' => true,
                 'actions' => ['grid-view-settings', 'route-to-url'],
                 'roles' => ['@'],
             ]
-        ], parent::getAccessRules());
+        ], $behaviors['accessControl']['rules']);
+
+        return $behaviors;
     }
 
     public function actionInfo()

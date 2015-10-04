@@ -2,10 +2,12 @@
 
 namespace yz\admin\controllers;
 
-use backend\base\Controller;
+use yii\filters\AccessControl;
+use yii\web\Controller;
 use yii\web\Response;
 use yz\admin\forms\ChangeUserPasswordForm;
 use yz\admin\models\User;
+use yz\admin\traits\CrudTrait;
 use yz\widgets\ActiveForm;
 
 
@@ -15,6 +17,30 @@ use yz\widgets\ActiveForm;
  */
 class ProfileController extends Controller
 {
+    use CrudTrait;
+
+    /**
+     * @inheritDoc
+     */
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            'accessControl' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                    ],
+                ]
+            ]
+        ]);
+    }
+
+
     public function actionIndex()
     {
         /** @var User $model */

@@ -2,9 +2,9 @@
 
 namespace yz\admin\controllers;
 
-use backend\base\Controller;
-use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 use yii\helpers\Url;
+use yii\web\Controller;
 use yii\web\ErrorAction;
 use yz\admin\forms\LoginForm;
 
@@ -65,18 +65,31 @@ class MainController extends Controller
         return $this->render('accessDenied');
     }
 
-    protected function getAccessRules()
+    public function actionReturn($url)
     {
-        return ArrayHelper::merge([
-            [
-                'allow' => true,
-                'actions' => ['login', 'error'],
-            ],
-            [
-                'allow' => true,
-                'actions' => ['index', 'logout', 'access-denied'],
-                'roles' => ['@'],
+        Url::remember(null);
+        return $this->redirect($url);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function behaviors()
+    {
+        return [
+            'accessControl' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['login', 'error'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ]
+                ]
             ]
-        ], parent::getAccessRules());
+        ];
     }
 }

@@ -218,13 +218,13 @@ class ActionButtons extends Widget
     public function getReturnButton()
     {
         if ($this->_returnButton === null) {
-            if (AdminUrl::getReturnUrl() !== null) {
+            if (Url::previous() !== null) {
                 $this->_returnButton = Button::widget([
                     'tagName' => 'a',
                     'label' => Icons::p('angle-left') . \Yii::t('admin/t', 'Go Back'),
                     'encodeLabel' => false,
                     'options' => [
-                        'href' => AdminUrl::getReturnUrl(),
+                        'href' => Url::to(['/admin/main/return', 'url' => Url::previous()]),
                         'class' => 'btn btn-default',
                     ],
                 ]);
@@ -249,7 +249,7 @@ class ActionButtons extends Widget
     public function getCreateButton()
     {
         if ($this->_createButton === null) {
-            $url = $this->createUrl + ($this->addReturnUrl ? AdminUrl::returnUrlRoute() : []);
+            $url = $this->createUrl;
             $attributes = $this->getModelAttributes();
 
             if ($attributes == []) {
@@ -348,7 +348,7 @@ class ActionButtons extends Widget
     public function getDeleteButton()
     {
         if ($this->_deleteButton === null) {
-            $url = $this->deleteUrl + ($this->addReturnUrl ? AdminUrl::returnUrlRoute() : []);
+            $url = $this->deleteUrl;
             $this->_deleteButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('trash-o') . \Yii::t('admin/t', 'Delete Checked'),
@@ -379,7 +379,7 @@ class ActionButtons extends Widget
     public function getIndexButton()
     {
         if ($this->_indexButton === null) {
-            $url = $this->indexUrl + ($this->addReturnUrl ? AdminUrl::returnUrlRoute() : []);
+            $url = $this->indexUrl;
             $this->_indexButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('list') . \Yii::t('admin/t', 'List'),
@@ -407,7 +407,7 @@ class ActionButtons extends Widget
     public function getIndexViewButton()
     {
         if ($this->_indexViewButton === null) {
-            $url = $this->indexViewUrl + ($this->addReturnUrl ? AdminUrl::returnUrlRoute() : []);
+            $url = $this->indexViewUrl;
             $this->_indexButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('list') . \Yii::t('admin/t', 'List'),
@@ -435,7 +435,7 @@ class ActionButtons extends Widget
     public function getUpdateButton()
     {
         if ($this->_updateButton === null) {
-            $url = $this->updateUrl + ($this->addReturnUrl ? AdminUrl::returnUrlRoute() : []);
+            $url = $this->updateUrl;
             $this->_updateButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('pencil') . \Yii::t('admin/t', 'Edit'),

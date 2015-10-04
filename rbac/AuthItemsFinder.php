@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 use yii\helpers\Inflector;
 use yii\rbac\Item;
+use yz\admin\contracts\AccessControlInterface;
 use yz\Module;
 
 
@@ -95,7 +96,13 @@ class AuthItemsFinder extends Object
             $controllerBaseClassName = substr($relativePath, 0, -4); // Removing .php
             $controllerName = substr($controllerBaseClassName, 0, -10); // Removing Controller
             $controllerClassName = ltrim($this->app->controllerNamespace . '\\' . $controllerBaseClassName);
-            if (is_subclass_of($controllerClassName, Controller::className())) {
+            $ref = new \ReflectionClass($controllerClassName);
+            if (
+                $ref->isSubclassOf(Controller::class) /** @deprecated */
+                ||
+                ($ref->implementsInterface(AccessControlInterface::class))
+            ) {
+                /** @var string $controllerClassName */
                 $controllerAuthItemName = $controllerClassName;
                 $controllerDescription = \Yii::t('admin/t', 'Access to the section "Application/{controller}"', [
                     'controller' => $controllerName,

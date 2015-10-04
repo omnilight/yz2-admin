@@ -6,6 +6,7 @@ namespace yz\admin\helpers;
 /**
  * Class AdminUrl
  * @package yz\admin\helpers
+ * @deprecated
  */
 class AdminUrl
 {

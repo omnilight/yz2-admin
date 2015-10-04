@@ -2,27 +2,33 @@
 
 namespace yz\admin\controllers;
 
-use backend\base\Controller;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yz\admin\contracts\AccessControlInterface;
 use yz\admin\forms\ChangeUserPasswordForm;
 use yz\admin\models\search\UserSearch;
 use yz\admin\models\User;
 use yz\admin\models\UserCreate;
+use yz\admin\traits\CheckAccessTrait;
+use yz\admin\traits\CrudTrait;
 use yz\widgets\ActiveForm;
 use yz\Yz;
 
 /**
  * UsersController implements the CRUD actions for User model.
  */
-class UsersController extends Controller
+class UsersController extends Controller implements AccessControlInterface
 {
+    use CrudTrait, CheckAccessTrait;
+
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
+            'accessControl' => $this->accessControlBehavior(),
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -113,6 +119,22 @@ class UsersController extends Controller
     }
 
     /**
+     * Finds the User model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return User the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = User::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param mixed $id
@@ -133,21 +155,5 @@ class UsersController extends Controller
         \Yii::$app->session->setFlash(Yz::FLASH_SUCCESS, $message);
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = User::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

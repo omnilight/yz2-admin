@@ -1,9 +1,11 @@
 <?php
 
 namespace yz\admin\controllers;
-use backend\base\Controller;
-use yii\helpers\ArrayHelper;
+
+use yii\filters\AccessControl;
+use yii\web\Controller;
 use yii\web\Response;
+use yz\admin\contracts\AccessControlInterface;
 use yz\admin\models\UserSetting;
 
 
@@ -12,15 +14,26 @@ use yz\admin\models\UserSetting;
  */
 class UserSettingsController extends Controller
 {
-    protected function getAccessRules()
+    /**
+     * @inheritDoc
+     */
+    public function behaviors()
     {
-        return ArrayHelper::merge([
-            [
-                'allow' => true,
-                'actions' => ['set', 'get'],
-                'roles' => ['@'],
+        return array_merge(parent::behaviors(), [
+            'accessControl' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['set', 'get'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                    ]
+                ]
             ]
-        ], parent::getAccessRules());
+        ]);
     }
 
     public function actionSet($name, $value)

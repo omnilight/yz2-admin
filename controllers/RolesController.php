@@ -2,17 +2,20 @@
 
 namespace yz\admin\controllers;
 
-use backend\base\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\rbac\Item;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
-use yz\admin\components\AuthItemsFinder;
+use yz\admin\contracts\AccessControlInterface;
 use yz\admin\models\AuthItem;
 use yz\admin\models\Role;
 use yz\admin\models\search\RoleSearch;
+use yz\admin\rbac\AuthItemsFinder;
+use yz\admin\traits\CheckAccessTrait;
+use yz\admin\traits\CrudTrait;
 use yz\admin\widgets\ActiveForm;
 use yz\Module;
 use yz\Yz;
@@ -20,11 +23,14 @@ use yz\Yz;
 /**
  * RolesController implements the CRUD actions for Role model.
  */
-class RolesController extends Controller
+class RolesController extends Controller  implements AccessControlInterface
 {
+    use CrudTrait, CheckAccessTrait;
+
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
+            'accessControl' => $this->accessControlBehavior(),
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
