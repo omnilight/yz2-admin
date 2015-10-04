@@ -10,6 +10,8 @@ use yz\admin\helpers\AdminHtml;
 
 trait CrudTrait
 {
+    public $createUrlParam = '__createUrlParam';
+
     /**
      * @param Action $action the action just executed.
      * @param mixed $result the action return result.
@@ -19,6 +21,9 @@ trait CrudTrait
     {
         if ($action->id == 'index') {
             Url::remember();
+        }
+        if ($action->id == 'create') {
+            Url::remember('', $this->createUrlParam);
         }
         return parent::afterAction($action, $result);
     }
@@ -37,17 +42,22 @@ trait CrudTrait
      */
     protected function getCreateUpdateResponse($model, $actions = [], $addDefaultActions = true)
     {
-        /** @var Controller $this */
-        $me = $this;
         $defaultActions = [
-            AdminHtml::ACTION_SAVE_AND_STAY => function () use ($model, $me) {
-                return $me->redirect(['update', 'id' => $model->getPrimaryKey()]);
+            AdminHtml::ACTION_SAVE_AND_STAY => function () use ($model) {
+                /** @var Controller | CrudTrait $this */
+                return $this->redirect(['update', 'id' => $model->getPrimaryKey()]);
             },
-            AdminHtml::ACTION_SAVE_AND_CREATE => function () use ($model, $me) {
-                return $me->redirect(['create']);
+            AdminHtml::ACTION_SAVE_AND_CREATE => function () use ($model) {
+                /** @var Controller | CrudTrait $this */
+                if (($url = Url::previous($this->createUrlParam))) {
+                    Url::remember(null, $this->createUrlParam);
+                    return $this->redirect($url);
+                }
+                return $this->redirect(['create']);
             },
-            AdminHtml::ACTION_SAVE_AND_LEAVE => function () use ($model, $me) {
-                return $me->redirect(['index']);
+            AdminHtml::ACTION_SAVE_AND_LEAVE => function () use ($model) {
+                /** @var Controller | CrudTrait $this */
+                return $this->redirect(['index']);
             },
         ];
 
