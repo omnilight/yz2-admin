@@ -22,6 +22,11 @@ class Bootstrap implements BootstrapInterface
             'basePath' => '@yz/admin/messages',
             'sourceLanguage' => 'en-US',
         ];
+        $app->i18n->translations['admin/buttons'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@yz/admin/messages',
+            'sourceLanguage' => 'en-US',
+        ];
         $app->i18n->translations['admin/gridview'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'basePath' => '@yz/admin/messages',

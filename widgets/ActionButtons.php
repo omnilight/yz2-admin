@@ -255,7 +255,7 @@ class ActionButtons extends Widget
             if ($attributes == []) {
                 $this->_createButton = Button::widget([
                     'tagName' => 'a',
-                    'label' => Icons::p('plus') . \Yii::t('admin/t', 'Create'),
+                    'label' => Icons::p('plus') . \Yii::t('admin/buttons', 'Create'),
                     'encodeLabel' => false,
                     'options' => [
                         'href' => Url::to($url),
@@ -265,7 +265,7 @@ class ActionButtons extends Widget
             } else {
                 $this->_createButton = Html::tag('div', ButtonDropdown::widget([
                     'tagName' => 'a',
-                    'label' => Icons::p('plus') . \Yii::t('admin/t', 'Create'),
+                    'label' => Icons::p('plus') . \Yii::t('admin/buttons', 'Create'),
                     'encodeLabel' => false,
                     'split' => true,
                     'dropdown' => [
