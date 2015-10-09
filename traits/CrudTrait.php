@@ -10,7 +10,16 @@ use yz\admin\helpers\AdminHtml;
 
 trait CrudTrait
 {
+    /**
+     * Name of the session parameter where to store last create action url
+     * @var string
+     */
     public $createUrlParam = '__createUrlParam';
+    /**
+     * Name of the session parameter where to store last index action url
+     * @var string
+     */
+    public $indexUrlParam = '__indexUrlParam';
 
     /**
      * @param Action $action the action just executed.
@@ -20,7 +29,7 @@ trait CrudTrait
     public function afterAction($action, $result)
     {
         if ($action->id == 'index') {
-            Url::remember();
+            Url::remember('', $this->indexUrlParam);
         }
         if ($action->id == 'create') {
             Url::remember('', $this->createUrlParam);
@@ -57,8 +66,8 @@ trait CrudTrait
             },
             AdminHtml::ACTION_SAVE_AND_LEAVE => function () use ($model) {
                 /** @var Controller | CrudTrait $this */
-                if (($url = Url::previous())) {
-                    Url::remember(null);
+                if (($url = Url::previous($this->indexUrlParam))) {
+                    Url::remember(null, $this->indexUrlParam);
                     return $this->redirect($url);
                 }
                 return $this->redirect(['index']);
