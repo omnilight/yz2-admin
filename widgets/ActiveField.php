@@ -2,6 +2,8 @@
 
 namespace yz\admin\widgets;
 
+use omnilight\datetime\DatePickerConfig;
+use yii\base\InvalidParamException;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\MaskedInput;
@@ -108,6 +110,13 @@ class ActiveField extends \yii\bootstrap\ActiveField
                     'class' => 'form-control',
                 ],
             ];
+            if ($config === []) {
+                try {
+                    $config = DatePickerConfig::get($this->model, $this->attribute, [], 'omnilight\widgets\DatePicker');
+                } catch (InvalidParamException $e) {
+                    $config = [];
+                }
+            }
             $config = ArrayHelper::merge($defaults, $config);
             return $this->widget('omnilight\widgets\DatePicker', $config);
         }
