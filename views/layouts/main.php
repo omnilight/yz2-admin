@@ -1,7 +1,5 @@
 <?php
 use yii\helpers\Html;
-use yii\bootstrap\NavBar;
-use yii\bootstrap\Nav;
 use yii\helpers\Url;
 use yz\admin\widgets\SystemEvents;
 use yz\icons\Icons;
@@ -21,11 +19,12 @@ use yz\icons\Icons;
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only"><?= Yii::t('admin/t','Toggle navigation') ?></span>
+                <span class="sr-only"><?= Yii::t('admin/t', 'Toggle navigation') ?></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
+
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
 
@@ -44,8 +43,10 @@ use yz\icons\Icons;
                                     <ul class="menu">
                                         <?php foreach ($events->items as $event): ?>
                                             <li>
-                                                <a href="<?= Url::to(['/admin/system-events/view', 'id' => $event->id]) ?>" class="clearfix">
-                                                    <div class="pull-left"><?= Icons::i('warning ' . $event->type) ?></div>
+                                                <a href="<?= Url::to(['/admin/system-events/view', 'id' => $event->id]) ?>"
+                                                   class="clearfix">
+                                                    <div
+                                                        class="pull-left"><?= Icons::i('warning ' . $event->type) ?></div>
                                                     <span><?= $event->message ?></span>
                                                 </a>
                                             </li>
@@ -71,10 +72,12 @@ use yz\icons\Icons;
                             </li>
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a class="btn btn-default btn-flat" href="<?= Url::to(['/admin/profile/index']) ?>"><?= Yii::t('admin/t', 'Your profile') ?></a>
+                                    <a class="btn btn-default btn-flat"
+                                       href="<?= Url::to(['/admin/profile/index']) ?>"><?= Yii::t('admin/t', 'Your profile') ?></a>
                                 </div>
                                 <div class="pull-right">
-                                    <a class="btn btn-default btn-flat" href="<?= Url::to(['/admin/main/logout']) ?>"><?= Yii::t('admin/t', 'Logout') ?></a>
+                                    <a class="btn btn-default btn-flat"
+                                       href="<?= Url::to(['/admin/main/logout']) ?>"><?= Yii::t('admin/t', 'Logout') ?></a>
                                 </div>
                             </li>
                         </ul>
@@ -87,7 +90,11 @@ use yz\icons\Icons;
 
     <aside class="main-sidebar">
         <section class="sidebar">
+
+            <?= $this->render('@yz/admin/views/layouts/partials/_sidebar-top') ?>
+
             <?= \yz\admin\widgets\MainMenu::widget(); ?>
+
         </section>
     </aside>
 
