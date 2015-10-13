@@ -2,6 +2,7 @@
 
 namespace yz\admin\grid;
 use yii\web\AssetBundle;
+use yii\web\JqueryAsset;
 
 
 /**
@@ -16,6 +17,10 @@ class GridViewAsset extends AssetBundle
 
     public $js = [
         'grid-view.js',
+    ];
+
+    public $depends = [
+        JqueryAsset::class,
     ];
 
     public function registerAssetFiles($view)
