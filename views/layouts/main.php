@@ -91,7 +91,7 @@ use yz\icons\Icons;
     <aside class="main-sidebar">
         <section class="sidebar">
 
-            <?= $this->render('/layouts/partials/_sidebar-top') ?>
+            <?= $this->render('@yz/admin/views/layouts/partials/_sidebar-top') ?>
 
             <?= \yz\admin\widgets\MainMenu::widget(); ?>
 
