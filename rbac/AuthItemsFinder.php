@@ -70,8 +70,9 @@ class AuthItemsFinder extends Object
 
             $children = ArrayHelper::getColumn($authManager->getChildren($name), 'name');
             foreach ($itemChildren as $childName) {
-                if (!in_array($childName, $children))
+                if (!in_array($childName, $children) && isset($items[$childName])) {
                     $authManager->addChild($items[$name], $items[$childName]);
+                }
             }
         }
         unset($itemDescription, $itemType, $itemChildren);
