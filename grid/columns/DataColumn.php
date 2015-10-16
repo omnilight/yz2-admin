@@ -8,6 +8,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yz\admin\grid\filters\ActiveTextInputFilter;
 use yz\admin\grid\filters\BaseFilter;
+use yz\admin\grid\filters\BooleanFilter;
 use yz\admin\grid\filters\DatePickerFilter;
 use yz\admin\grid\filters\FilterInstance;
 use yz\admin\grid\filters\InlineFilter;
@@ -125,6 +126,12 @@ class DataColumn extends \yii\grid\DataColumn
         if ($this->format == 'datetime') {
             return \Yii::createObject([
                 'class' => DatePickerFilter::class,
+            ], [$this]);
+        }
+
+        if ($this->format == 'boolean') {
+            return \Yii::createObject([
+                'class' => BooleanFilter::class,
             ], [$this]);
         }
 
