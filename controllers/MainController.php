@@ -68,7 +68,6 @@ class MainController extends Controller
     /**
      * @param $url
      * @return \yii\web\Response
-     * @deprecated Use Url controller methods
      */
     public function actionReturn($url)
     {
