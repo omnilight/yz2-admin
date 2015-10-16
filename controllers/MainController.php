@@ -41,7 +41,7 @@ class MainController extends Controller
 
         $model = new LoginForm();
         if ($model->load(\Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack(Url::toRoute('index'));
+            return $this->goBackAndForget();
         } else {
             return $this->render('login', [
                 'loginForm' => $model,
@@ -65,6 +65,11 @@ class MainController extends Controller
         return $this->render('accessDenied');
     }
 
+    /**
+     * @param $url
+     * @return \yii\web\Response
+     * @deprecated Use Url controller methods
+     */
     public function actionReturn($url)
     {
         Url::remember(null);
@@ -91,5 +96,15 @@ class MainController extends Controller
                 ]
             ]
         ];
+    }
+
+    /**
+     * @return \yii\web\Response
+     */
+    private function goBackAndForget()
+    {
+        $url = Url::previous();
+        Url::remember(null);
+        return $this->redirect($url ?: Url::toRoute('index'));
     }
 }
