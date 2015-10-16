@@ -105,13 +105,11 @@ class MainMenu extends Widget
         if (isset($_routes[$route]))
             return $_routes[$route];
 
-        if (($ca = Yii::$app->createController($route)) === false) {
+        $operation = Rbac::routeToOperation($route);
+
+        if ($operation === null) {
             return true;
         }
-
-        list($controller, $action) = $ca;
-
-        $operation = Rbac::operationName($controller, $action);
 
         return ($_routes[$route] = Yii::$app->user->can($operation));
     }

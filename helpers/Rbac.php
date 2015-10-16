@@ -1,6 +1,7 @@
 <?php
 
 namespace yz\admin\helpers;
+use Yii;
 use yii\helpers\Inflector;
 use yii\web\Controller;
 
@@ -37,5 +38,21 @@ class Rbac
         }
 
         return $authItem;
+    }
+
+    /**
+     * Converts route into the operation name
+     * @param $route
+     * @return null|string
+     */
+    public static function routeToOperation($route)
+    {
+        if (($ca = Yii::$app->createController($route)) === false) {
+            return null;
+        }
+
+        list($controller, $action) = $ca;
+
+        return self::operationName($controller, $action);
     }
 }
