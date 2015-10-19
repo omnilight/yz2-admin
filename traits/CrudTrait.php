@@ -16,11 +16,6 @@ trait CrudTrait
      */
     public $createUrlParam = '__createUrlParam';
     /**
-     * Name of the session parameter where to store last create action url
-     * @var string
-     */
-    public $referrerUrlParam = '__referrerUrlParam';
-    /**
      * Name of the session parameter where to store last index action url
      * @var string
      */
@@ -38,11 +33,6 @@ trait CrudTrait
         }
         if ($action->id == 'create') {
             Url::remember('', $this->createUrlParam);
-        }
-        if (\Yii::$app->request->referrer && \Yii::$app->request->method == 'GET') {
-            Url::remember(\Yii::$app->request->referrer, $this->referrerUrlParam);
-        } else {
-            Url::remember(null, $this->referrerUrlParam);
         }
         return parent::afterAction($action, $result);
     }
@@ -76,8 +66,7 @@ trait CrudTrait
             },
             AdminHtml::ACTION_SAVE_AND_LEAVE => function () use ($model) {
                 /** @var Controller | CrudTrait $this */
-                if (($url = Url::previous($this->indexUrlParam))) {
-                    Url::remember(null, $this->indexUrlParam);
+                if (($url = \Yii::$app->request->get('return'))) {
                     return $this->redirect($url);
                 }
                 if (($url = Url::previous($this->referrerUrlParam))) {
