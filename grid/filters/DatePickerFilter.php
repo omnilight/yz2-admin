@@ -17,10 +17,6 @@ class DatePickerFilter extends BaseFilter
      */
     public function render()
     {
-        return DatePicker::widget(DatePickerConfig::get($this->getModel(), $this->getAttribute(), [
-            'model' => $this->getModel(),
-            'attribute' => $this->getAttribute(),
-            'options' => ['class' => 'form-control', 'placeholder' => \Yii::t('admin/gridview', 'Search')],
-        ]));
+        return '';
     }
 }
