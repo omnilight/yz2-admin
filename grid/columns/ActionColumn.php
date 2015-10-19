@@ -1,11 +1,10 @@
 <?php
 
 namespace yz\admin\grid\columns;
+
 use Closure;
 use Yii;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yz\admin\helpers\AdminUrl;
 use yz\admin\helpers\Rbac;
 use yz\admin\helpers\RouteNormalizer;
 use yz\icons\Icons;
@@ -26,6 +25,7 @@ class ActionColumn extends \yii\grid\ActionColumn
      * @var callable a callback that checks access for the button.
      */
     public $checkAccess;
+    private $_checkAccessCache = [];
 
     protected function initDefaultButtons()
     {
@@ -88,14 +88,14 @@ class ActionColumn extends \yii\grid\ActionColumn
         if ($this->checkAccess instanceof Closure) {
             return call_user_func($this->checkAccess, $action, $model, $key, $index);
         } else {
-            $params = is_array($key) ? $key : ['id' => (string) $key];
+            $params = is_array($key) ? $key : ['id' => (string)$key];
             $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
-            if (!isset ($checkAccessCache[$params[0]])) {
+            if (!isset($this->_checkAccessCache[$params[0]])) {
                 $operation = Rbac::routeToOperation(RouteNormalizer::normalizeRoute($params[0]));
-                $checkAccessCache[$params[0]] = Yii::$app->user->can($operation);
+                $this->_checkAccessCache[$params[0]] = Yii::$app->user->can($operation);
             }
 
-            return $checkAccessCache[$params[0]];
+            return $this->_checkAccessCache[$params[0]];
         }
     }
 }
