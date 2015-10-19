@@ -83,14 +83,19 @@ class ActionColumn extends \yii\grid\ActionColumn
      */
     protected function checkAccess($action, $model, $key, $index)
     {
+        static $checkAccessCache = [];
+
         if ($this->checkAccess instanceof Closure) {
             return call_user_func($this->checkAccess, $action, $model, $key, $index);
         } else {
             $params = is_array($key) ? $key : ['id' => (string) $key];
             $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
-            $operation = Rbac::routeToOperation(RouteNormalizer::normalizeRoute($params[0]));
+            if (!isset ($checkAccessCache[$params[0]])) {
+                $operation = Rbac::routeToOperation(RouteNormalizer::normalizeRoute($params[0]));
+                $checkAccessCache[$params[0]] = Yii::$app->user->can($operation);
+            }
 
-            return Yii::$app->user->can($operation);
+            return $checkAccessCache[$params[0]];
         }
     }
 }
