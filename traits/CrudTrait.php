@@ -69,8 +69,8 @@ trait CrudTrait
                 if (($url = \Yii::$app->request->get('return'))) {
                     return $this->redirect($url);
                 }
-                if (($url = Url::previous($this->referrerUrlParam))) {
-                    Url::remember(null, $this->referrerUrlParam);
+                if (($url = Url::previous($this->indexUrlParam))) {
+                    Url::remember(null, $this->indexUrlParam);
                     return $this->redirect($url);
                 }
                 return $this->redirect(['index']);
