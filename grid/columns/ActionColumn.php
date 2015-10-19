@@ -1,9 +1,13 @@
 <?php
 
 namespace yz\admin\grid\columns;
+use Closure;
 use Yii;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yz\admin\helpers\AdminUrl;
+use yz\admin\helpers\Rbac;
+use yz\admin\helpers\RouteNormalizer;
 use yz\icons\Icons;
 
 
@@ -18,6 +22,10 @@ class ActionColumn extends \yii\grid\ActionColumn
      * @deprecated
      */
     public $addReturnUrl = true;
+    /**
+     * @var callable a callback that checks access for the button.
+     */
+    public $checkAccess;
 
     protected function initDefaultButtons()
     {
@@ -54,7 +62,35 @@ class ActionColumn extends \yii\grid\ActionColumn
 
     protected function renderDataCellContent($model, $key, $index)
     {
-        $data = parent::renderDataCellContent($model, $key, $index);
-        return "<nobr>{$data}</nobr>";
+        return Html::tag('nobr', preg_replace_callback('/\\{([\w\-\/]+)\\}/', function ($matches) use ($model, $key, $index) {
+            $name = $matches[1];
+            if (isset($this->buttons[$name]) && $this->checkAccess($name, $model, $key, $index)) {
+                $url = $this->createUrl($name, $model, $key, $index);
+
+                return call_user_func($this->buttons[$name], $url, $model, $key);
+            } else {
+                return '';
+            }
+        }, $this->template));
+    }
+
+    /**
+     * @param $action
+     * @param $model
+     * @param $key
+     * @param $index
+     * @return bool
+     */
+    protected function checkAccess($action, $model, $key, $index)
+    {
+        if ($this->checkAccess instanceof Closure) {
+            return call_user_func($this->checkAccess, $action, $model, $key, $index);
+        } else {
+            $params = is_array($key) ? $key : ['id' => (string) $key];
+            $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
+            $operation = Rbac::routeToOperation(RouteNormalizer::normalizeRoute($params[0]));
+
+            return Yii::$app->user->can($operation);
+        }
     }
 }

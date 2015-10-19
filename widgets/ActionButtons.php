@@ -11,7 +11,8 @@ use yii\bootstrap\ButtonGroup;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
 use yii\helpers\Url;
-use yz\admin\helpers\AdminUrl;
+use yz\admin\helpers\Rbac;
+use yz\admin\helpers\RouteNormalizer;
 use yz\icons\Icon;
 use yz\icons\Icons;
 
@@ -250,6 +251,9 @@ class ActionButtons extends Widget
     {
         if ($this->_createButton === null) {
             $url = $this->createUrl;
+            if ($this->checkAccess($url) == false) {
+                return null;
+            }
             $attributes = $this->getModelAttributes();
 
             if ($attributes == []) {
@@ -320,6 +324,9 @@ class ActionButtons extends Widget
     {
         if ($this->_createAjaxButton === null) {
             $url = $this->createAjaxUrl;
+            if ($this->checkAccess($url) == false) {
+                return null;
+            }
             $this->_createAjaxButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('plus') . \Yii::t('admin/t', 'Add'),
@@ -349,6 +356,9 @@ class ActionButtons extends Widget
     {
         if ($this->_deleteButton === null) {
             $url = $this->deleteUrl;
+            if ($this->checkAccess($url) == false) {
+                return null;
+            }
             $this->_deleteButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('trash-o') . \Yii::t('admin/t', 'Delete Checked'),
@@ -380,6 +390,9 @@ class ActionButtons extends Widget
     {
         if ($this->_indexButton === null) {
             $url = $this->indexUrl;
+            if ($this->checkAccess($url) == false) {
+                return null;
+            }
             $this->_indexButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('list') . \Yii::t('admin/t', 'List'),
@@ -408,6 +421,9 @@ class ActionButtons extends Widget
     {
         if ($this->_indexViewButton === null) {
             $url = $this->indexViewUrl;
+            if ($this->checkAccess($url) == false) {
+                return null;
+            }
             $this->_indexButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('list') . \Yii::t('admin/t', 'List'),
@@ -422,7 +438,7 @@ class ActionButtons extends Widget
     }
 
     /**
-     * @param \yii\bootstrap\Button $indexButton
+     * @param $indexViewButton
      */
     public function setIndexViewButton($indexViewButton)
     {
@@ -436,6 +452,9 @@ class ActionButtons extends Widget
     {
         if ($this->_updateButton === null) {
             $url = $this->updateUrl;
+            if ($this->checkAccess($url) == false) {
+                return null;
+            }
             $this->_updateButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('pencil') . \Yii::t('admin/t', 'Edit'),
@@ -491,6 +510,9 @@ class ActionButtons extends Widget
         if ($this->_exportButton === null) {
             $params = \Yii::$app->request->getQueryParams();
             $url = $this->exportUrl + $params;
+            if ($this->checkAccess($url) == false) {
+                return null;
+            }
             $this->_exportButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('file-excel-o') . \Yii::t('admin/t', 'Экспорт в Excel'),
@@ -520,6 +542,12 @@ class ActionButtons extends Widget
     {
         if ($this->_importButton === null) {
             $url = $this->importUrl;
+            if ($this->checkAccess($url) == false) {
+                return null;
+            }
+            if ($this->checkAccess($url) == false) {
+                return null;
+            }
             $this->_importButton = Button::widget([
                 'tagName' => 'a',
                 'label' => Icons::p('upload') . \Yii::t('admin/t', 'Импорт'),
@@ -532,5 +560,18 @@ class ActionButtons extends Widget
             ]);
         }
         return $this->_importButton;
+    }
+
+    /**
+     * @param string|array $route
+     * @return bool
+     */
+    protected function checkAccess($route)
+    {
+        if (is_array($route)) {
+            $route = reset($route);
+        }
+        $operation = Rbac::routeToOperation(RouteNormalizer::normalizeRoute($route));
+        return \Yii::$app->user->can($operation);
     }
 }
