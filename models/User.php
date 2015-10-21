@@ -203,9 +203,9 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
      */
     public function getRolesItems()
     {
-        if ($this->_rolesItems == null && !$this->isNewRecord) {
+        if ($this->_rolesItems === null && !$this->isNewRecord) {
             $this->_rolesItems = array_keys($this->getAuthManager()->getAssignments($this->id));
-        } elseif ($this->_rolesItems == null) {
+        } elseif ($this->_rolesItems === null) {
             $this->_rolesItems = [];
         }
         return $this->_rolesItems;
@@ -216,6 +216,9 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
      */
     public function setRolesItems($rolesItems)
     {
+        if ($rolesItems === '') {
+            $rolesItems = [];
+        }
         $this->_rolesItems = $rolesItems;
     }
 
@@ -314,15 +317,25 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
 
     public function afterSave($insert, $changedAttributes)
     {
-        if ($this->_rolesItems !== null) {
-            $roles = $this->getAuthManager()->getRolesByUser($this->id);
-            foreach ($this->_rolesItems as $itemName) {
-                if (!isset($roles[$itemName]))
-                    $this->getAuthManager()->assign($this->getAuthManager()->getRole($itemName), $this->id);
-            }
-        }
+        $this->saveRoleItems();
 
         parent::afterSave($insert, $changedAttributes);
+    }
+
+    private function saveRoleItems()
+    {
+        if ($this->_rolesItems === null) {
+            return;
+        }
+        $roles = $this->getAuthManager()->getRolesByUser($this->id);
+        $newRoles = array_diff_key(array_combine($this->_rolesItems, $this->_rolesItems), $roles);
+        $deletedRoles = array_diff_key($roles, array_combine($this->_rolesItems, $this->_rolesItems));
+        foreach ($newRoles as $itemName) {
+            $this->getAuthManager()->assign($this->getAuthManager()->getRole($itemName), $this->id);
+        }
+        foreach ($deletedRoles as $itemName => $role) {
+            $this->getAuthManager()->revoke($this->getAuthManager()->getRole($itemName), $this->id);
+        }
     }
 
     /**

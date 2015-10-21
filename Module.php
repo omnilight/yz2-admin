@@ -31,6 +31,10 @@ class Module extends \yz\Module
      * @var array Extra menu items
      */
     public $menuItems = [];
+    /**
+     * @var array Extra auth items
+     */
+    public $authItems = [];
 
     /**
      * @inheritdoc
@@ -89,4 +93,14 @@ class Module extends \yz\Module
             ]
         ]: []);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAuthItems()
+    {
+        return array_merge(parent::getAuthItems(), $this->authItems);
+    }
+
+
 }
