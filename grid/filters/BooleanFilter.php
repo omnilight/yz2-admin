@@ -16,10 +16,13 @@ class BooleanFilter extends BaseFilter
      */
     public function render()
     {
-        return Html::activeRadioList($this->getModel(), $this->getAttribute(), [
+        return Html::activeDropDownList($this->getModel(), $this->getAttribute(), [
             '' => 'Все',
             '0' => 'Нет',
             '1' => 'Да',
+        ], [
+            'class' => 'form-control',
+            'style' => 'min-width: 90px',
         ]);
     }
 }
