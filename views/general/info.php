@@ -32,6 +32,10 @@ $this->params['header'] = Yii::t('admin/sysinfo', 'General system info')
                 <td><?= Yii::t('admin/sysinfo', 'Load averages') ?></td>
                 <td><?= implode(', ', SystemInfo::getLoadAverage()) ?></td>
             </tr>
+            <tr>
+                <td><?= Yii::t('admin/sysinfo', 'Date and time') ?></td>
+                <td><?= Yii::$app->formatter->asDatetime(new DateTime()) ?></td>
+            </tr>
         </table>
         <?php Box::end() ?>
     </div>
