@@ -71,6 +71,7 @@ class MainController extends Controller
         if ($token === null) {
             throw new ForbiddenHttpException();
         }
+        $token->delete();
         \Yii::$app->user->login($user);
         return $this->goHome();
     }
