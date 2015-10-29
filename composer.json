@@ -27,7 +27,8 @@
     "omnilight/yz2": "*"
   },
   "suggest": {
-    "omnilight/yii2-angular": "To give ability to login via token exchange"
+    "omnilight/yii2-angular": "To give ability to login via token exchange",
+    "omnilight/yii2-tokens": "To allow user login via token exchange"
   },
   "autoload": {
     "psr-4": {"yz\\admin\\": ""}
