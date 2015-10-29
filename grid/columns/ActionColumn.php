@@ -64,7 +64,7 @@ class ActionColumn extends \yii\grid\ActionColumn
     {
         return Html::tag('nobr', preg_replace_callback('/\\{([\w\-\/]+)\\}/', function ($matches) use ($model, $key, $index) {
             $name = $matches[1];
-            if (isset($this->buttons[$name]) && $this->checkAccess($name, $model, $key, $index)) {
+            if (isset($this->buttons[$name]) && $this->checkAccessInternal($name, $model, $key, $index)) {
                 $url = $this->createUrl($name, $model, $key, $index);
 
                 return call_user_func($this->buttons[$name], $url, $model, $key);
@@ -81,21 +81,24 @@ class ActionColumn extends \yii\grid\ActionColumn
      * @param $index
      * @return bool
      */
-    protected function checkAccess($action, $model, $key, $index)
+    public function checkAccess($action, $model, $key, $index)
     {
-        static $checkAccessCache = [];
+        $params = is_array($key) ? $key : ['id' => (string)$key];
+        $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
+        if (!isset($this->_checkAccessCache[$params[0]])) {
+            $operation = Rbac::routeToOperation(RouteNormalizer::normalizeRoute($params[0]));
+            $this->_checkAccessCache[$params[0]] = Yii::$app->user->can($operation);
+        }
 
+        return $this->_checkAccessCache[$params[0]];
+    }
+
+    protected function checkAccessInternal($action, $model, $key, $index)
+    {
         if ($this->checkAccess instanceof Closure) {
-            return call_user_func($this->checkAccess, $action, $model, $key, $index);
+            return call_user_func($this->checkAccess, $this, $action, $model, $key, $index);
         } else {
-            $params = is_array($key) ? $key : ['id' => (string)$key];
-            $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
-            if (!isset($this->_checkAccessCache[$params[0]])) {
-                $operation = Rbac::routeToOperation(RouteNormalizer::normalizeRoute($params[0]));
-                $this->_checkAccessCache[$params[0]] = Yii::$app->user->can($operation);
-            }
-
-            return $this->_checkAccessCache[$params[0]];
+            return $this->checkAccess($action, $model, $key, $index);
         }
     }
 }
