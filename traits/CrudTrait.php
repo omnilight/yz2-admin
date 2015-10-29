@@ -87,4 +87,13 @@ trait CrudTrait
         else
             throw new BadRequestHttpException('Unknown action: ' . $actionName);
     }
+
+    protected function goPreviousUrl()
+    {
+        /** @var Controller | CrudTrait $this */
+        if (($url = \Yii::$app->request->get('return'))) {
+            return $this->redirect($url);
+        }
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
 } 
