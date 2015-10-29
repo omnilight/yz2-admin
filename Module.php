@@ -35,6 +35,11 @@ class Module extends \yz\Module
      * @var array Extra auth items
      */
     public $authItems = [];
+    /**
+     * If true, login by token exchange algorithm will be used
+     * @var bool
+     */
+    public $allowLoginViaToken = false;
 
     /**
      * @inheritdoc

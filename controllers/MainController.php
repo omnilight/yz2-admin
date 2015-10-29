@@ -6,7 +6,12 @@ use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\ErrorAction;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
+use yz\admin\AdminModuleTrait;
 use yz\admin\forms\LoginForm;
+use yz\admin\models\User;
+use yz\admin\tokens\AdminLoginToken;
 
 /**
  * Class MainController
@@ -14,6 +19,8 @@ use yz\admin\forms\LoginForm;
  */
 class MainController extends Controller
 {
+    use AdminModuleTrait;
+
     public function actions()
     {
         return [
@@ -47,6 +54,25 @@ class MainController extends Controller
                 'loginForm' => $model,
             ]);
         }
+    }
+
+    public function actionLoginByToken($id, $token)
+    {
+        if (self::getAdminModule()->allowLoginViaToken == false) {
+            throw new NotFoundHttpException();
+        }
+
+        /** @var User $user */
+        $user = User::findOne($id);
+        if ($user === null) {
+            throw new NotFoundHttpException();
+        }
+        $token = AdminLoginToken::compareToken($user->id, $token);
+        if ($token === null) {
+            throw new ForbiddenHttpException();
+        }
+        \Yii::$app->user->login($user);
+        return $this->goHome();
     }
 
     public function actionLogout()
@@ -86,7 +112,7 @@ class MainController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'login-by-token'],
                     ],
                     [
                         'allow' => true,
