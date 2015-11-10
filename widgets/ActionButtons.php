@@ -219,13 +219,25 @@ class ActionButtons extends Widget
     public function getReturnButton()
     {
         if ($this->_returnButton === null) {
-            if (Url::previous() !== null) {
+
+            $returnUrl = \Yii::$app->request->get('return');
+            $indexUrl = Url::previous('__indexUrlParam');
+
+            if ($indexUrl !== null) {
+                $url = $indexUrl;
+            } elseif ($returnUrl !== null) {
+                $url = $returnUrl;
+            } else {
+                $url = null;
+            }
+
+            if ($url !== null) {
                 $this->_returnButton = Button::widget([
                     'tagName' => 'a',
                     'label' => Icons::p('angle-left') . \Yii::t('admin/t', 'Go Back'),
                     'encodeLabel' => false,
                     'options' => [
-                        'href' => Url::to(['/admin/main/return', 'url' => Url::previous()]),
+                        'href' => Url::to(['/admin/main/return', 'url' => $url]),
                         'class' => 'btn btn-default',
                     ],
                 ]);
