@@ -112,6 +112,7 @@ return [
     'Update & Then Create New One' => 'Сохранить, а затем создать новую запись',
     'Update Time' => 'Дата обновления',
     'Update object "{item}": {title}' => 'Обновить объект "{item}": {title}',
+    'Update {item}' => 'Обновить {item}',
     'Updated At' => 'Обновлено',
     'Url Raw' => 'Сырой URL',
     'User ID' => 'ID пользователя',

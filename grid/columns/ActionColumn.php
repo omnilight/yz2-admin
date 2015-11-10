@@ -23,6 +23,12 @@ class ActionColumn extends \yii\grid\ActionColumn
     public $addReturnUrl = true;
     /**
      * @var callable a callback that checks access for the button.
+     * ```php
+     * function (ActionColumn $column, $action, $model, $key, $index)
+     * {
+     *
+     * }
+     * ```
      */
     public $checkAccess;
     private $_checkAccessCache = [];
