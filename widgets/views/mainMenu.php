@@ -12,14 +12,16 @@ $context = $this->context;
 <ul class="sidebar-menu">
     <?php foreach ($menuItems as $group): ?>
         <li class="treeview <?= $group['active'] ? 'active' : '' ?>">
-            <a href="#">
-                <?= Icons::i('angle-left fa-fw pull-right') ?>
+            <a href="<?= isset($group['route']) ? \yii\helpers\Url::to($group['route']) : '#' ?>">
+                <?php if (isset($group['items'])): ?>
+                    <?= Icons::i('angle-left fa-fw pull-right') ?>
+                <?php endif ?>
                 <div>
                     <?= (isset($group['icon']) ? $group['icon']->ac('fa-fw') . ' ' : '') ?>
                     <span><?= Html::encode($group['label']); ?></span>
                 </div>
             </a>
-            <?php if (is_array($group['items']) && count($group['items']) > 0): ?>
+            <?php if (isset($group['items']) && is_array($group['items']) && count($group['items']) > 0): ?>
                 <ul class="treeview-menu">
                     <?php foreach ($group['items'] as $item): ?>
                         <li class="item <?= $item['active'] ? 'active' : '' ?>">

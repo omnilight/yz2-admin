@@ -51,30 +51,34 @@ class MainMenu extends Widget
                 $moduleMenu = $module->getAdminMenu();
 
                 foreach ($moduleMenu as $group) {
-                    $groupItems = [];
-                    foreach ($group['items'] as $item) {
-                        if (isset($item['authItem'])) {
-                            $hasAccess = Yii::$app->user->can($item['authItem']);
-                        } elseif (isset($item['roles'])) {
-                            $hasAccess = false;
-                            foreach ($item['roles'] as $role) {
-                                if (Yii::$app->user->can($role)) {
-                                    $hasAccess = true;
-                                    break;
+                    if (isset($group['items'])) {
+                        $groupItems = [];
+                        foreach ($group['items'] as $item) {
+                            if (isset($item['authItem'])) {
+                                $hasAccess = Yii::$app->user->can($item['authItem']);
+                            } elseif (isset($item['roles'])) {
+                                $hasAccess = false;
+                                foreach ($item['roles'] as $role) {
+                                    if (Yii::$app->user->can($role)) {
+                                        $hasAccess = true;
+                                        break;
+                                    }
                                 }
+                            } elseif (isset($item['route']) && is_array($item['route'])) {
+                                $hasAccess = $this->checkAccessByRoute($item['route'][0]);
+                            } else {
+                                $hasAccess = true;
                             }
-                        } elseif (isset($item['route']) && is_array($item['route'])) {
-                            $hasAccess = $this->checkAccessByRoute($item['route'][0]);
-                        } else {
-                            $hasAccess = true;
-                        }
 
-                        if ($hasAccess) {
-                            $groupItems[] = $item;
+                            if ($hasAccess) {
+                                $groupItems[] = $item;
+                            }
                         }
-                    }
-                    if (count($groupItems) > 0) {
-                        $group['items'] = $groupItems;
+                        if (count($groupItems) > 0) {
+                            $group['items'] = $groupItems;
+                            $menuItems[$module->adminMenuOrder][] = $group;
+                        }
+                    } else {
                         $menuItems[$module->adminMenuOrder][] = $group;
                     }
                 }
@@ -88,11 +92,14 @@ class MainMenu extends Widget
 
         foreach ($menuItems as &$group) {
             $hasActive = false;
-            foreach ($group['items'] as &$item) {
-                $item['active'] = $this->isItemActive($item);
-                $hasActive = $item['active'] ? true : $hasActive;
+            $group['active'] = $this->isItemActive($group);
+            if (isset ($group['items'])) {
+                foreach ($group['items'] as &$item) {
+                    $item['active'] = $this->isItemActive($item);
+                    $hasActive = $item['active'] ? true : $hasActive;
+                }
+                $group['active'] = $hasActive;
             }
-            $group['active'] = $hasActive;
         }
 
         return $menuItems;
