@@ -23,18 +23,20 @@ yii.yz.admin = (function($) {
 
 // Window size check
 $(function() {
-    var $table = $('.grid-view table.table'),
-        $body = $('body'),
-        $window = $(window);
+    setTimeout(function() {
+        var $table = $('.grid-view table.table'),
+            $body = $('body'),
+            $window = $(window);
 
-    if ($table.length == 0) {
-        return;
-    }
+        if ($table.length == 0) {
+            return;
+        }
 
-    var desiredWidth = $table.offset().left + $table.width();
+        var desiredWidth = $table.offset().left + $table.width();
 
-    $body.css({
-        overflowX: 'auto',
-        minWidth: desiredWidth
-    });
+        $body.css({
+            overflowX: 'auto',
+            minWidth: desiredWidth
+        });
+    }, 200);
 });
