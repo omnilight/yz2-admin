@@ -103,9 +103,11 @@ use yz\icons\Icons;
             <?php if (isset($this->params['header'])): ?>
                 <h1><?= $this->params['header'] ?></h1>
             <?php endif ?>
-            <?php echo \yii\widgets\Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]); ?>
+            <?php if (\yii\helpers\ArrayHelper::getValue($this->params, 'breadcrumbs-enabled', true)): ?>
+                <?php echo \yii\widgets\Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]); ?>
+            <?php endif ?>
         </section>
 
         <!-- Main content -->
