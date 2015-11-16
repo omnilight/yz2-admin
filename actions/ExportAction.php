@@ -50,6 +50,10 @@ class ExportAction extends Action
      */
     public $reportName = 'report';
     /**
+     * @var string
+     */
+    public $reportExtension = 'xls';
+    /**
      * @var callable
      */
     protected $_gridColumns = null;
@@ -101,7 +105,7 @@ class ExportAction extends Action
             '{name}' => $this->reportName,
             '{grid}' => $grid,
         ]);
-        return Yii::$app->response->sendContentAsFile($content, $this->reportName . '.xls', 'application/msexcel');
+        return Yii::$app->response->sendContentAsFile($content, $this->reportName . '.' . $this->reportExtension, 'application/msexcel');
     }
 
     const EXPORT_TEMPLATE = <<<HTML
