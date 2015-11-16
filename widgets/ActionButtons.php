@@ -223,10 +223,10 @@ class ActionButtons extends Widget
             $returnUrl = \Yii::$app->request->get('return');
             $indexUrl = Url::previous('__indexUrlParam');
 
-            if ($indexUrl !== null) {
-                $url = $indexUrl;
-            } elseif ($returnUrl !== null) {
+            if ($returnUrl !== null) {
                 $url = $returnUrl;
+            } elseif ($indexUrl !== null) {
+                $url = $indexUrl;
             } else {
                 $url = null;
             }
