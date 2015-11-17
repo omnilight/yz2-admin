@@ -54,9 +54,16 @@ class GridView extends \yii\grid\GridView
      */
     public $showSettings = true;
     /**
+     * If true, total row will be displayed all the time. If false - it will not be shown.
+     * If null (default) - it will be shown in the case when any of the data column will have total property
+     * @var bool | null
+     */
+    public $showTotal;
+    /**
+     * If true, total label row will be added before to the total row (only if total row is visible)
      * @var bool
      */
-    public $showTotal = false;
+    public $showTotalLabel = true;
     /**
      * Total condition that will be added to the total query. Could be string or a function in the form of:
      * ```
@@ -252,17 +259,37 @@ class GridView extends \yii\grid\GridView
 
     public function renderTotal()
     {
-        if ($this->showTotal) {
+        if ($this->showTotal === null) {
+            $showTotal = false;
+            foreach ($this->columns as $column) {
+                if ($column instanceof \yz\admin\grid\columns\DataColumn) {
+                    if ($column->total !== null) {
+                        $showTotal = true;
+                        break;
+                    }
+                }
+            }
+        } else {
+            $showTotal = $this->showTotal;
+        }
+
+        if ($showTotal) {
             $cells = [];
             foreach ($this->columns as $column) {
-                /* @var $column Column */
-                if (method_exists($column, 'renderTotalCell')) {
+                if ($column instanceof \yz\admin\grid\columns\DataColumn) {
                     $cells[] = $column->renderTotalCell();
                 } else {
                     $cells[] = Html::tag('td', '', ['class' => 'grid-view-cell-total-empty']);
                 }
             }
-            return Html::tag('tr', implode('', $cells), ['class' => 'grid-view-row-total']);
+            if ($this->showTotalLabel) {
+                $rows[] = Html::tag('tr', Html::tag('td', Yii::t('admin/gridview', 'Total:'), [
+                    'colspan' => count($this->columns),
+                    'class' => 'grid-view-row-total-label',
+                ]));
+            }
+            $rows[] = Html::tag('tr', implode('', $cells), ['class' => 'grid-view-row-total']);
+            return implode("\n", $rows);
         } else {
             return '';
         }
