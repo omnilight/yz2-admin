@@ -18,6 +18,11 @@ class Select2Filter extends BaseFilter
      * @var array
      */
     public $options = [];
+    /**
+     * If true, it will be possible to select multiple values
+     * @var bool
+     */
+    public $multiple = false;
 
     /**
      * Renders the filter content
@@ -25,10 +30,14 @@ class Select2Filter extends BaseFilter
      */
     public function render()
     {
-        $options = array_merge([
+        $defaults = [
             'prompt' => '',
             'class' => 'form-control',
-        ], $this->options);
+        ];
+        if ($this->multiple) {
+            $defaults['multiple'] = 'multiple';
+        }
+        $options = array_merge($defaults, $this->options);
 
         return Select2::widget([
             'bootstrap' => true,
