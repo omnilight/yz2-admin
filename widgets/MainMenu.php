@@ -54,23 +54,7 @@ class MainMenu extends Widget
                     if (isset($group['items'])) {
                         $groupItems = [];
                         foreach ($group['items'] as $item) {
-                            if (isset($item['authItem'])) {
-                                $hasAccess = Yii::$app->user->can($item['authItem']);
-                            } elseif (isset($item['roles'])) {
-                                $hasAccess = false;
-                                foreach ($item['roles'] as $role) {
-                                    if (Yii::$app->user->can($role)) {
-                                        $hasAccess = true;
-                                        break;
-                                    }
-                                }
-                            } elseif (isset($item['route']) && is_array($item['route'])) {
-                                $hasAccess = $this->checkAccessByRoute($item['route'][0]);
-                            } else {
-                                $hasAccess = true;
-                            }
-
-                            if ($hasAccess) {
+                            if ( $this->checkItemAccess($item)) {
                                 $groupItems[] = $item;
                             }
                         }
@@ -79,7 +63,9 @@ class MainMenu extends Widget
                             $menuItems[$module->adminMenuOrder][] = $group;
                         }
                     } else {
-                        $menuItems[$module->adminMenuOrder][] = $group;
+                        if ($this->checkItemAccess($group)) {
+                            $menuItems[$module->adminMenuOrder][] = $group;
+                        }
                     }
                 }
             }
@@ -154,5 +140,27 @@ class MainMenu extends Widget
         }
 
         return false;
+    }
+
+    /**
+     * @param array $item
+     * @return bool
+     */
+    protected function checkItemAccess($item)
+    {
+        if (isset($item['authItem'])) {
+            return Yii::$app->user->can($item['authItem']);
+        } elseif (isset($item['roles'])) {
+            foreach ($item['roles'] as $role) {
+                if (Yii::$app->user->can($role)) {
+                    return true;
+                }
+            }
+            return false;
+        } elseif (isset($item['route']) && is_array($item['route'])) {
+            return $this->checkAccessByRoute($item['route'][0]);
+        }
+
+        return true;
     }
 } 
