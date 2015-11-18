@@ -63,8 +63,10 @@ class DataColumn extends \yii\grid\DataColumn
             /** @var GridView $grid */
             $grid = $this->grid;
             return \Yii::$app->formatter->format($grid->getTotalData()[array_keys($this->total)[0]], $this->format);
-        } else {
+        } elseif (is_string($this->total)) {
             return \Yii::$app->formatter->format($this->total, $this->format);
+        } else {
+            return '';
         }
     }
 

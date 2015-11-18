@@ -22,4 +22,5 @@ return [
     'Grid Settings' => 'Настройки списка',
     'Grid settings' => 'Настройки списка',
     'Elements on page' => 'Число записей на странице',
+    'Total:' => 'Итого',
 ];
