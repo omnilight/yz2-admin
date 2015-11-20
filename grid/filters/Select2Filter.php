@@ -31,7 +31,7 @@ class Select2Filter extends BaseFilter
     public function render()
     {
         $defaults = [
-            'prompt' => '',
+            'prompt' => 'Все',
             'class' => 'form-control',
         ];
         if ($this->multiple) {
