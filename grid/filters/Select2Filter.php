@@ -43,9 +43,7 @@ class Select2Filter extends BaseFilter
             'bootstrap' => true,
             'model' => $this->column->grid->filterModel,
             'attribute' => $this->column->attribute,
-            'items' => ArrayHelper::merge([
-                '' => '',
-            ], $this->values),
+            'items' => $this->values,
             'options' => $options,
         ]) . $this->getError();
     }
