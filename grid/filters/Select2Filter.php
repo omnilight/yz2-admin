@@ -31,7 +31,7 @@ class Select2Filter extends BaseFilter
     public function render()
     {
         $defaults = [
-            'prompt' => 'Все',
+            'prompt' => \Yii::t('admin/gridview', 'All'),
             'class' => 'form-control',
         ];
         if ($this->multiple) {
