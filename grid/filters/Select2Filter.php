@@ -31,18 +31,19 @@ class Select2Filter extends BaseFilter
     public function render()
     {
         $defaults = [
-            'prompt' => \Yii::t('admin/gridview', 'All'),
             'class' => 'form-control',
         ];
         if ($this->multiple) {
             $defaults['multiple'] = 'multiple';
+        } else {
+            $defaults['prompt'] = \Yii::t('admin/gridview', 'All');
         }
         $options = array_merge($defaults, $this->options);
 
         return Select2::widget([
             'bootstrap' => true,
-            'model' => $this->column->grid->filterModel,
-            'attribute' => $this->column->attribute,
+            'model' => $this->getModel(),
+            'attribute' => $this->getAttribute(),
             'items' => $this->values,
             'options' => $options,
         ]) . $this->getError();

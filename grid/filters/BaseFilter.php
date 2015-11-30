@@ -1,15 +1,17 @@
 <?php
 
 namespace yz\admin\grid\filters;
+
+use yii\base\Model;
 use yii\base\Object;
 use yii\helpers\Html;
-use yz\admin\grid\GridView;
-use yii\grid\Column;
 use yz\admin\grid\columns\DataColumn;
 
 
 /**
  * Class BaseFilter
+ * @property Model $model
+ * @property string $attribute
  */
 abstract class BaseFilter extends Object
 {
@@ -17,6 +19,14 @@ abstract class BaseFilter extends Object
      * @var DataColumn
      */
     public $column;
+    /**
+     * @var Model
+     */
+    private $_model;
+    /**
+     * @var string
+     */
+    private $_attribute;
 
     public function __construct(DataColumn $column, $config = [])
     {
@@ -36,6 +46,12 @@ abstract class BaseFilter extends Object
     }
 
     /**
+     * Renders the filter content
+     * @return string
+     */
+    abstract public function render();
+
+    /**
      * Returns error message if one's exist
      * @return string
      */
@@ -50,17 +66,22 @@ abstract class BaseFilter extends Object
     }
 
     /**
-     * Renders the filter content
-     * @return string
-     */
-    abstract public function render();
-
-    /**
      * @return \yii\base\Model
      */
     protected function getModel()
     {
+        if ($this->_model !== null) {
+            return $this->_model;
+        }
         return $this->column->grid->filterModel;
+    }
+
+    /**
+     * @param Model $model
+     */
+    public function setModel($model)
+    {
+        $this->_model = $model;
     }
 
     /**
@@ -68,7 +89,18 @@ abstract class BaseFilter extends Object
      */
     protected function getAttribute()
     {
+        if ($this->_attribute !== null) {
+            return $this->_attribute;
+        }
         return $this->column->attribute;
+    }
+
+    /**
+     * @param string $attribute
+     */
+    public function setAttribute($attribute)
+    {
+        $this->_attribute = $attribute;
     }
 
 }
