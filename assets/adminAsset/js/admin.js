@@ -1,17 +1,16 @@
-
-yii.yz.admin = (function($) {
+yii.yz.admin = (function ($) {
     var settings = {
         routeToUrl: ''
     };
     var pub = {
         settings: settings,
-        url: function(route, callback) {
+        url: function (route, callback) {
             var url = settings.routeToUrl;
             $.ajax({
                 url: url,
                 data: {route: route},
                 dataType: 'json',
-                success:  function(data) {
+                success: function (data) {
                     callback(data.url);
                 }
             });
@@ -22,8 +21,8 @@ yii.yz.admin = (function($) {
 })(jQuery);
 
 // Window size check
-$(function() {
-    setTimeout(function() {
+$(function () {
+    setTimeout(function () {
         var $table = $('.grid-view table.table'),
             $body = $('body'),
             $window = $(window);
@@ -39,4 +38,12 @@ $(function() {
             minWidth: desiredWidth
         });
     }, 200);
+});
+
+// Iframe height check
+$(function () {
+    $('iframe.iframe-content-autosize').on('load', function () {
+        console.log('ok');
+        $(this).height($(this).contents().height());
+    });
 });

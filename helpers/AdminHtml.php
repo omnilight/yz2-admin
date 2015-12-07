@@ -25,7 +25,7 @@ class AdminHtml
      */
     public static function actionButton($action = self::ACTION_SAVE_AND_LEAVE, $isNewRecord = null, $options = [])
     {
-        $content = ArrayHelper::getValue(static::getActionButtonContent($isNewRecord), $action, ArrayHelper::getValue($options, 'content', 'Submit'));
+        $content = ArrayHelper::getValue($options, 'content') ?: ArrayHelper::getValue(static::getActionButtonContent($isNewRecord), $action, 'Submit');
         ArrayHelper::remove($options, 'content');
 
         $options = array_merge(ArrayHelper::getValue(static::getActionButtonOptions(), $action, ['class' => 'btn btn-primary']), [
