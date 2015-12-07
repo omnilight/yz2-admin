@@ -55,10 +55,10 @@ class ProfileController extends Controller
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Your profile was successfully updated'));
-            return $this->getCreateUpdateResponse($model);
+            return $this->redirect(['index']);
         } elseif ($passwordForm->load(\Yii::$app->request->post()) && $passwordForm->process()) {
             \Yii::$app->session->setFlash(\yz\Yz::FLASH_SUCCESS, \Yii::t('admin/t', 'Your password was successfully changed'));
-            return $this->getCreateUpdateResponse($model);
+            return $this->redirect(['index']);
         } else {
             return $this->render('index', [
                 'model' => $model,

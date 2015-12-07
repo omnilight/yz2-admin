@@ -134,4 +134,5 @@ return [
     'Access Token' => 'Токен доступа',
     'Try to go to' => 'Попробуйте перейти на',
     'the main page' => 'главную страницу',
+    'Old Password' => 'Текущий пароль',
 ];

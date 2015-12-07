@@ -60,6 +60,7 @@ class ChangeUserPasswordForm extends Model
     public function attributeLabels()
     {
         return [
+            'oldPassword' => \Yii::t('admin/t', 'Old Password'),
             'password' => \Yii::t('admin/t', 'Password'),
             'passwordRepeat' => \Yii::t('admin/t', 'Repeat Password'),
         ];
