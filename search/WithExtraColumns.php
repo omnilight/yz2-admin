@@ -31,7 +31,7 @@ trait WithExtraColumns
      */
     protected function filtersForExtraColumns($query)
     {
-        foreach (self::extraColumns() as $attribute) {
+        foreach (static::extraColumns() as $attribute) {
             $query->andFilterWhere(['like', self::columnName($attribute, false), $this->getAttribute($attribute)]);
         }
     }
