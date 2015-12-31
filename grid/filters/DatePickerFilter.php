@@ -7,6 +7,7 @@ use omnilight\datetime\DatePickerConfig;
 
 /**
  * Class DatePickerFilter
+ * @deprecated This filter is returing empty string. Use DateFilter instead
  */
 class DatePickerFilter extends BaseFilter
 {
