@@ -30,6 +30,16 @@ class DateRangeFilteringBehavior extends Behavior
      * @var array
      */
     public $attributes;
+    /**
+     * @var callable | null | boolean
+     * ```php
+     * function ($attribute) {
+     *  // Attribute can be create_at_start ...
+     *  return ...
+     * }
+     * ```
+     */
+    public $initAttribute;
 
     /**
      * @var array
@@ -47,6 +57,22 @@ class DateRangeFilteringBehavior extends Behavior
         return [];
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function init()
+    {
+        $attributes = [];
+        foreach ($this->attributes as $attribute => $dbAttribute) {
+            if (is_int($attribute)) {
+                $attribute = $dbAttribute;
+            }
+            $attributes[$attribute] = $dbAttribute;
+        }
+        $this->attributes = $attributes;
+    }
+
+
     public function attach($owner)
     {
         parent::attach($owner);
@@ -59,9 +85,6 @@ class DateRangeFilteringBehavior extends Behavior
         $rangeAttributes = [];
 
         foreach ($this->attributes as $attribute => $dbAttribute) {
-            if (is_int($attribute)) {
-                $attribute = $dbAttribute;
-            }
             $rangeAttributes[] = $attribute . '_start';
             $rangeAttributes[] = $attribute . '_end';
 
@@ -143,10 +166,22 @@ class DateRangeFilteringBehavior extends Behavior
 
     public function initAttribute($name)
     {
-        if ($this->owner instanceof ActiveRecord) {
-            $this->setAttribute($name.'_start', $this->owner->find()->min(strtr('DATE({attr})', ['{attr}' => $name])));
-            $this->setAttribute($name.'_end', $this->owner->find()->max(strtr('DATE({attr})', ['{attr}' => $name])));
+        if ($this->initAttribute === false) {
+            return;
         }
+
+        if (is_callable($this->initAttribute)) {
+            $this->setAttribute($name.'_start', call_user_func($this->initAttribute, $name.'_start'));
+            $this->setAttribute($name.'_end', call_user_func($this->initAttribute, $name.'_end'));
+            return;
+        }
+
+        if (!($this->owner instanceof ActiveRecord)) {
+            return;
+        }
+
+        $this->setAttribute($name.'_start', $this->owner->find()->min(strtr('DATE({attr})', ['{attr}' => $this->getDbAttribute($name)])));
+        $this->setAttribute($name.'_end', $this->owner->find()->max(strtr('DATE({attr})', ['{attr}' => $this->getDbAttribute($name)])));
     }
 
     public function getOriginalAttribute($name)
@@ -176,5 +211,9 @@ class DateRangeFilteringBehavior extends Behavior
         }
     }
 
-
+    protected function getDbAttribute($name)
+    {
+        $attribute = $this->getOriginalAttribute($name);
+        return ArrayHelper::getValue($this->attributes, $attribute);
+    }
 }
