@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
 use yii\rbac\DbManager;
 use yii\rbac\Item;
 use yii\web\IdentityInterface;
+use yii\web\Request;
 use yii\web\UserEvent;
 use yz\admin\contracts\ProfileFinderInterface;
 use yz\admin\contracts\ProfileInterface;
@@ -43,6 +44,7 @@ use yz\interfaces\ModelInfoInterface;
  * @property Role[] $roles Roles of the user
  * @property UserSetting $settings Settings for the current user
  * @property ProfileInterface | null $profile
+ * @property AdminLoginHistoryRecord[] $loginRecords History of the login actions
  *
  * @package yz\admin\models
  */
@@ -137,6 +139,13 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
         $identity->updateAttributes([
             'logged_at' => new Expression('NOW()'),
         ]);
+
+        $model = new AdminLoginHistoryRecord();
+        $model->user_id = $identity->id;
+        if (Yii::$app->request instanceof Request) {
+            $model->remote_address = Yii::$app->request->userIP;
+        }
+        $model->save(false);
     }
 
     public function behaviors()
@@ -387,5 +396,13 @@ class User extends \yz\db\ActiveRecord implements IdentityInterface, ModelInfoIn
         $class = $this->profile_finder_class;
 
         return $class::findByIdentityId($this->id);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getLoginRecords()
+    {
+        return $this->hasMany(AdminLoginHistoryRecord::class, ['user_id' => 'id']);
     }
 }
