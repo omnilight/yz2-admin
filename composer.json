@@ -21,10 +21,10 @@
     "yiisoft/yii2-bootstrap": "2.0.*",
     "yiisoft/yii2-jui": "2.0.*",
     "vova07/yii2-select2-widget": "*",
-    "omnilight/yii2-bootstrap-daterangepicker": "*",
-    "omnilight/yii2-bootstrap-datepicker": "*",
-    "omnilight/icons": "*",
-    "omnilight/yz2": "*"
+    "omnilight/yii2-bootstrap-daterangepicker": "^1.0.0",
+    "omnilight/yii2-bootstrap-datepicker": "^1.0.0",
+    "omnilight/icons": "^1.0.0",
+    "omnilight/yz2": "^1.0.0"
   },
   "suggest": {
     "omnilight/yii2-angular": "To give ability to login via token exchange",
