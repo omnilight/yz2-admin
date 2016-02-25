@@ -14,7 +14,7 @@ class LoginAsset extends AssetBundle
 	/**
 	 * @inheritdoc
 	 */
-	public $sourcePath = '@yz/admin/assets/loginAsset';
+	public $sourcePath = '@yz/admin/assets/login-asset';
 	/**
 	 * @inheritdoc
 	 */

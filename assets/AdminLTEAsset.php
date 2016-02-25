@@ -13,7 +13,7 @@ class AdminLTEAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@yz/admin/assets/adminLteAsset/dist';
+    public $sourcePath = '@yz/admin/assets/admin-lte-asset/dist';
     /**
      * @inheritdoc
      */

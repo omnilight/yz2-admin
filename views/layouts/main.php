@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yz\admin\widgets\SystemEvents;
@@ -13,9 +14,6 @@ use yz\icons\Icons;
     <!-- Site wrapper -->
     <div class="wrapper">
     <header class="main-header">
-        <a href="<?= Url::home() ?>" class="logo">
-            <small><?= Yii::$app->getModule('admin')->adminTitle ?: Yii::t('admin/t', 'Administration panel') ?></small>
-        </a>
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -24,6 +22,14 @@ use yz\icons\Icons;
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
+
+            <?php if (isset($this->blocks['header-logo'])): ?>
+                <?= $this->blocks['header-logo'] ?>
+            <?php else: ?>
+                <a href="<?= Url::home() ?>" class="logo">
+                    <small><?= Yii::$app->getModule('admin')->adminTitle ?: Yii::t('admin/t', 'Administration panel') ?></small>
+                </a>
+            <?php endif ?>
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
@@ -91,7 +97,7 @@ use yz\icons\Icons;
     <aside class="main-sidebar">
         <section class="sidebar">
 
-            <?= $this->render('@yz/admin/views/layouts/partials/_sidebar-top') ?>
+            <?= ArrayHelper::getValue($this->blocks, 'sidebar-top') ?>
 
             <?= \yz\admin\widgets\MainMenu::widget(); ?>
 
@@ -103,7 +109,7 @@ use yz\icons\Icons;
             <?php if (isset($this->params['header'])): ?>
                 <h1><?= $this->params['header'] ?></h1>
             <?php endif ?>
-            <?php if (\yii\helpers\ArrayHelper::getValue($this->params, 'breadcrumbs-enabled', true)): ?>
+            <?php if (ArrayHelper::getValue($this->params, 'breadcrumbs-enabled', true)): ?>
                 <?php echo \yii\widgets\Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ]); ?>

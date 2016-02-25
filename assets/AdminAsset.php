@@ -16,7 +16,7 @@ class AdminAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@yz/admin/assets/adminAsset';
+    public $sourcePath = '@yz/admin/assets/admin-asset';
     /**
      * @inheritdoc
      */
