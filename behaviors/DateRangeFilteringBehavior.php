@@ -40,6 +40,11 @@ class DateRangeFilteringBehavior extends Behavior
      * ```
      */
     public $initAttribute;
+    /**
+     * If true, behavior will append filters for attributes
+     * @var bool
+     */
+    public $appendFilters = true;
 
     /**
      * @var array
@@ -48,7 +53,7 @@ class DateRangeFilteringBehavior extends Behavior
 
     public function events()
     {
-        if ($this->owner instanceof SearchModelInterface) {
+        if ($this->owner instanceof SearchModelInterface && $this->appendFilters) {
             return [
                 SearchModelInterface::EVENT_AFTER_PREPARE_FILTERS => 'afterPrepareFilters'
             ];
