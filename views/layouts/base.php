@@ -22,7 +22,7 @@ Icons::register($this);
     <?= Html::csrfMetaTags() ?>
     <?php $this->head(); ?>
 </head>
-<body class="<?= ArrayHelper::getValue($this->params, 'body-class', 'skin-blue') ?>">
+<body class="<?= ArrayHelper::getValue($this->params, 'body-class', 'skin-blue') ?> <?= ArrayHelper::getValue($this->params, 'body-extra-class', 'default-page') ?>">
 <?php $this->beginBody() ?>
     <?= $content; ?>
 <?php $this->endBody() ?>
