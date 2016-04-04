@@ -8,6 +8,7 @@ use yz\icons\Icons;
  * @var \yz\admin\forms\LoginForm $loginForm
  */
 \yz\admin\assets\LoginAsset::register($this);
+$this->params['body-extra-class'] = 'login-page'
 ?>
 <div class="container">
 	<div class="b-login">
