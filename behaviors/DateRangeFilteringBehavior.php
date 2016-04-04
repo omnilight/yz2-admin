@@ -29,7 +29,7 @@ class DateRangeFilteringBehavior extends Behavior
      * ```
      * @var array
      */
-    public $attributes;
+    public $attributes = [];
     /**
      * @var callable | null | boolean
      * ```php
