@@ -5,6 +5,7 @@ namespace yz\admin\grid\columns;
 use Closure;
 use Yii;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yz\admin\helpers\Rbac;
 use yz\admin\helpers\RouteNormalizer;
 use yz\icons\Icons;
@@ -18,7 +19,6 @@ class ActionColumn extends \yii\grid\ActionColumn
     /**
      * Indicates whether to add return URL to the default buttons
      * @var bool
-     * @deprecated
      */
     public $addReturnUrl = true;
     /**
@@ -105,6 +105,24 @@ class ActionColumn extends \yii\grid\ActionColumn
             return call_user_func($this->checkAccess, $this, $action, $model, $key, $index);
         } else {
             return $this->checkAccess($action, $model, $key, $index);
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function createUrl($action, $model, $key, $index)
+    {
+        if (is_callable($this->urlCreator)) {
+            return call_user_func($this->urlCreator, $action, $model, $key, $index);
+        } else {
+            $params = is_array($key) ? $key : ['id' => (string) $key];
+            if ($this->addReturnUrl) {
+                $params['return'] = Url::current();
+            }
+            $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
+
+            return Url::toRoute($params);
         }
     }
 }
