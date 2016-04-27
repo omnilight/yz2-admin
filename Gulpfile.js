@@ -14,7 +14,7 @@ gulp.task ('less-admin-lte', function() {
         .pipe(gulp.dest('assets/admin-lte-asset/dist/css'));
 });
 
-gulp.task ('less-backend', function() {
+gulp.task ('less-admin', function() {
     return gulp.src(['assets/admin-asset/less/admin.less'])
         .pipe(less())
         .pipe(autoprefixer())
